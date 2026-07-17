@@ -1,0 +1,87 @@
+@import "tailwindcss";
+
+:root {
+  /* Default light theme colors */
+  --primary: #0f172a;
+  --secondary: #0284c7;
+  --accent: #3b82f6;
+  --background: #f8fafc;
+  --surface: #ffffff;
+  --card: #ffffff;
+  --sidebar: #f1f5f9;
+  --navbar: #ffffff;
+  --header: #ffffff;
+  --footer: #e2e8f0;
+  --border: rgba(15, 23, 42, 0.08);
+  --text: #0f172a;
+  --text-muted: #475569;
+  --icon: #0f172a;
+  --link: #0284c7;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
+  --info: #3b82f6;
+  --chart-1: #0f172a;
+  --chart-2: #0284c7;
+  --border-radius: 12px;
+}
+
+.dark {
+  /* Default dark theme colors - Pure Black VIP Theme */
+  --primary: #06b6d4;
+  --secondary: #10b981;
+  --accent: #3b82f6;
+  --background: #000000;
+  --surface: #0a0a0a;
+  --card: #0c0c0e;
+  --sidebar: #030303;
+  --navbar: #000000;
+  --header: #000000;
+  --footer: #000000;
+  --border: rgba(255, 255, 255, 0.05);
+  --text: #f8fafc;
+  --text-muted: #a1a1aa;
+  --icon: #06b6d4;
+  --link: #06b6d4;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
+  --info: #3b82f6;
+  --chart-1: #06b6d4;
+  --chart-2: #10b981;
+  --border-radius: 12px;
+}
+
+@theme {
+  --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-mono), ui-monospace, monospace;
+  --font-display: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+
+  /* Color token mapping in Tailwind CSS v4 */
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-card: var(--card);
+  --color-sidebar: var(--sidebar);
+  --color-navbar: var(--navbar);
+  --color-header: var(--header);
+  --color-footer: var(--footer);
+  --color-border: var(--border);
+  --color-text: var(--text);
+  --color-text-muted: var(--text-muted);
+  --color-icon: var(--icon);
+  --color-link: var(--link);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-error: var(--error);
+  --color-info: var(--info);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+}
+
+h1, h2, h3, .font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
