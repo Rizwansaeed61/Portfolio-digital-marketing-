@@ -161,7 +161,7 @@ export default function Header({ setShowPasskeyModal }: HeaderProps) {
 
   return (
     <>
-      {/* PERSISTENT HEADER WITH HIGH-TECH GLASSMORPHISM */}
+      {/* PERSISTENT HEADER WITH PREMIUM WIX LILAC/PLUM STYLE */}
       <header 
         id="main-header" 
         style={{
@@ -169,19 +169,15 @@ export default function Header({ setShowPasskeyModal }: HeaderProps) {
           transition: 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s, border-color 0.3s, padding 0.3s'
         }}
         className={cn(
-          "sticky top-0 z-40 w-full border-b",
-          effectiveThemeMode === 'light'
-            ? scrolled 
-              ? "bg-white/85 backdrop-blur-2xl border-black/10 shadow-[0_10px_40px_rgba(15,23,42,0.06)] py-3.5 text-slate-800" 
-              : "bg-white/60 backdrop-blur-md border-black/5 py-5.5 text-slate-800"
-            : scrolled 
-              ? "bg-black/85 backdrop-blur-2xl border-cyan-500/15 shadow-[0_10px_40px_rgba(0,0,0,0.6)] py-3.5 text-gray-100" 
-              : "bg-black/60 backdrop-blur-md border-white/[0.05] py-5.5 text-gray-100"
+          "sticky top-0 z-40 w-full border-b transition-all duration-300",
+          scrolled 
+            ? "bg-[#dfd3eb]/95 backdrop-blur-xl border-[#5c253d]/20 shadow-[0_4px_30px_rgba(92,37,61,0.08)] py-3 text-[#5c253d]" 
+            : "bg-[#e2d8ee]/90 backdrop-blur-md border-[#5c253d]/10 py-5 text-[#5c253d]"
         )}
       >
         {/* Dynamic sub-pixel scrolling progress bar */}
         <div 
-          className="absolute bottom-0 left-0 h-[2.5px] bg-gradient-to-r from-cyan-500 via-teal-400 to-emerald-400 transition-all duration-100 shadow-[0_0_8px_rgba(6,182,212,0.6)]" 
+          className="absolute bottom-0 left-0 h-[2px] bg-[#f27447] transition-all duration-100" 
           style={{ width: `${scrollProgress}%` }} 
         />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
@@ -197,8 +193,8 @@ export default function Header({ setShowPasskeyModal }: HeaderProps) {
               }} 
               className="flex items-center space-x-3 group"
             >
-              <div className="w-10 h-10 rounded-lg bg-gradient-to-tr from-cyan-500 to-emerald-400 p-[1px] flex items-center justify-center shadow-lg shadow-cyan-500/10 shrink-0 group-hover:scale-105 transition-transform duration-300 overflow-hidden">
-                <div className="w-full h-full bg-[#070a13] rounded-[7px] flex items-center justify-center overflow-hidden">
+              <div className="w-10 h-10 rounded-lg bg-[#5c253d] p-[1px] flex items-center justify-center shadow-md shrink-0 group-hover:scale-105 transition-transform duration-300 overflow-hidden">
+                <div className="w-full h-full bg-[#f6f3f8] rounded-[7px] flex items-center justify-center overflow-hidden">
                   {brandInfo.logoImageUrl ? (
                     <Image 
                       src={brandInfo.logoImageUrl} 
@@ -210,17 +206,17 @@ export default function Header({ setShowPasskeyModal }: HeaderProps) {
                       unoptimized
                     />
                   ) : (
-                    <span className="font-display font-black text-transparent bg-clip-text bg-gradient-to-tr from-cyan-400 to-emerald-400 text-lg">
+                    <span className="font-display font-black text-[#5c253d] text-lg">
                       {brandInfo.logoInitials || 'RS'}
                     </span>
                   )}
                 </div>
               </div>
               <div className="min-w-0">
-                <span className="font-display text-sm tracking-wider font-bold block text-white uppercase leading-none group-hover:text-cyan-400 transition-colors">
+                <span className="font-display text-sm tracking-wider font-bold block text-[#5c253d] uppercase leading-none group-hover:text-[#f27447] transition-colors">
                   {brandInfo.logoText || 'Rizwan Saeed'}
                 </span>
-                <span className="text-[9px] text-cyan-400/80 tracking-widest font-mono uppercase block mt-1.5 whitespace-nowrap">
+                <span className="text-[9px] text-[#f27447] tracking-widest font-mono uppercase block mt-1.5 font-bold whitespace-nowrap">
                   {brandInfo.logoTagline || 'Shopify & Growth PPC'}
                 </span>
               </div>
@@ -228,33 +224,33 @@ export default function Header({ setShowPasskeyModal }: HeaderProps) {
           </div>
 
           {/* DESKTOP NAVIGATION LINKS */}
-          <nav className="hidden lg:flex items-center space-x-6 xl:space-x-8 text-[11px] font-sans font-semibold uppercase tracking-wider text-gray-400">
+          <nav className="hidden lg:flex items-center space-x-6 xl:space-x-8 text-[11px] font-sans font-bold uppercase tracking-wider text-[#5c253d]/80">
             <a 
               href="#services-estimator" 
               onClick={() => setActiveMainPage('home')}
               className={cn(
-                "hover:text-cyan-400 transition-colors relative py-2 group",
-                activeMainPage === 'home' && "text-gray-300"
+                "hover:text-[#f27447] transition-colors relative py-2 group",
+                activeMainPage === 'home' && "text-[#5c253d] font-black"
               )}
             >
               Services
-              <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-cyan-400 to-emerald-400 group-hover:w-full transition-all duration-300" />
+              <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#f27447] group-hover:w-full transition-all duration-300" />
             </a>
             <a 
               href="#experience-timeline" 
               onClick={() => setActiveMainPage('home')}
-              className="hover:text-cyan-400 transition-colors relative py-2 group"
+              className="hover:text-[#f27447] transition-colors relative py-2 group"
             >
               Experience
-              <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-cyan-400 to-emerald-400 group-hover:w-full transition-all duration-300" />
+              <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#f27447] group-hover:w-full transition-all duration-300" />
             </a>
             <a 
               href="#portfolio-grid" 
               onClick={() => setActiveMainPage('home')}
-              className="hover:text-cyan-400 transition-colors relative py-2 group"
+              className="hover:text-[#f27447] transition-colors relative py-2 group"
             >
               Portfolio
-              <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-cyan-400 to-emerald-400 group-hover:w-full transition-all duration-300" />
+              <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#f27447] group-hover:w-full transition-all duration-300" />
             </a>
             <button 
               onClick={() => {
@@ -262,13 +258,13 @@ export default function Header({ setShowPasskeyModal }: HeaderProps) {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
               className={cn(
-                "hover:text-cyan-400 transition-colors relative py-2 group cursor-pointer font-sans font-semibold text-[11px] uppercase tracking-wider",
-                activeMainPage === 'blog' ? "text-cyan-400" : "text-gray-400"
+                "hover:text-[#f27447] transition-colors relative py-2 group cursor-pointer font-sans font-bold text-[11px] uppercase tracking-wider",
+                activeMainPage === 'blog' ? "text-[#f27447]" : "text-[#5c253d]/80"
               )}
             >
               Blog
               <span className={cn(
-                "absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-cyan-400 to-emerald-400 transition-all duration-300",
+                "absolute bottom-0 left-0 h-[2px] bg-[#f27447] transition-all duration-300",
                 activeMainPage === 'blog' ? "w-full" : "w-0 group-hover:w-full"
               )} />
             </button>
@@ -277,12 +273,10 @@ export default function Header({ setShowPasskeyModal }: HeaderProps) {
           {/* RIGHT SIDE ACTIONS */}
           <div className="flex items-center space-x-2 sm:space-x-3 shrink-0">
             
-
-
             {/* Book a Call CTA */}
             <button 
               onClick={() => setIsBookingOpen(true)} 
-              className="hidden md:flex items-center gap-1.5 px-4 py-2 bg-gradient-to-r from-cyan-500 to-emerald-500 hover:from-cyan-400 hover:to-emerald-400 text-black font-semibold font-sans text-xs uppercase tracking-wider rounded transition-all shadow-lg hover:shadow-cyan-500/20 active:scale-95 cursor-pointer shrink-0"
+              className="hidden md:flex items-center gap-1.5 px-4 py-2 bg-[#f27447] hover:bg-[#d65f33] text-white font-bold font-sans text-xs uppercase tracking-wider rounded-lg transition-all shadow-md active:scale-95 cursor-pointer shrink-0"
             >
               <Calendar className="w-3.5 h-3.5" />
               <span>Book a Call</span>
@@ -291,13 +285,13 @@ export default function Header({ setShowPasskeyModal }: HeaderProps) {
             {/* HAMBURGER MENUS */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden flex items-center justify-center p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/5 border border-white/5 active:scale-95 transition-all shrink-0"
+              className="lg:hidden flex items-center justify-center p-2 rounded-lg text-[#5c253d] hover:bg-[#5c253d]/5 border border-[#5c253d]/10 active:scale-95 transition-all shrink-0"
               aria-label="Toggle Navigation Menu"
             >
               {isMobileMenuOpen ? (
-                <X className="w-5 h-5 text-pink-400" />
+                <X className="w-5 h-5 text-[#f27447]" />
               ) : (
-                <Menu className="w-5 h-5 text-cyan-400" />
+                <Menu className="w-5 h-5 text-[#5c253d]" />
               )}
             </button>
           </div>
@@ -311,16 +305,16 @@ export default function Header({ setShowPasskeyModal }: HeaderProps) {
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3, ease: 'easeInOut' }}
-              className="lg:hidden border-t border-white/[0.06] bg-black/95 backdrop-blur-2xl px-4 py-6 space-y-4 shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
+              className="lg:hidden border-t border-[#5c253d]/15 bg-[#dfd3eb]/95 backdrop-blur-2xl px-4 py-6 space-y-4 shadow-lg text-[#5c253d]"
             >
-              <div className="grid grid-cols-2 gap-3 text-xs font-sans font-semibold uppercase tracking-wider text-gray-300">
+              <div className="grid grid-cols-2 gap-3 text-xs font-sans font-bold uppercase tracking-wider text-[#5c253d]">
                 <a 
                   href="#services-estimator" 
                   onClick={() => {
                     setActiveMainPage('home');
                     setIsMobileMenuOpen(false);
                   }}
-                  className="flex items-center justify-center p-3 rounded-lg bg-white/[0.02] hover:bg-cyan-500/10 hover:text-cyan-400 border border-white/[0.04] transition-all"
+                  className="flex items-center justify-center p-3 rounded-lg bg-white/40 hover:bg-[#f27447]/10 hover:text-[#f27447] border border-[#5c253d]/10 transition-all text-center"
                 >
                   Services
                 </a>
@@ -330,7 +324,7 @@ export default function Header({ setShowPasskeyModal }: HeaderProps) {
                     setActiveMainPage('home');
                     setIsMobileMenuOpen(false);
                   }}
-                  className="flex items-center justify-center p-3 rounded-lg bg-white/[0.02] hover:bg-cyan-500/10 hover:text-cyan-400 border border-white/[0.04] transition-all"
+                  className="flex items-center justify-center p-3 rounded-lg bg-white/40 hover:bg-[#f27447]/10 hover:text-[#f27447] border border-[#5c253d]/10 transition-all text-center"
                 >
                   Brands
                 </a>
@@ -340,7 +334,7 @@ export default function Header({ setShowPasskeyModal }: HeaderProps) {
                     setActiveMainPage('home');
                     setIsMobileMenuOpen(false);
                   }}
-                  className="flex items-center justify-center p-3 rounded-lg bg-white/[0.02] hover:bg-cyan-500/10 hover:text-cyan-400 border border-white/[0.04] transition-all"
+                  className="flex items-center justify-center p-3 rounded-lg bg-white/40 hover:bg-[#f27447]/10 hover:text-[#f27447] border border-[#5c253d]/10 transition-all text-center"
                 >
                   Experience
                 </a>
@@ -350,7 +344,7 @@ export default function Header({ setShowPasskeyModal }: HeaderProps) {
                     setActiveMainPage('home');
                     setIsMobileMenuOpen(false);
                   }}
-                  className="flex items-center justify-center p-3 rounded-lg bg-white/[0.02] hover:bg-cyan-500/10 hover:text-cyan-400 border border-white/[0.04] transition-all"
+                  className="flex items-center justify-center p-3 rounded-lg bg-white/40 hover:bg-[#f27447]/10 hover:text-[#f27447] border border-[#5c253d]/10 transition-all text-center"
                 >
                   Portfolio
                 </a>
@@ -361,10 +355,10 @@ export default function Header({ setShowPasskeyModal }: HeaderProps) {
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                   }}
                   className={cn(
-                    "flex items-center justify-center p-3 rounded-lg border transition-all col-span-2 gap-2 text-xs font-sans font-semibold uppercase tracking-wider cursor-pointer",
+                    "flex items-center justify-center p-3 rounded-lg border transition-all col-span-2 gap-2 text-xs font-sans font-bold uppercase tracking-wider cursor-pointer",
                     activeMainPage === 'blog'
-                      ? "bg-cyan-950/40 border-cyan-500/50 text-cyan-400"
-                      : "bg-white/[0.02] hover:bg-cyan-500/10 hover:text-cyan-400 border-white/[0.04]"
+                      ? "bg-white/60 border-[#f27447] text-[#f27447]"
+                      : "bg-white/40 hover:bg-[#f27447]/10 hover:text-[#f27447] border-[#5c253d]/10"
                   )}
                 >
                   📰 Read Blog Articles
@@ -375,9 +369,9 @@ export default function Header({ setShowPasskeyModal }: HeaderProps) {
                     setActiveMainPage('home');
                     setIsMobileMenuOpen(false);
                   }}
-                  className="flex items-center justify-center p-3 rounded-lg bg-white/[0.02] hover:bg-cyan-500/10 hover:text-cyan-400 border border-white/[0.04] transition-all col-span-2 gap-2"
+                  className="flex items-center justify-center p-3 rounded-lg bg-white/40 hover:bg-[#f27447]/10 hover:text-[#f27447] border border-[#5c253d]/10 transition-all col-span-2 gap-2"
                 >
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" /> Live Analytics Dashboard
+                  <span className="w-2 h-2 rounded-full bg-[#f27447]" /> Live Analytics Dashboard
                 </a>
                 <a 
                   href="#roi-calculator" 
@@ -385,22 +379,19 @@ export default function Header({ setShowPasskeyModal }: HeaderProps) {
                     setActiveMainPage('home');
                     setIsMobileMenuOpen(false);
                   }}
-                  className="flex items-center justify-center p-3 rounded-lg bg-white/[0.02] hover:bg-cyan-500/10 hover:text-cyan-400 border border-white/[0.04] transition-all col-span-2"
+                  className="flex items-center justify-center p-3 rounded-lg bg-white/40 hover:bg-[#f27447]/10 hover:text-[#f27447] border border-[#5c253d]/10 transition-all col-span-2"
                 >
                   ROI Growth Calculator
                 </a>
               </div>
 
-              <div className={cn(
-                "pt-3 border-t flex flex-col space-y-3",
-                effectiveThemeMode === 'light' ? "border-black/5" : "border-white/[0.06]"
-              )}>
+              <div className="pt-3 border-t border-[#5c253d]/10 flex flex-col space-y-3">
                 <button 
                   onClick={() => {
                     setIsMobileMenuOpen(false);
                     setIsBookingOpen(true);
                   }}
-                  className="w-full py-3 bg-gradient-to-r from-cyan-500 to-emerald-500 hover:from-cyan-400 hover:to-emerald-400 text-black font-bold font-sans text-xs uppercase tracking-wider rounded text-center transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer"
+                  className="w-full py-3 bg-[#f27447] hover:bg-[#d65f33] text-white font-bold font-sans text-xs uppercase tracking-wider rounded-lg text-center transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer"
                 >
                   <Calendar className="w-4 h-4" />
                   <span>Book a Consultation Call</span>
@@ -421,7 +412,7 @@ export default function Header({ setShowPasskeyModal }: HeaderProps) {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={closeBookingModal}
-              className="absolute inset-0 bg-black/80 backdrop-blur-md"
+              className="absolute inset-0 bg-[#5c253d]/40 backdrop-blur-md"
             />
 
             {/* Modal Body */}
@@ -430,25 +421,25 @@ export default function Header({ setShowPasskeyModal }: HeaderProps) {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ type: 'spring', damping: 25, stiffness: 350 }}
-              className="relative w-full max-w-lg bg-[#0c1221]/95 border border-white/[0.08] rounded-[24px] shadow-[0_10px_50px_rgba(6,182,212,0.15)] overflow-hidden z-10"
+              className="relative w-full max-w-lg bg-[#f6f3f8] border-2 border-[#5c253d] rounded-[24px] shadow-2xl overflow-hidden z-10 text-[#5c253d]"
             >
               {/* Outer top highlight line */}
-              <div className="absolute top-0 inset-x-0 h-[3px] bg-gradient-to-r from-cyan-500 via-teal-400 to-emerald-500" />
+              <div className="absolute top-0 inset-x-0 h-[3px] bg-[#f27447]" />
 
               {/* Header */}
-              <div className="p-6 border-b border-white/[0.06] flex items-center justify-between bg-white/[0.01]">
+              <div className="p-6 border-b border-[#5c253d]/10 flex items-center justify-between bg-white/40">
                 <div className="flex items-center gap-2.5">
-                  <div className="p-2 bg-cyan-500/10 border border-cyan-500/20 rounded-xl text-cyan-400">
+                  <div className="p-2 bg-[#f27447]/10 border border-[#f27447]/20 rounded-xl text-[#f27447]">
                     <Calendar className="w-5 h-5 animate-pulse" />
                   </div>
                   <div>
-                    <h3 className="text-sm font-bold font-sans uppercase tracking-wider text-white">Book Your Growth Audit Call</h3>
-                    <p className="text-[10px] font-mono text-cyan-400/80 uppercase">Securing 1-on-1 Strategy Session</p>
+                    <h3 className="text-sm font-bold font-sans uppercase tracking-wider text-[#5c253d]">Book Your Growth Audit Call</h3>
+                    <p className="text-[10px] font-mono text-[#f27447] uppercase font-bold">Securing 1-on-1 Strategy Session</p>
                   </div>
                 </div>
                 <button 
                   onClick={closeBookingModal}
-                  className="p-1.5 hover:bg-white/5 border border-white/5 rounded-lg text-gray-400 hover:text-white transition-all"
+                  className="p-1.5 hover:bg-[#5c253d]/5 border border-[#5c253d]/10 rounded-lg text-[#5c253d] transition-all"
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -461,7 +452,7 @@ export default function Header({ setShowPasskeyModal }: HeaderProps) {
                     
                     {/* Step 1: Choose Date */}
                     <div className="space-y-1.5">
-                      <span className="text-[10px] font-mono text-gray-500 uppercase block tracking-wider">1. Select Available Date</span>
+                      <span className="text-[10px] font-mono text-[#5c253d]/60 uppercase block tracking-wider font-bold">1. Select Available Date</span>
                       <div className="grid grid-cols-5 gap-2">
                         {bookingDates.map((date, idx) => (
                           <button
@@ -471,8 +462,8 @@ export default function Header({ setShowPasskeyModal }: HeaderProps) {
                             className={cn(
                               "p-2 rounded-xl border flex flex-col items-center justify-center text-center transition-all cursor-pointer",
                               selectedDateIdx === idx 
-                                ? "bg-cyan-950/40 border-cyan-500/50 text-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.15)]" 
-                                : "bg-[#070a13] border-white/[0.05] text-gray-400 hover:border-white/10 hover:text-white"
+                                ? "bg-[#5c253d] border-[#5c253d] text-[#f6f3f8] shadow-sm font-bold" 
+                                : "bg-white/60 border-[#5c253d]/10 text-[#5c253d]/80 hover:border-[#5c253d]/30 hover:text-[#5c253d]"
                             )}
                           >
                             <span className="text-[8px] uppercase font-mono">{date.dayName}</span>
@@ -485,7 +476,7 @@ export default function Header({ setShowPasskeyModal }: HeaderProps) {
 
                     {/* Step 2: Choose Time */}
                     <div className="space-y-1.5">
-                      <span className="text-[10px] font-mono text-gray-500 uppercase block tracking-wider">2. Select Time Slot</span>
+                      <span className="text-[10px] font-mono text-[#5c253d]/60 uppercase block tracking-wider font-bold">2. Select Time Slot</span>
                       <div className="flex flex-wrap gap-1.5">
                         {timeSlots.map((slot) => (
                           <button
@@ -495,8 +486,8 @@ export default function Header({ setShowPasskeyModal }: HeaderProps) {
                             className={cn(
                               "px-3 py-2 rounded-xl text-xs font-mono border transition-all cursor-pointer",
                               selectedTimeSlot === slot 
-                                ? "bg-emerald-950/40 border-emerald-500/50 text-emerald-300 font-bold shadow-[0_0_15px_rgba(16,185,129,0.15)]" 
-                                : "bg-[#070a13] border-white/[0.05] text-gray-400 hover:border-white/10 hover:text-white"
+                                ? "bg-[#f27447] border-[#f27447] text-white font-bold" 
+                                : "bg-white/60 border-[#5c253d]/10 text-[#5c253d]/80 hover:border-[#5c253d]/30 hover:text-[#5c253d]"
                             )}
                           >
                             {slot}
@@ -506,51 +497,51 @@ export default function Header({ setShowPasskeyModal }: HeaderProps) {
                     </div>
 
                     {/* Step 3: Contact Inputs */}
-                    <div className="space-y-3 pt-1 border-t border-white/[0.04]">
-                      <span className="text-[10px] font-mono text-gray-500 uppercase block tracking-wider">3. Provide Partnership Context</span>
+                    <div className="space-y-3 pt-1 border-t border-[#5c253d]/10">
+                      <span className="text-[10px] font-mono text-[#5c253d]/60 uppercase block tracking-wider font-bold">3. Provide Partnership Context</span>
                       
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div>
-                          <label className="text-[9px] font-mono text-gray-500 uppercase block mb-1">Your Full Name *</label>
+                          <label className="text-[9px] font-mono text-[#5c253d]/70 uppercase block mb-1 font-bold">Your Full Name *</label>
                           <input 
                             type="text"
                             required
                             value={bookName}
                             onChange={(e) => setBookName(e.target.value)}
                             placeholder="John Doe"
-                            className="w-full bg-[#070a13] border border-white/[0.08] rounded-xl px-3 py-2 text-xs font-sans text-white focus:outline-none focus:border-cyan-500/50"
+                            className="w-full bg-white border border-[#5c253d]/15 rounded-xl px-3 py-2 text-xs font-sans text-[#5c253d] focus:outline-none focus:border-[#5c253d]"
                           />
                         </div>
                         <div>
-                          <label className="text-[9px] font-mono text-gray-500 uppercase block mb-1">Your Business Email *</label>
+                          <label className="text-[9px] font-mono text-[#5c253d]/70 uppercase block mb-1 font-bold">Your Business Email *</label>
                           <input 
                             type="email"
                             required
                             value={bookEmail}
                             onChange={(e) => setBookEmail(e.target.value)}
                             placeholder="john@company.com"
-                            className="w-full bg-[#070a13] border border-white/[0.08] rounded-xl px-3 py-2 text-xs font-mono text-white focus:outline-none focus:border-cyan-500/50"
+                            className="w-full bg-white border border-[#5c253d]/15 rounded-xl px-3 py-2 text-xs font-mono text-[#5c253d] focus:outline-none focus:border-[#5c253d]"
                           />
                         </div>
                       </div>
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div>
-                          <label className="text-[9px] font-mono text-gray-500 uppercase block mb-1">Company Website URL</label>
+                          <label className="text-[9px] font-mono text-[#5c253d]/70 uppercase block mb-1 font-bold">Company Website URL</label>
                           <input 
                             type="text"
                             value={bookCompany}
                             onChange={(e) => setBookCompany(e.target.value)}
                             placeholder="e.g. yourbrandsite.com"
-                            className="w-full bg-[#070a13] border border-white/[0.08] rounded-xl px-3 py-2 text-xs font-mono text-white focus:outline-none focus:border-cyan-500/50"
+                            className="w-full bg-white border border-[#5c253d]/15 rounded-xl px-3 py-2 text-xs font-mono text-[#5c253d] focus:outline-none focus:border-[#5c253d]"
                           />
                         </div>
                         <div>
-                          <label className="text-[9px] font-mono text-gray-500 uppercase block mb-1">Primary Objective</label>
+                          <label className="text-[9px] font-mono text-[#5c253d]/70 uppercase block mb-1 font-bold">Primary Objective</label>
                           <select
                             value={bookService}
                             onChange={(e) => setBookService(e.target.value)}
-                            className="w-full bg-[#070a13] border border-white/[0.08] rounded-xl px-3 py-2 text-xs font-sans text-white focus:outline-none focus:border-cyan-500/50"
+                            className="w-full bg-white border border-[#5c253d]/15 rounded-xl px-3 py-2 text-xs font-sans text-[#5c253d] focus:outline-none focus:border-[#5c253d]"
                           >
                             <option value="Shopify Custom Growth Funnel">Shopify Custom Growth Funnel</option>
                             <option value="Google & Meta Ads High Scale ROI">Google & Meta Ads High Scale ROI</option>
@@ -565,11 +556,11 @@ export default function Header({ setShowPasskeyModal }: HeaderProps) {
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-full mt-4 py-3 bg-gradient-to-r from-cyan-500 to-emerald-500 hover:from-cyan-400 hover:to-emerald-400 text-black font-bold font-sans text-xs uppercase tracking-wider rounded-xl transition-all shadow-lg flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50"
+                      className="w-full mt-4 py-3 bg-[#f27447] hover:bg-[#d65f33] text-white font-bold font-sans text-xs uppercase tracking-wider rounded-xl transition-all shadow-md flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50"
                     >
                       {isSubmitting ? (
                         <>
-                          <span className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin" />
+                          <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
                           <span>Establishing Secure Connection...</span>
                         </>
                       ) : (
@@ -581,51 +572,51 @@ export default function Header({ setShowPasskeyModal }: HeaderProps) {
                     </button>
                   </form>
                 ) : (
-                  /* Success Hologram Screen */
+                  /* Success Screen */
                   <motion.div 
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="space-y-5 text-center py-2"
+                    className="space-y-5 text-center py-2 text-[#5c253d]"
                   >
-                    <div className="w-14 h-14 bg-emerald-500/10 border border-emerald-500/20 rounded-full flex items-center justify-center mx-auto text-emerald-400 shadow-[0_0_20px_rgba(16,185,129,0.2)]">
+                    <div className="w-14 h-14 bg-[#f27447]/10 border border-[#f27447]/20 rounded-full flex items-center justify-center mx-auto text-[#f27447] shadow-sm">
                       <CheckCircle2 className="w-8 h-8 animate-bounce" />
                     </div>
 
                     <div className="space-y-1">
-                      <h4 className="text-base font-bold font-sans text-white">GROWTH SESSION SECURED!</h4>
-                      <p className="text-xs text-gray-400 font-sans">Verification Code: <span className="font-mono text-cyan-400 font-bold">{bookingSuccess.id}</span></p>
+                      <h4 className="text-base font-bold font-sans text-[#5c253d] uppercase">Growth Session Secured!</h4>
+                      <p className="text-xs text-[#5c253d]/70 font-sans">Verification Code: <span className="font-mono text-[#f27447] font-bold">{bookingSuccess.id}</span></p>
                     </div>
 
                     {/* Meeting coordinates card */}
-                    <div className="bg-[#070a13]/80 border border-white/[0.05] rounded-2xl p-4 text-left space-y-3">
-                      <div className="flex items-center gap-2.5 border-b border-white/[0.03] pb-2.5">
-                        <MessageSquare className="w-4 h-4 text-emerald-400 shrink-0 animate-pulse" />
+                    <div className="bg-white border border-[#5c253d]/15 rounded-2xl p-4 text-left space-y-3 shadow-sm">
+                      <div className="flex items-center gap-2.5 border-b border-[#5c253d]/10 pb-2.5">
+                        <MessageSquare className="w-4 h-4 text-[#f27447] shrink-0 animate-pulse" />
                         <div>
-                          <span className="text-[8px] font-mono text-gray-500 uppercase block">WhatsApp Secure Hotlink</span>
+                          <span className="text-[8px] font-mono text-[#5c253d]/60 uppercase block font-bold">WhatsApp Secure Hotlink</span>
                           <a 
                             href={bookingSuccess.whatsAppLink || bookingSuccess.meetLink} 
                             target="_blank" 
                             rel="noopener noreferrer" 
-                            className="text-xs font-mono text-emerald-400 hover:underline flex items-center gap-1 font-bold"
+                            className="text-xs font-mono text-[#f27447] hover:underline flex items-center gap-1 font-bold"
                           >
                             <span>Direct WhatsApp with Rizwan</span>
-                            <ArrowUpRight className="w-3 h-3 text-emerald-500" />
+                            <ArrowUpRight className="w-3 h-3 text-[#f27447]" />
                           </a>
                         </div>
                       </div>
 
                       <div className="grid grid-cols-2 gap-3">
                         <div>
-                          <span className="text-[8px] font-mono text-gray-500 uppercase block">Scheduled Date</span>
-                          <span className="text-xs font-sans text-white font-semibold block leading-tight">{bookingSuccess.date}</span>
+                          <span className="text-[8px] font-mono text-[#5c253d]/60 uppercase block font-bold">Scheduled Date</span>
+                          <span className="text-xs font-sans text-[#5c253d] font-bold block leading-tight">{bookingSuccess.date}</span>
                         </div>
                         <div>
-                          <span className="text-[8px] font-mono text-gray-500 uppercase block">Time Coordinator</span>
-                          <span className="text-xs font-sans text-emerald-400 font-semibold block leading-tight">{bookingSuccess.time}</span>
+                          <span className="text-[8px] font-mono text-[#5c253d]/60 uppercase block font-bold">Time Coordinator</span>
+                          <span className="text-xs font-sans text-[#f27447] font-bold block leading-tight">{bookingSuccess.time}</span>
                         </div>
                       </div>
 
-                      <div className="pt-2 border-t border-white/[0.03] text-[10px] text-gray-500 font-sans leading-relaxed">
+                      <div className="pt-2 border-t border-[#5c253d]/10 text-[10px] text-[#5c253d]/70 font-sans leading-relaxed">
                         WhatsApp verification link compiled. Click the button below to directly launch a WhatsApp chat with Rizwan Saeed. Your scheduled Shopify & marketing channel audit is locked.
                       </div>
                     </div>
@@ -635,14 +626,14 @@ export default function Header({ setShowPasskeyModal }: HeaderProps) {
                         href={bookingSuccess.whatsAppLink || bookingSuccess.meetLink}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="w-1/2 py-2.5 bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 hover:bg-emerald-500 hover:text-black font-bold font-sans text-xs uppercase tracking-wider rounded-xl transition-all text-center flex items-center justify-center gap-1.5 shadow-[0_0_10px_rgba(16,185,129,0.1)] hover:shadow-[0_0_15px_rgba(16,185,129,0.3)]"
+                        className="w-1/2 py-2.5 bg-[#f27447] text-white hover:bg-[#d65f33] font-bold font-sans text-xs uppercase tracking-wider rounded-xl transition-all text-center flex items-center justify-center gap-1.5 shadow-sm"
                       >
                         <MessageSquare className="w-3.5 h-3.5" />
                         <span>Launch WhatsApp</span>
                       </a>
                       <button 
                         onClick={closeBookingModal}
-                        className="w-1/2 py-2.5 bg-[#141c2d] hover:bg-[#1a263d] border border-white/[0.05] text-gray-300 font-bold font-sans text-xs uppercase tracking-wider rounded-xl transition-all"
+                        className="w-1/2 py-2.5 bg-white hover:bg-[#5c253d]/5 border border-[#5c253d]/15 text-[#5c253d]/80 font-bold font-sans text-xs uppercase tracking-wider rounded-xl transition-all"
                       >
                         Dismiss Handshake
                       </button>

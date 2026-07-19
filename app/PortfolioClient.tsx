@@ -1252,10 +1252,6 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
   const [leadCloseRate, setLeadCloseRate] = useState<number>(15); // % for B2B
   const [leadValue, setLeadValue] = useState<number>(1200); // AED for B2B
 
-  // Activity Ticker Event Index
-  const [currentTickerIdx, setCurrentTickerIdx] = useState(0);
-  const [tickerAnimate, setTickerAnimate] = useState(true);
-
   // FAQ Active State
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
 
@@ -1295,7 +1291,7 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
   const [themePreset, setThemePreset] = useState<'cyber' | 'emerald' | 'sunset' | 'ice'>('cyber');
 
   // App Initial Loading Screen Vibe
-  const [appLoading, setAppLoading] = useState(true);
+  const [appLoading, setAppLoading] = useState(false);
 
   // Command Palette (⌘K) States
   const [isCmdPaletteOpen, setIsCmdPaletteOpen] = useState(false);
@@ -1333,7 +1329,7 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
 
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [cursorHovered, setCursorHovered] = useState(false);
-  const [customCursorEnabled, setCustomCursorEnabled] = useState<boolean>(true);
+  const [customCursorEnabled, setCustomCursorEnabled] = useState<boolean>(false);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -1573,17 +1569,6 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
   };
 
   // --- Effects ---
-  // Cycle simulated real-time activity feed every 5 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTickerAnimate(false);
-      setTimeout(() => {
-        setCurrentTickerIdx((prev) => (prev + 1) % SIMULATED_TICKER_EVENTS.length);
-        setTickerAnimate(true);
-      }, 300);
-    }, 5500);
-    return () => clearInterval(interval);
-  }, []);
 
   // --- Computed Analytics for GA4 Mock Realtime values ---
   const ga4RealtimeState = useMemo(() => {
@@ -1778,11 +1763,7 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
   return (
     <div 
       id="portfolio-container" 
-      className={cn(
-        "min-h-screen flex flex-col transition-colors duration-300",
-        activePreset.selection,
-        effectiveThemeMode === 'light' ? "light-mode bg-[#f8fafc] text-slate-800" : "bg-[#000000] text-gray-100"
-      )}
+      className="min-h-screen flex flex-col bg-[#f6f3f8] text-[#5c253d] font-sans selection:bg-[#f27447]/30 selection:text-[#5c253d]"
     >
       {/* CUSTOM CURSOR SYSTEM */}
       {customCursorEnabled && (
@@ -1976,19 +1957,14 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
         )}
       </AnimatePresence>
       
-      {/* HIGH-TECH CYBERNETIC GRIDS AND RADIAL GLOW BLURS (Inspired by Hala Technology UAE) */}
+      {/* PREMIUM HANDCRAFTED DESIGN AGENCY GRIDS AND SOFT AMBIENT LIGHTS */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
-        {/* Fine grid lines */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.015)_1px,transparent_1px)] [background-size:40px_40px] opacity-60" />
-        {/* Subtle dot matrix */}
-        <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.02)_1px,transparent_1px)] [background-size:20px_20px] opacity-70" />
-        
-        {/* Glowing floating ambient light blobs */}
-        <div className={cn("absolute top-0 left-1/4 w-[600px] h-[600px] rounded-full filter blur-[120px] pointer-events-none opacity-45 transition-all duration-1000", activePreset.glowBg)} />
-        <div className="absolute top-[15%] right-[10%] w-[500px] h-[500px] bg-indigo-500/5 rounded-full filter blur-[140px] pointer-events-none" />
-        <div className="absolute top-[40%] left-[5%] w-[650px] h-[650px] bg-purple-500/5 rounded-full filter blur-[150px] pointer-events-none" />
-        <div className={cn("absolute bottom-[10%] right-[15%] w-[600px] h-[600px] rounded-full filter blur-[130px] pointer-events-none opacity-30 transition-all duration-1000", activePreset.glowBg)} />
-        <div className="absolute bottom-[20%] left-[20%] w-[550px] h-[550px] bg-emerald-500/5 rounded-full filter blur-[140px] pointer-events-none" />
+        {/* Designer Lavender Grid Lines */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#e1d6e9_1px,transparent_1px),linear-gradient(to_bottom,#e1d6e9_1px,transparent_1px)] bg-[size:40px_40px] opacity-80" />
+        {/* Soft elegant warm ambient glow spots */}
+        <div className="absolute top-[10%] left-[20%] w-[500px] h-[500px] bg-[#dfd3eb]/30 rounded-full filter blur-[100px] pointer-events-none" />
+        <div className="absolute top-[40%] right-[15%] w-[600px] h-[600px] bg-[#f27447]/5 rounded-full filter blur-[120px] pointer-events-none" />
+        <div className="absolute bottom-[20%] left-[10%] w-[550px] h-[550px] bg-[#dfd3eb]/40 rounded-full filter blur-[110px] pointer-events-none" />
       </div>
 
       {/* TOP HEADER & NAVIGATION */}
@@ -1999,80 +1975,45 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
           <BlogPageView posts={liveBlogPosts} />
         ) : (
           <>
-        
-        {/* HERO SECTION */}
+               {/* HERO SECTION */}
         <motion.section 
           id="hero-section" 
-          className="relative pt-8 pb-4 rounded-3xl overflow-hidden group/hero"
+          className="relative pt-12 pb-4 rounded-3xl overflow-hidden group/hero text-[#5c253d]"
           initial="hidden"
           animate="visible"
           variants={fadeInUpVariants}
-          onMouseMove={(e) => {
-            const rect = e.currentTarget.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            e.currentTarget.style.setProperty("--x", `${x}px`);
-            e.currentTarget.style.setProperty("--y", `${y}px`);
-          }}
         >
-          {/* Spotlight cursor glow backdrop */}
-          <div 
-            className="absolute inset-0 opacity-0 group-hover/hero:opacity-100 transition-opacity duration-500 pointer-events-none"
-            style={{
-              background: `radial-gradient(600px circle at var(--x, 0px) var(--y, 0px), rgba(6, 182, 212, 0.08), transparent 80%)`
-            }}
-          />
+          {/* Headline Display */}
+          <div className="space-y-4 text-center max-w-4xl mx-auto mb-12">
+            <span className="font-mono text-xs uppercase tracking-widest block font-bold text-[#f27447]">
+              RIZWAN SAEED — GROWTH LEAD & SHOPIFY ARCHITECT
+            </span>
+            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-none text-[#5c253d] font-display uppercase">
+              Scale Your Brand&apos;s <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#5c253d] via-[#f27447] to-[#5c253d] font-display">
+                Digital Footprint
+              </span>
+            </h1>
+            <p className="text-[#5c253d]/80 text-sm sm:text-base font-sans max-w-2xl mx-auto leading-relaxed">
+              Award-winning certified Google Ads & Meta Business Partner, managing over <strong className="text-[#f27447]">AED 350K+</strong> ad spend and generating <strong className="text-[#f27447]">AED 1.2M+</strong> revenue.
+            </p>
+          </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch relative z-10 mb-12">
             
-            {/* Left side: Premium Introduction Content */}
-            <div className="lg:col-span-7 space-y-7">
-              <div className="inline-flex flex-wrap gap-2 items-center">
-                <div className="inline-flex items-center space-x-2 bg-cyan-950/40 border border-cyan-800/60 px-3.5 py-1.5 rounded-full text-[11px] font-mono uppercase text-cyan-300 tracking-wider">
-                  <Sparkles className="w-3.5 h-3.5 text-cyan-400 animate-spin-slow" />
-                  <span>Certified Shopify Developer & Growth Specialist</span>
-                </div>
-              </div>
-              
+            {/* Left Column: The Digital Edge Info Card */}
+            <div className="lg:col-span-4 flex flex-col justify-between p-6 sm:p-8 bg-white border-2 border-[#5c253d] rounded-2xl shadow-[4px_4px_0px_#5c253d] text-left">
               <div className="space-y-4">
-                <span className="font-mono text-xs text-emerald-400 uppercase tracking-widest block font-black">INTRODUCING RIZWAN SAEED</span>
-                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-none text-white font-sans uppercase">
-                  Scale Your Business <br />
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-teal-400 to-emerald-400 font-sans">
-                    With AI + Marketing
-                  </span> <br />
-                  <span className="text-white text-2xl sm:text-3xl lg:text-4xl tracking-normal normal-case font-light block mt-3 text-gray-300 font-sans leading-tight">
-                    {hero.headline} {hero.headlineAccent}
-                  </span>
-                </h1>
-              </div>
-
-              {/* Expert colored tag pills */}
-              <div className="flex flex-wrap gap-2 pt-1">
-                {[
-                  { label: "Google Ads Certified", color: "bg-amber-400/10 border-amber-500/30 text-amber-400" },
-                  { label: "Meta Business Partner", color: "bg-sky-400/10 border-sky-500/30 text-sky-400" },
-                  { label: "Shopify Theme Dev", color: "bg-emerald-400/10 border-emerald-500/30 text-emerald-400" },
-                  { label: "Technical SEO Expert", color: "bg-cyan-400/10 border-cyan-500/30 text-cyan-400" },
-                  { label: "AI Automation Lead", color: "bg-purple-400/10 border-purple-500/30 text-purple-400" }
-                ].map((pill, idx) => (
-                  <span key={idx} className={cn("px-2.5 py-1 text-[10px] font-mono font-bold uppercase tracking-wider rounded-lg border", pill.color)}>
-                    {pill.label}
-                  </span>
-                ))}
-              </div>
-
-              {/* Dynamic Region Welcome selector */}
-              <div className="space-y-2.5 pt-1">
-                <span className="text-[9px] font-mono text-gray-500 uppercase tracking-widest block font-black">CHOOSE YOUR MARKET TO CALIBRATE EXPERTISE:</span>
-                <div className="flex flex-wrap gap-1.5">
+                <span className="text-[10px] font-mono text-[#f27447] uppercase font-black block tracking-wider">THE DIGITAL EDGE</span>
+                <h3 className="text-xl sm:text-2xl font-black uppercase text-[#5c253d] tracking-tight">Market Context</h3>
+                
+                {/* Region Selector */}
+                <div className="flex flex-wrap gap-1">
                   {[
                     { key: 'uae', label: 'UAE 🇦🇪' },
                     { key: 'usa', label: 'USA 🇺🇸' },
                     { key: 'uk', label: 'UK 🇬🇧' },
-                    { key: 'canada', label: 'CANADA 🇨🇦' },
-                    { key: 'australia', label: 'AUSTRALIA 🇦🇺' },
-                    { key: 'global', label: 'GLOBAL 🌐' }
+                    { key: 'global', label: 'Global 🌐' }
                   ].map((region) => (
                     <button
                       key={region.key}
@@ -2081,152 +2022,146 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                         showToast(`Hero metrics & positioning focused on ${region.key.toUpperCase()}!`, "success");
                       }}
                       className={cn(
-                        "px-2.5 py-1.5 text-[10px] font-mono font-bold uppercase tracking-wider rounded-xl border transition-all cursor-pointer",
+                        "px-2 py-1 text-[9px] font-mono font-bold uppercase rounded-lg border transition-all cursor-pointer",
                         regionalFocus === region.key
-                          ? "bg-cyan-500/10 border-cyan-500/40 text-cyan-400 shadow-[0_0_15px_rgba(34,211,238,0.1)]"
-                          : "bg-white/[0.01] border-white/[0.04] text-gray-400 hover:text-white hover:border-white/10"
+                          ? "bg-[#5c253d] border-[#5c253d] text-white"
+                          : "bg-transparent border-[#5c253d]/15 text-[#5c253d]/80 hover:bg-[#5c253d]/5"
                       )}
                     >
                       {region.label}
                     </button>
                   ))}
                 </div>
-              </div>
-              
-              <p className="text-gray-300 text-sm sm:text-base leading-relaxed max-w-2xl font-sans min-h-[60px] flex items-center">
-                {regionalFocus === 'uae' && "Helping UAE & Dubai Brands scale to millions with custom high-speed Shopify storefronts & hyper-targeted enterprise Google and Meta PPC campaigns."}
-                {regionalFocus === 'usa' && "Helping US Shopify e-commerce brands maximize Google Ads ROAS with technical CRO audits, high-performance Liquid templates, and custom APIs."}
-                {regionalFocus === 'uk' && "Powering UK digital businesses with secure Shopify setups, deep SEO audits, custom theme development, and high-converting marketing funnels."}
-                {regionalFocus === 'canada' && "Driving qualified commercial pipelines and scale for Canadian enterprises using ROI-first digital marketing frameworks and analytics pipelines."}
-                {regionalFocus === 'australia' && "Scaling Australian brands through high-performance Shopify Liquid development, custom integrations, and expert conversion rate optimization."}
-                {regionalFocus === 'global' && "Architecting world-class, multi-currency Shopify storefronts, global headless systems, and scalable paid acquisition frameworks for international firms."}
-              </p>
 
-              {/* Dual Action CTAs */}
-              <div className="flex flex-wrap gap-4 pt-2">
-                <button 
-                  onClick={() => setIsContactModalOpen(true)} 
-                  className="px-6 py-4 bg-gradient-to-r from-cyan-500 via-teal-500 to-emerald-500 hover:from-cyan-400 hover:to-emerald-400 text-black font-semibold font-mono text-xs uppercase tracking-widest rounded-xl transition-all flex items-center space-x-2.5 shadow-lg shadow-cyan-500/10 hover:shadow-cyan-500/20 active:scale-95 cursor-pointer border border-cyan-400/20"
-                >
-                  <Calendar className="w-4 h-4 text-black animate-pulse" />
-                  <span>Book Free Strategy Call</span>
-                </button>
-                <a 
-                  href="#portfolio-grid" 
-                  className="px-6 py-4 bg-transparent border border-gray-800 hover:border-cyan-500/50 hover:bg-cyan-950/10 text-gray-300 hover:text-white font-mono text-xs uppercase tracking-widest rounded-xl transition-all flex items-center space-x-2.5 active:scale-95 cursor-pointer"
-                >
-                  <Briefcase className="w-4 h-4 text-cyan-400" />
-                  <span>Explore Case Studies</span>
-                </a>
+                <p className="text-[#5c253d]/80 text-xs sm:text-sm leading-relaxed min-h-[100px] pt-2">
+                  {regionalFocus === 'uae' && "Helping UAE & Dubai Brands scale to millions with custom high-speed Shopify storefronts & hyper-targeted enterprise Google and Meta PPC campaigns."}
+                  {regionalFocus === 'usa' && "Helping US Shopify e-commerce brands maximize Google Ads ROAS with technical CRO audits, high-performance Liquid templates, and custom APIs."}
+                  {regionalFocus === 'uk' && "Powering UK digital businesses with secure Shopify setups, deep SEO audits, custom theme development, and high-converting marketing funnels."}
+                  {regionalFocus === 'canada' && "Driving Canada pipeline scale using ROI-first digital marketing frameworks and analytics pipelines."}
+                  {regionalFocus === 'australia' && "Scaling Australian brands through high-performance Shopify Liquid development, custom integrations, and expert conversion optimization."}
+                  {regionalFocus === 'global' && "Architecting world-class, multi-currency Shopify storefronts, global headless systems, and scalable paid acquisition frameworks for international firms."}
+                </p>
               </div>
 
-              {/* Verified Trust indicators */}
-              <div className="flex flex-wrap items-center gap-6 pt-5 text-left border-t border-white/[0.04] max-w-xl">
-                <div className="flex items-center space-x-1">
+              <div className="pt-4 border-t border-[#5c253d]/10 flex items-center justify-between">
+                <span className="text-[10px] font-mono text-[#5c253d]/60 font-bold uppercase">5.0 RATED EXPERTISE</span>
+                <div className="flex items-center gap-0.5">
                   {[1, 2, 3, 4, 5].map((s) => (
-                    <Star key={s} className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
+                    <Star key={s} className="w-3 h-3 text-[#f27447] fill-[#f27447]" />
                   ))}
-                  <span className="text-xs font-bold text-white ml-1.5 font-mono">5.0 Star Rated</span>
-                </div>
-                <div className="h-4 w-[1px] bg-white/10 hidden sm:block" />
-                <div className="text-xs font-mono text-gray-400">
-                  <strong className="text-cyan-400 font-bold">150+</strong> Projects Complete
-                </div>
-                <div className="h-4 w-[1px] bg-white/10 hidden sm:block" />
-                <div className="text-xs font-mono text-gray-400">
-                  <strong className="text-emerald-400 font-bold">20+</strong> Brands Managed
                 </div>
               </div>
-
             </div>
 
-            {/* Right side: High-fidelity Visual Profile & Stats Container with FLOAT ANIMATION */}
-            <motion.div 
-              className="lg:col-span-5 relative"
-              animate={{ y: [0, -15, 0] }}
-              transition={{ duration: 6, ease: "easeInOut", repeat: Infinity }}
-            >
-              <div className="relative p-1 bg-gradient-to-br from-cyan-500/20 via-transparent to-emerald-500/20 rounded-2xl">
-                <div className="bg-[#060608] border border-gray-800/80 rounded-xl p-5 sm:p-6 space-y-5 shadow-2xl relative overflow-hidden">
-                  
-                  {/* Glowing background decor */}
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/5 rounded-full filter blur-xl pointer-events-none" />
-                  <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-emerald-500/5 rounded-full filter blur-xl pointer-events-none" />
-                  
-                  {/* Photo Frame Container with Cyber Overlay */}
-                  <div className="relative rounded-lg overflow-hidden border border-gray-800 bg-black/40 group aspect-[4/3] sm:aspect-[16/10] md:aspect-[4/3] lg:aspect-[1.3/1]">
-                    <Image
-                      src={hero.profileImage || "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=800&auto=format&fit=crop"}
-                      alt="Rizwan Saeed - Senior Shopify Developer & Digital Marketing Manager"
-                      fill
-                      unoptimized
-                      className="object-cover object-top grayscale-[20%] group-hover:scale-105 group-hover:grayscale-0 transition-all duration-700"
-                      referrerPolicy="no-referrer"
-                    />
-                    
-                    {/* Glowing corner brackets and cyberpunk overlays */}
-                    <div className="absolute top-3 left-3 px-2 py-0.5 bg-black/75 backdrop-blur-sm border border-cyan-500/30 rounded text-[9px] font-mono text-cyan-300 flex items-center space-x-1.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                      <span className="font-bold">STATUS: ACTIVE_FOR_CONTRACTS</span>
-                    </div>
-
-                    <div className="absolute bottom-3 left-3 right-3 p-2 bg-black/80 backdrop-blur-md border border-gray-800 rounded-lg flex items-center justify-between">
-                      <div className="flex flex-col">
-                        <span className="text-[10px] font-bold text-white tracking-tight uppercase">Rizwan Saeed</span>
-                        <span className="text-[8px] font-mono text-gray-400 uppercase">Growth Lead & Shopify Engineer</span>
-                      </div>
-                      <div className="flex items-center space-x-1 bg-gray-950 px-2 py-1 rounded border border-gray-800">
-                        <MapPin className="w-3.5 h-3.5 text-emerald-400" />
-                        <span className="text-[8px] font-mono text-gray-300">DUBAI, UAE</span>
-                      </div>
-                    </div>
-
-                    {/* Holographic scanner line animation */}
-                    <div className="absolute inset-x-0 h-[1.5px] bg-gradient-to-r from-transparent via-cyan-400/50 to-transparent top-0 animate-pulse pointer-events-none" />
+            {/* Middle Column: Premium 3D-styled Framed Profile Image */}
+            <div className="lg:col-span-4 relative flex items-center justify-center">
+              <div className="relative w-full h-full min-h-[300px] lg:min-h-0 bg-white border-2 border-[#5c253d] rounded-2xl shadow-[4px_4px_0px_#5c253d] p-3 flex flex-col justify-between overflow-hidden">
+                <div className="relative w-full h-48 sm:h-64 lg:h-52 rounded-xl overflow-hidden border border-[#5c253d]/15 bg-[#f6f3f8]">
+                  <Image
+                    src={hero.profileImage || "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=800&auto=format&fit=crop"}
+                    alt="Rizwan Saeed - Senior Shopify Developer & Digital Marketing Manager"
+                    fill
+                    unoptimized
+                    className="object-cover object-top grayscale-[15%] hover:scale-105 hover:grayscale-0 transition-all duration-700"
+                    referrerPolicy="no-referrer"
+                  />
+                  <div className="absolute top-2 left-2 px-2 py-0.5 bg-white/90 backdrop-blur-sm border border-[#5c253d]/20 rounded text-[8px] font-mono text-[#5c253d] font-bold">
+                    ONLINE • CONTRACTS ACTIVE
                   </div>
+                </div>
 
-                  {/* Compact Stats Sub-grid with dynamic CountUp */}
-                  <div className="space-y-3 pt-1">
-                    <div className="flex items-center justify-between">
-                      <span className="font-mono text-[10px] text-gray-400 tracking-wider uppercase font-bold">VERIFIED ENGAGEMENT METRICS</span>
-                      <span className="text-[9px] font-mono text-emerald-400 animate-pulse">SECURE CONNECTED</span>
+                <div className="pt-3 text-left">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <span className="text-xs font-bold text-[#5c253d] block leading-tight uppercase font-display">Rizwan Saeed</span>
+                      <span className="text-[9px] font-mono text-[#5c253d]/70 uppercase font-semibold">Growth Lead & Shopify Engineer</span>
                     </div>
-                    
-                    <div className="grid grid-cols-2 gap-3">
-                      {STATS_METRICS.slice(0, 4).map((stat: any) => (
-                        <div 
-                          key={stat.id}
-                          className={cn(
-                            "p-2.5 rounded-xl border transition-all hover:bg-gray-900/40",
-                            stat.highlight 
-                              ? "bg-cyan-950/20 border-cyan-500/20 shadow-sm shadow-cyan-500/5" 
-                              : "bg-gray-950/20 border-gray-900/50"
-                          )}
-                        >
-                          <span className="text-[9px] font-mono text-gray-400 uppercase tracking-wider block">{stat.label}</span>
-                          <span className={cn(
-                            "font-mono font-bold text-sm sm:text-base block mt-0.5",
-                            stat.highlight ? "text-cyan-400" : "text-white"
-                          )}>
-                            <CountUp value={stat.value} />
-                          </span>
-                          <p className="text-[9px] text-gray-500 leading-tight mt-0.5">{stat.desc}</p>
-                        </div>
-                      ))}
+                    <div className="flex items-center space-x-1 bg-[#dfd3eb]/50 px-2 py-1 rounded-lg border border-[#5c253d]/10">
+                      <MapPin className="w-3 h-3 text-[#f27447]" />
+                      <span className="text-[8px] font-mono text-[#5c253d] font-bold">DUBAI, UAE</span>
                     </div>
                   </div>
-
                 </div>
               </div>
-            </motion.div>
+            </div>
 
+            {/* Right Column: CTA Blocks / Highlight Action Cards */}
+            <div className="lg:col-span-4 flex flex-col gap-4 justify-between">
+              {/* Coral Strategy Card */}
+              <button 
+                onClick={() => setIsContactModalOpen(true)}
+                className="flex-1 flex flex-col justify-between p-6 bg-[#f27447] text-white border-2 border-[#5c253d] rounded-2xl shadow-[4px_4px_0px_#5c253d] text-left hover:bg-[#d65f33] transition-all cursor-pointer group"
+              >
+                <div className="space-y-2">
+                  <div className="p-2 bg-white/20 rounded-xl w-max border border-white/20">
+                    <Calendar className="w-5 h-5 text-white animate-pulse" />
+                  </div>
+                  <h4 className="text-lg font-black uppercase tracking-tight font-display mt-2">Book Free Growth Session</h4>
+                  <p className="text-white/80 text-xs">Unlock a 1-on-1 strategy call. We audit your checkout, page speed, and active ads campaigns with no obligation.</p>
+                </div>
+                <div className="flex items-center gap-1.5 font-mono text-xs uppercase font-bold pt-4">
+                  <span>Secure slot now</span>
+                  <span className="transform group-hover:translate-x-1 transition-transform">↘</span>
+                </div>
+              </button>
+
+              {/* Exploration White Card */}
+              <a 
+                href="#portfolio-grid"
+                className="p-5 bg-white border-2 border-[#5c253d] rounded-2xl shadow-[4px_4px_0px_#5c253d] text-left hover:bg-[#5c253d]/5 transition-all flex items-center justify-between group"
+              >
+                <div>
+                  <h4 className="text-sm font-bold uppercase tracking-tight text-[#5c253d] font-display">Explore Live Case Studies</h4>
+                  <p className="text-[#5c253d]/70 text-[11px] mt-0.5">Real audits, 4.2x ROAS pipelines, Shopify clean codebases.</p>
+                </div>
+                <div className="p-2 bg-[#dfd3eb] rounded-xl text-[#5c253d] border border-[#5c253d]/10 transform group-hover:translate-x-1 transition-all">
+                  <Briefcase className="w-4 h-4" />
+                </div>
+              </a>
+            </div>
+          </div>
+
+          {/* STATS BAR (Deep plum with clean columns) */}
+          <div className="border-2 border-[#5c253d] bg-[#5c253d] rounded-2xl p-6 text-white grid grid-cols-2 md:grid-cols-4 gap-6 mb-6">
+            {STATS_METRICS.slice(0, 4).map((stat: any, idx: number) => (
+              <div 
+                key={stat.id}
+                className={cn(
+                  "text-center space-y-1 relative",
+                  idx > 0 ? "md:before:absolute md:before:left-0 md:before:top-2 md:before:bottom-2 md:before:w-[1px] md:before:bg-white/10" : ""
+                )}
+              >
+                <span className="text-[9px] font-mono text-white/60 uppercase tracking-widest block font-bold">
+                  {stat.label}
+                </span>
+                <span className="text-2xl sm:text-3xl font-black block font-display tracking-tight text-[#f27447]">
+                  <CountUp value={stat.value} />
+                </span>
+                <p className="text-[10px] text-white/70 max-w-[160px] mx-auto leading-tight">{stat.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* SMOOTH RUNNING TICKER */}
+          <div className="w-full bg-[#dfd3eb] border-2 border-[#5c253d] rounded-xl py-3.5 overflow-hidden relative">
+            <div className="animate-marquee whitespace-nowrap flex items-center gap-16 text-xs font-mono font-bold uppercase tracking-widest text-[#5c253d]">
+              <span>RIZWAN SAEED ⚡ DUBAI GROWTH SPECIALIST</span>
+              <span>SHOPIFY CUSTOM THEME DEV ⚡ META BUSINESS PARTNER</span>
+              <span>GOOGLE ADS CERTIFIED ⚡ CONVERSION OPTIMIZATION AUDIT</span>
+              <span>RIZWAN SAEED ⚡ DUBAI GROWTH SPECIALIST</span>
+              <span>SHOPIFY CUSTOM THEME DEV ⚡ META BUSINESS PARTNER</span>
+              <span>GOOGLE ADS CERTIFIED ⚡ CONVERSION OPTIMIZATION AUDIT</span>
+              <span>RIZWAN SAEED ⚡ DUBAI GROWTH SPECIALIST</span>
+              <span>SHOPIFY CUSTOM THEME DEV ⚡ META BUSINESS PARTNER</span>
+              <span>GOOGLE ADS CERTIFIED ⚡ CONVERSION OPTIMIZATION AUDIT</span>
+            </div>
           </div>
         </motion.section>
 
         {/* EXECUTIVE BIOGRAPHY SECTION */}
         <motion.section 
           id="executive-biography" 
-          className="border-t border-gray-800/60 pt-16"
+          className="border-t border-[#5c253d]/15 pt-16 text-[#5c253d]"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
@@ -2236,22 +2171,22 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
             
             <div className="lg:col-span-4">
               <div className="sticky top-28 space-y-3">
-                <div className="font-mono text-[11px] uppercase tracking-widest text-emerald-400">01 / BRAND LEADER</div>
-                <h2 className="text-3xl font-black tracking-tight text-white uppercase">Executive Biography</h2>
-                <div className="h-1 w-20 bg-gradient-to-r from-emerald-500 to-cyan-500 rounded" />
-                <p className="text-gray-500 text-xs font-mono pt-4">Targeting UAE, US, & UK E-commerce & Hospitality Landscapes</p>
+                <div className="font-mono text-[11px] uppercase tracking-widest text-[#f27447] font-bold">01 / BRAND LEADER</div>
+                <h2 className="text-3xl font-black tracking-tight text-[#5c253d] uppercase font-display">Executive Biography</h2>
+                <div className="h-1 w-20 bg-[#5c253d] rounded" />
+                <p className="text-[#5c253d]/70 text-xs font-mono pt-4">Targeting UAE, US, & UK E-commerce & Hospitality Landscapes</p>
               </div>
             </div>
 
             <div className="lg:col-span-8 space-y-6">
-              <p className="text-gray-300 text-base sm:text-lg leading-relaxed font-light">
+              <p className="text-[#5c253d]/80 text-base sm:text-lg leading-relaxed font-light">
                 With over 5 years of experience in the digital landscape, I have successfully scaled businesses across the USA, UK, UAE, and Pakistan markets. My expertise lies in a holistic approach combining Shopify Development, Technical SEO, and high-converting Paid Advertising campaigns on Google and Meta platforms.
               </p>
 
-              <div className="p-6 rounded-xl bg-gray-900/20 border border-gray-800/80 backdrop-blur-sm space-y-6">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-gray-900">
-                  <h4 className="text-xs font-mono uppercase tracking-widest text-gray-400">Core Strengths & Platform Integrations</h4>
-                  <span className="text-[10px] font-mono text-cyan-400/80 bg-cyan-950/40 px-2 py-0.5 rounded border border-cyan-900/30">
+              <div className="p-6 rounded-2xl bg-white border-2 border-[#5c253d] shadow-[4px_4px_0px_#5c253d] space-y-6">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#5c253d]/10">
+                  <h4 className="text-xs font-mono uppercase tracking-widest text-[#5c253d]/80 font-bold">Core Strengths & Platform Integrations</h4>
+                  <span className="text-[10px] font-mono text-[#f27447] bg-[#f27447]/5 px-2.5 py-0.5 rounded border border-[#f27447]/20 font-bold">
                     Click / Hover tags to inspect outcomes
                   </span>
                 </div>
@@ -2267,15 +2202,15 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                         onClick={() => setActiveBioTag(tag.label)}
                         onMouseEnter={() => setActiveBioTag(tag.label)}
                         className={cn(
-                          "inline-flex items-center space-x-2 px-3 py-2 rounded-lg text-xs font-mono transition-all duration-300 transform cursor-pointer border text-left",
+                          "inline-flex items-center space-x-2 px-3.5 py-2 rounded-xl text-xs font-mono transition-all duration-300 transform cursor-pointer border text-left",
                           isActive 
-                            ? `${details.bgColor} ${details.borderColor} ${details.colorClass} ${details.glowColor} scale-[1.03] border-opacity-100` 
-                            : "bg-gray-950/40 border-gray-900 text-gray-400 hover:border-gray-800 hover:text-gray-200 hover:bg-gray-900/30"
+                            ? `bg-[#5c253d] border-[#5c253d] text-white scale-[1.03] border-opacity-100` 
+                            : "bg-[#dfd3eb]/10 border-[#5c253d]/15 text-[#5c253d] hover:border-[#5c253d]/40 hover:text-[#5c253d] hover:bg-[#dfd3eb]/20"
                         )}
                         style={{ outline: 'none' }}
                       >
                         {getTagLogo(tag.label)}
-                        <span>{tag.label}</span>
+                        <span className="font-bold">{tag.label}</span>
                       </button>
                     );
                   })}
@@ -2283,32 +2218,25 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
 
                 {/* DYNAMIC DETAIL PANE */}
                 {activeBioTag && BIOGRAPHY_TAG_DETAILS[activeBioTag] && (
-                  <div className="p-4 sm:p-5 rounded-lg bg-gray-950/80 border border-gray-900 flex flex-col md:flex-row md:items-center gap-6 transition-all duration-300 animate-fadeIn">
+                  <div className="p-4 sm:p-5 rounded-xl bg-[#f6f3f8] border-2 border-[#5c253d] flex flex-col md:flex-row md:items-center gap-6 transition-all duration-300 animate-fadeIn text-[#5c253d]">
                     
                     {/* Left: Info & Bullets */}
                     <div className="flex-1 space-y-4">
                       <div className="flex items-center space-x-2">
-                        <span className={cn("w-2 h-2 rounded-full animate-pulse", 
-                          activeBioTag === 'Shopify Development' ? 'bg-[#96bf48]' :
-                          activeBioTag === 'SEO' ? 'bg-emerald-400' :
-                          activeBioTag === 'Google Ads' ? 'bg-yellow-400' :
-                          activeBioTag === 'Facebook Ads' ? 'bg-sky-400' :
-                          activeBioTag === 'Ecommerce Growth' ? 'bg-cyan-400' :
-                          activeBioTag === 'Conversion Tracking' ? 'bg-indigo-400' : 'bg-rose-400'
-                        )} />
-                        <h5 className="text-sm font-mono font-bold text-white uppercase tracking-tight">
+                        <span className="w-2.5 h-2.5 rounded-full bg-[#f27447] animate-pulse" />
+                        <h5 className="text-sm font-mono font-black text-[#5c253d] uppercase tracking-tight">
                           {activeBioTag} Expertise
                         </h5>
                       </div>
                       
-                      <p className="text-gray-300 text-xs sm:text-sm leading-relaxed font-sans font-light">
+                      <p className="text-[#5c253d]/80 text-xs sm:text-sm leading-relaxed font-sans font-light">
                         {BIOGRAPHY_TAG_DETAILS[activeBioTag].description}
                       </p>
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2">
                         {BIOGRAPHY_TAG_DETAILS[activeBioTag].keyPoints.map((point, idx) => (
-                          <div key={idx} className="flex items-center space-x-2 text-[11px] font-mono text-gray-400">
-                            <span className={cn("text-xs", BIOGRAPHY_TAG_DETAILS[activeBioTag].colorClass)}>✔</span>
+                          <div key={idx} className="flex items-center space-x-2 text-[11px] font-mono text-[#5c253d]/70">
+                            <span className="text-xs text-[#f27447] font-bold">✔</span>
                             <span>{point}</span>
                           </div>
                         ))}
@@ -2316,14 +2244,14 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                     </div>
 
                     {/* Right: Premium Metric Box */}
-                    <div className="w-full md:w-48 p-4 rounded-lg bg-gray-900/20 border border-gray-900 flex flex-col items-center justify-center text-center space-y-1.5 flex-shrink-0 self-stretch">
-                      <span className="text-[10px] font-mono text-gray-500 uppercase tracking-widest">
+                    <div className="w-full md:w-48 p-4 rounded-xl bg-white border-2 border-[#5c253d] shadow-[2px_2px_0px_#5c253d] flex flex-col items-center justify-center text-center space-y-1.5 flex-shrink-0 self-stretch">
+                      <span className="text-[9px] font-mono text-[#5c253d]/60 uppercase tracking-widest font-bold">
                         {BIOGRAPHY_TAG_DETAILS[activeBioTag].metricLabel}
                       </span>
-                      <div className={cn("text-2xl sm:text-3xl font-mono font-black tracking-tight", BIOGRAPHY_TAG_DETAILS[activeBioTag].colorClass)}>
+                      <div className="text-2xl sm:text-3xl font-mono font-black tracking-tight text-[#f27447]">
                         {BIOGRAPHY_TAG_DETAILS[activeBioTag].metric}
                       </div>
-                      <div className="text-[9px] font-mono text-emerald-400/80 bg-emerald-950/10 px-2 py-0.5 rounded border border-emerald-900/20">
+                      <div className="text-[9px] font-mono text-white bg-[#5c253d] px-2 py-0.5 rounded border border-[#5c253d]">
                         Verified Outcome
                       </div>
                     </div>
@@ -2335,77 +2263,77 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
 
           </div>
 
-          {/* INTERACTIVE GROWTH TIMELINE - Apple / Vercel style */}
-          <div className="mt-12 pt-12 border-t border-gray-800/40">
+          {/* INTERACTIVE GROWTH TIMELINE */}
+          <div className="mt-12 pt-12 border-t border-[#5c253d]/15">
             <div className="space-y-4 mb-10 text-left">
-              <span className="text-[10px] font-mono text-cyan-400 uppercase tracking-widest block">✦ EVOLUTION PATHWAY</span>
-              <h3 className="text-xl font-bold font-sans uppercase tracking-tight text-white">Milestone Story Timeline</h3>
-              <p className="text-xs text-gray-400 max-w-xl font-sans leading-relaxed">
-                Tracing the progression from building static web pages to architecting integrated, multi-channel AI growth engines for high-value brands in Dubai, New York, and London.
+              <span className="text-[10px] font-mono text-[#f27447] uppercase tracking-widest block font-bold">✦ EVOLUTION PATHWAY</span>
+              <h3 className="text-xl font-bold font-display uppercase tracking-tight text-[#5c253d]">Milestone Story Timeline</h3>
+              <p className="text-xs text-[#5c253d]/80 max-w-xl font-sans leading-relaxed">
+                Tracing the progression from building static web pages to architecting integrated, multi-channel growth engines for high-value brands in Dubai, New York, and London.
               </p>
             </div>
 
-            <div className="relative border-l border-cyan-500/10 pl-6 ml-4 space-y-8 text-left">
+            <div className="relative border-l-2 border-[#5c253d]/20 pl-6 ml-4 space-y-8 text-left">
               {[
                 {
                   year: "2026",
                   title: "Elite Growth Partner Model",
                   desc: "Aligning interest as a select equity & retention performance growth partner. Deploying advanced automated marketing chains, Shopify Plus liquid blueprints, and Gemini server-side automation protocols to drive custom pipeline conversions.",
                   status: "CURRENT FOCUS",
-                  badgeClass: "bg-cyan-950/40 border-cyan-500/50 text-cyan-300 shadow-[0_0_15px_rgba(6,182,212,0.15)]",
-                  dotClass: "bg-cyan-400 shadow-[0_0_12px_rgba(34,211,238,0.8)]"
+                  badgeClass: "bg-[#5c253d] border-[#5c253d] text-white",
+                  dotClass: "bg-[#f27447]"
                 },
                 {
                   year: "2025",
                   title: "AI Integration & Dynamic CRO",
                   desc: "Integrated Gemini/GPT content pipelines and automated workflows into custom shopify structures. Combined multi-channel acquisition tracking setups to feed real-time first-party data securely back into ad architectures.",
                   status: "AI TRANSITION",
-                  badgeClass: "bg-emerald-950/40 border-emerald-500/50 text-emerald-300",
-                  dotClass: "bg-emerald-400"
+                  badgeClass: "bg-[#f27447]/10 border-[#f27447] text-[#f27447]",
+                  dotClass: "bg-[#5c253d]"
                 },
                 {
                   year: "2023",
                   title: "International Horizons (UAE, USA, UK)",
                   desc: "Secured high-scale e-commerce retaining contracts in Dubai, London, and New York. Transformed legacy search frameworks into blazing-fast performance architecture that drives multi-million dollar annual store pipelines.",
                   status: "GLOBAL EXPANSION",
-                  badgeClass: "bg-indigo-950/40 border-indigo-500/50 text-indigo-300",
-                  dotClass: "bg-indigo-400"
+                  badgeClass: "bg-[#dfd3eb] border-[#5c253d]/40 text-[#5c253d]",
+                  dotClass: "bg-[#f27447]"
                 },
                 {
                   year: "2021",
                   title: "Agency Acceleration",
                   desc: "Expanded into high-performance Shopify custom liquid development and full-funnel CRO strategy. Handled comprehensive search ranking profiles and established technical multi-channel acquisition channels.",
                   status: "PLATFORM MATURITY",
-                  badgeClass: "bg-amber-950/40 border-amber-500/50 text-amber-300",
-                  dotClass: "bg-amber-400"
+                  badgeClass: "bg-white border-[#5c253d]/40 text-[#5c253d]/80",
+                  dotClass: "bg-[#5c253d]"
                 },
                 {
                   year: "2019",
                   title: "Founded Freelance Channel",
                   desc: "Launched custom digital design & development offerings. Delivered robust WordPress sites, managed local paid advertising, and formulated custom performance standards.",
                   status: "FOUNDATION",
-                  badgeClass: "bg-gray-950/40 border-gray-800 text-gray-400",
-                  dotClass: "bg-gray-600"
+                  badgeClass: "bg-white border-[#5c253d]/20 text-[#5c253d]/60",
+                  dotClass: "bg-[#5c253d]/40"
                 }
               ].map((milestone, idx) => (
                 <div key={idx} className="relative group/timeline transition-all duration-300 hover:translate-x-1.5">
                   {/* Glowing vertical line connectors */}
-                  <div className="absolute -left-[31px] top-1.5 w-2 h-2 rounded-full border-2 border-black transition-all duration-300 group-hover/timeline:scale-125 z-10 bg-black flex items-center justify-center">
-                    <span className={cn("w-full h-full rounded-full transition-colors", milestone.dotClass)} />
+                  <div className="absolute -left-[32px] top-2 w-3 h-3 rounded-full border-2 border-[#5c253d] transition-all duration-300 group-hover/timeline:scale-125 z-10 bg-white flex items-center justify-center">
+                    <span className={cn("w-1.5 h-1.5 rounded-full transition-colors", milestone.dotClass)} />
                   </div>
                   
-                  <div className="bg-[#050508]/60 border border-white/[0.03] hover:border-white/[0.08] rounded-2xl p-5 md:p-6 space-y-3 relative overflow-hidden backdrop-blur-sm transition-all duration-300 hover:shadow-[0_4px_30px_rgba(0,0,0,0.5)]">
+                  <div className="bg-white border-2 border-[#5c253d] shadow-[4px_4px_0px_#5c253d] rounded-2xl p-5 md:p-6 space-y-3 relative overflow-hidden transition-all duration-300">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
                       <div className="flex items-center space-x-3">
-                        <span className="font-mono font-black text-lg md:text-xl text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-300 to-gray-500">{milestone.year}</span>
-                        <div className="h-4 w-[1px] bg-white/10 hidden sm:block" />
-                        <h4 className="text-sm font-bold text-white tracking-tight font-sans uppercase">{milestone.title}</h4>
+                        <span className="font-mono font-black text-lg md:text-xl text-[#f27447]">{milestone.year}</span>
+                        <div className="h-4 w-[1px] bg-[#5c253d]/20 hidden sm:block" />
+                        <h4 className="text-sm font-black text-[#5c253d] tracking-tight font-sans uppercase">{milestone.title}</h4>
                       </div>
                       <span className={cn("text-[8px] font-mono font-bold uppercase tracking-widest px-2.5 py-1 rounded-full border", milestone.badgeClass)}>
                         {milestone.status}
                       </span>
                     </div>
-                    <p className="text-xs text-gray-400 font-sans leading-relaxed font-light">
+                    <p className="text-xs text-[#5c253d]/80 font-sans leading-relaxed font-light">
                       {milestone.desc}
                     </p>
                   </div>
@@ -2418,27 +2346,27 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
         {/* PREMIUM SERVICES & INTERACTIVE ESTIMATOR */}
         <motion.section 
           id="services-estimator" 
-          className="border-t border-gray-800/60 pt-16"
+          className="border-t border-[#5c253d]/15 pt-16 text-[#5c253d]"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={fadeInUpVariants}
         >
           <div className="space-y-4 mb-12">
-            <div className="font-mono text-[11px] uppercase tracking-widest text-cyan-400">02 / CORE CAPABILITIES</div>
-            <h2 className="text-3xl font-black text-white uppercase tracking-tight">Premium Digital Services</h2>
-            <p className="text-gray-400 text-sm max-w-2xl font-sans">
+            <div className="font-mono text-[11px] uppercase tracking-widest text-[#f27447] font-bold">02 / CORE CAPABILITIES</div>
+            <h2 className="text-3xl font-black text-[#5c253d] uppercase tracking-tight font-display">Premium Digital Services</h2>
+            <p className="text-[#5c253d]/80 text-sm max-w-2xl font-sans">
               Deploying high-converting paid traffic, technical search engine visibility, and fast-rendering storefront code optimized for direct growth.
             </p>
           </div>
 
           {/* Interactive Service Explorer Accordion Flow */}
-          <div className="bg-[#060608] border border-gray-800/80 rounded-2xl overflow-hidden relative mb-12">
-            <div className="grid grid-cols-1 lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-gray-800/60">
+          <div className="bg-white border-2 border-[#5c253d] shadow-[4px_4px_0px_#5c253d] rounded-2xl overflow-hidden relative mb-12 text-[#5c253d]">
+            <div className="grid grid-cols-1 lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-[#5c253d]/15">
               
-              {/* Left sidebar: The service categories (Interactive Accordion Tabs) */}
-              <div className="lg:col-span-4 p-6 space-y-4 text-left">
-                <span className="text-[10px] font-mono text-gray-500 uppercase tracking-wider block mb-2 font-black">EXPLORE CATEGORIES // SERVICE LIST</span>
+              {/* Left sidebar: The service categories */}
+              <div className="lg:col-span-4 p-6 space-y-4 text-left bg-[#f6f3f8]/50">
+                <span className="text-[10px] font-mono text-[#5c253d]/60 uppercase tracking-wider block mb-2 font-black">EXPLORE CATEGORIES // SERVICE LIST</span>
                 <div className="space-y-2">
                   {SERVICES.map((serv: any) => {
                     const isSelected = activeServiceExplorerTab === serv.id;
@@ -2449,52 +2377,44 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                           setActiveServiceExplorerTab(serv.id);
                           showToast(`calibrated for ${serv.title.toUpperCase()}`, "success");
                         }}
-                        onMouseMove={(e) => {
-                          const rect = e.currentTarget.getBoundingClientRect();
-                          const x = e.clientX - rect.left;
-                          const y = e.clientY - rect.top;
-                          e.currentTarget.style.setProperty("--x", `${x}px`);
-                          e.currentTarget.style.setProperty("--y", `${y}px`);
-                        }}
                         className={cn(
-                          "w-full text-left p-4 rounded-xl border transition-all flex items-center justify-between group cursor-pointer relative overflow-hidden before:absolute before:inset-0 before:bg-[radial-gradient(150px_circle_at_var(--x,0px)_var(--y,0px),rgba(6,182,212,0.06),transparent_80%)] before:opacity-0 hover:before:opacity-100 before:transition-opacity before:pointer-events-none",
+                          "w-full text-left p-4 rounded-xl border transition-all flex items-center justify-between group cursor-pointer relative overflow-hidden",
                           isSelected
-                            ? "bg-cyan-950/20 border-cyan-500/40 text-cyan-400"
-                            : "bg-black/20 border-white/[0.04] text-gray-400 hover:border-gray-800 hover:text-white"
+                            ? "bg-[#dfd3eb]/50 border-2 border-[#5c253d] text-[#5c253d]"
+                            : "bg-transparent border-[#5c253d]/10 text-[#5c253d]/75 hover:bg-[#5c253d]/5 hover:text-[#5c253d]"
                         )}
                       >
                         <div className="space-y-0.5 text-left">
-                          <span className="text-[9px] font-mono uppercase tracking-widest block opacity-70">{serv.subtitle}</span>
-                          <span className="text-sm font-bold font-sans block">{serv.title}</span>
+                          <span className="text-[9px] font-mono uppercase tracking-widest block opacity-70 font-semibold">{serv.subtitle}</span>
+                          <span className="text-sm font-black font-sans block">{serv.title}</span>
                         </div>
                         <div className="flex items-center space-x-2">
-                          <span className="text-[9px] font-mono px-1.5 py-0.5 bg-black rounded border border-white/5 uppercase text-gray-500 group-hover:text-cyan-400">{serv.badge}</span>
-                          <ChevronRight className={cn("w-4 h-4 transition-transform", isSelected ? "rotate-90 text-cyan-400" : "text-gray-500 group-hover:translate-x-0.5")} />
+                          <span className="text-[9px] font-mono px-1.5 py-0.5 bg-white rounded border border-[#5c253d]/15 uppercase text-[#5c253d]/70">{serv.badge}</span>
+                          <ChevronRight className={cn("w-4 h-4 transition-transform", isSelected ? "rotate-90 text-[#f27447]" : "text-[#5c253d]/50 group-hover:translate-x-0.5")} />
                         </div>
                       </button>
                     );
                   })}
                 </div>
 
-                <div className="pt-4 border-t border-gray-900/60 text-[11px] font-mono text-gray-500 leading-relaxed space-y-1">
+                <div className="pt-4 border-t border-[#5c253d]/10 text-[11px] font-mono text-[#5c253d]/70 leading-relaxed space-y-1">
                   <p className="flex items-center space-x-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#f27447] animate-pulse" />
                     <span>98% Average Customer ROAS/SEO lift</span>
                   </p>
                   <p className="flex items-center space-x-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#5c253d] animate-pulse" />
                     <span>Pure Liquid and CSS optimization frameworks</span>
                   </p>
                 </div>
               </div>
 
               {/* Right content display: The Accordion Flow & Interactive Stages */}
-              <div className="lg:col-span-8 p-6 sm:p-8 space-y-8 text-left">
+              <div className="lg:col-span-8 p-6 sm:p-8 space-y-8 text-left bg-white">
                 {/* Active Service Title & Description */}
                 {(() => {
                   const activeService = SERVICES.find((s: any) => s.id === activeServiceExplorerTab) || SERVICES[0];
                   
-                  // Custom phases, case studies, and ROI values depending on the active service tab to make it high-fidelity
                   let processPhases = [
                     { name: 'Phase 01', title: 'Deep Audit', desc: 'Analyzing existing configuration bugs, conversion barriers, & tracking errors.' },
                     { name: 'Phase 02', title: 'Tailored Setup', desc: 'Crafting pixel placements, conversion events, or modular clean code.' },
@@ -2524,17 +2444,17 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                   return (
                     <div className="space-y-6">
                       {/* Section Heading */}
-                      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-4 border-b border-gray-900">
+                      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-4 border-b border-[#5c253d]/10">
                         <div className="space-y-1">
-                          <span className="text-[10px] font-mono text-cyan-400 uppercase tracking-widest font-bold">CURRENT STACK CALIBRATION</span>
-                          <h3 className="text-xl font-black text-white uppercase tracking-tight">{activeService.title}</h3>
+                          <span className="text-[10px] font-mono text-[#f27447] uppercase tracking-widest font-bold">CURRENT STACK CALIBRATION</span>
+                          <h3 className="text-xl font-black text-[#5c253d] uppercase tracking-tight">{activeService.title}</h3>
                         </div>
-                        <span className="text-xs font-mono text-gray-500">ENGAGEMENT SEQUENCE // DIRECT RESPONSE</span>
+                        <span className="text-xs font-mono text-[#5c253d]/50">ENGAGEMENT SEQUENCE // DIRECT RESPONSE</span>
                       </div>
 
                       {/* Interactive Sequence Explorer Map */}
                       <div className="space-y-4">
-                        <span className="text-[9px] font-mono text-gray-500 uppercase tracking-widest block font-bold">CONVERSION FUNNEL STAGES // CLICK TO PROGRESS</span>
+                        <span className="text-[9px] font-mono text-[#5c253d]/60 uppercase tracking-widest block font-bold">CONVERSION FUNNEL STAGES // CLICK TO PROGRESS</span>
                         
                         <div className="grid grid-cols-5 gap-2 text-center text-xs font-mono font-bold">
                           {[
@@ -2550,10 +2470,10 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                                 key={step.id}
                                 onClick={() => setActiveSequenceStep(step.id as any)}
                                 className={cn(
-                                  "py-2.5 rounded-lg border text-[10px] transition-all uppercase tracking-wider font-bold cursor-pointer",
+                                  "py-2 rounded-lg border text-[9px] transition-all uppercase tracking-wider font-bold cursor-pointer",
                                   isActiveStep
-                                    ? "bg-cyan-500/15 border-cyan-500/50 text-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.15)]"
-                                    : "bg-black/40 border-white/[0.04] text-gray-500 hover:text-white"
+                                    ? "bg-[#5c253d] border-[#5c253d] text-white shadow-sm"
+                                    : "bg-[#dfd3eb]/10 border-[#5c253d]/15 text-[#5c253d]/70 hover:bg-[#5c253d]/5 hover:text-[#5c253d]"
                                 )}
                               >
                                 {step.label}
@@ -2564,17 +2484,17 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                       </div>
 
                       {/* Active Pipeline Card Content */}
-                      <div className="p-6 rounded-2xl bg-black/40 border border-white/[0.04] relative min-h-[160px] flex flex-col justify-between">
+                      <div className="p-6 rounded-xl bg-[#f6f3f8] border-2 border-[#5c253d] relative min-h-[160px] flex flex-col justify-between text-[#5c253d]">
                         
                         {/* 1. Problem Card */}
                         {activeSequenceStep === 'problem' && (
                           <div className="space-y-4">
                             <div className="flex justify-between items-center">
-                              <span className="text-[10px] font-mono text-rose-400 uppercase font-black">STEP 01 // CRITICAL FRICTION POINT</span>
-                              <span className="text-[9px] font-mono text-rose-500 font-bold animate-pulse">REVENUE LOSS STATE</span>
+                              <span className="text-[10px] font-mono text-[#f27447] uppercase font-black">STEP 01 // CRITICAL FRICTION POINT</span>
+                              <span className="text-[9px] font-mono text-[#f27447] font-bold animate-pulse">REVENUE LOSS STATE</span>
                             </div>
-                            <h4 className="text-sm font-bold text-white uppercase tracking-tight">The Core Bottleneck</h4>
-                            <p className="text-gray-300 text-xs sm:text-sm leading-relaxed font-sans font-light">
+                            <h4 className="text-sm font-black text-[#5c253d] uppercase tracking-tight">The Core Bottleneck</h4>
+                            <p className="text-[#5c253d]/80 text-xs sm:text-sm leading-relaxed font-sans font-light">
                               {activeService.id === 'shopify-development' 
                                 ? "Shopify storefronts lose up to 40% of standard checkout volume because of heavy bloated themes, slow third-party application chains, clunky responsive touch layouts, and multi-step carts."
                                 : activeService.id === 'seo-optimization'
@@ -2582,9 +2502,9 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                                 : "Most digital brands drain over 35% of ad budgets on high-friction broad keywords, irrelevant traffic, or bad checkout attribution, giving platform giants free profit."
                               }
                             </p>
-                            <div className="p-3 bg-rose-950/15 border border-rose-500/20 rounded-xl flex items-center space-x-3">
+                            <div className="p-3 bg-white border border-[#5c253d]/15 rounded-xl flex items-center space-x-3">
                               <span className="text-xs">⚠️</span>
-                              <span className="text-[10px] font-mono text-rose-300 uppercase">Impact: Cuts conversion ratios and inflates customer acquisition costs.</span>
+                              <span className="text-[10px] font-mono text-[#5c253d]/80 uppercase">Impact: Cuts conversion ratios and inflates customer acquisition costs.</span>
                             </div>
                           </div>
                         )}
@@ -2593,11 +2513,11 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                         {activeSequenceStep === 'solution' && (
                           <div className="space-y-4">
                             <div className="flex justify-between items-center">
-                              <span className="text-[10px] font-mono text-emerald-400 uppercase font-black">STEP 02 // TECHNICAL BLUEPRINT</span>
-                              <span className="text-[9px] font-mono text-emerald-400 font-bold">SYSTEMIC CURE</span>
+                              <span className="text-[10px] font-mono text-[#5c253d] uppercase font-black">STEP 02 // TECHNICAL BLUEPRINT</span>
+                              <span className="text-[9px] font-mono text-[#5c253d] font-bold">SYSTEMIC CURE</span>
                             </div>
-                            <h4 className="text-sm font-bold text-white uppercase tracking-tight">The Growth Architecture</h4>
-                            <p className="text-gray-300 text-xs sm:text-sm leading-relaxed font-sans font-light">
+                            <h4 className="text-sm font-black text-[#5c253d] uppercase tracking-tight">The Growth Architecture</h4>
+                            <p className="text-[#5c253d]/80 text-xs sm:text-sm leading-relaxed font-sans font-light">
                               {activeService.id === 'shopify-development'
                                 ? "Complete speed restoration utilizing custom Shopify liquid blocks, stripping redundant apps, compressing media pipelines, and deploying high-converting AJAX sliding cart mechanics."
                                 : activeService.id === 'seo-optimization'
@@ -2607,8 +2527,8 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                             </p>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
                               {activeService.items.map((it: string) => (
-                                <div key={it} className="flex items-center space-x-2 text-[11px] font-mono text-gray-400">
-                                  <Check className="w-3.5 h-3.5 text-emerald-400" />
+                                <div key={it} className="flex items-center space-x-2 text-[11px] font-mono text-[#5c253d]/80">
+                                  <Check className="w-3.5 h-3.5 text-[#f27447]" />
                                   <span>{it}</span>
                                 </div>
                               ))}
@@ -2620,15 +2540,15 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                         {activeSequenceStep === 'process' && (
                           <div className="space-y-4">
                             <div className="flex justify-between items-center">
-                              <span className="text-[10px] font-mono text-gray-500 uppercase font-black">STEP 03 // EXECUTION FLOW</span>
-                              <span className="text-[9px] font-mono text-cyan-400 font-bold">THREE-PHASE ENGAGEMENT</span>
+                              <span className="text-[10px] font-mono text-[#5c253d]/70 uppercase font-black">STEP 03 // EXECUTION FLOW</span>
+                              <span className="text-[9px] font-mono text-[#f27447] font-bold">THREE-PHASE ENGAGEMENT</span>
                             </div>
                             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
                               {processPhases.map((phase) => (
-                                <div key={phase.name} className="p-3 bg-black/40 border border-white/[0.03] rounded-xl space-y-1 text-left">
-                                  <span className="text-[8px] font-mono text-cyan-400 uppercase font-black">{phase.name}</span>
-                                  <h4 className="text-xs font-black text-white uppercase">{phase.title}</h4>
-                                  <p className="text-[10px] text-gray-400 leading-relaxed font-sans font-light">{phase.desc}</p>
+                                <div key={phase.name} className="p-3 bg-white border border-[#5c253d]/15 rounded-xl space-y-1 text-left">
+                                  <span className="text-[8px] font-mono text-[#f27447] uppercase font-black">{phase.name}</span>
+                                  <h4 className="text-xs font-black text-[#5c253d] uppercase">{phase.title}</h4>
+                                  <p className="text-[10px] text-[#5c253d]/70 leading-relaxed font-sans font-light">{phase.desc}</p>
                                 </div>
                               ))}
                             </div>
@@ -2639,25 +2559,25 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                         {activeSequenceStep === 'result' && (
                           <div className="space-y-4">
                             <div className="flex justify-between items-center">
-                              <span className="text-[10px] font-mono text-gray-500 uppercase font-black">STEP 04 // MEASURED VERIFIED EVIDENCE</span>
-                              <span className="text-[9px] font-mono text-violet-400 font-bold">OUTCOME METRIC</span>
+                              <span className="text-[10px] font-mono text-[#5c253d]/70 uppercase font-black">STEP 04 // MEASURED VERIFIED EVIDENCE</span>
+                              <span className="text-[9px] font-mono text-[#5c253d] font-bold font-black">OUTCOME METRIC</span>
                             </div>
-                            <div className="flex flex-col sm:flex-row items-stretch justify-between gap-4 p-4 bg-black border border-cyan-500/20 rounded-xl">
+                            <div className="flex flex-col sm:flex-row items-stretch justify-between gap-4 p-4 bg-white border-2 border-[#5c253d] rounded-xl">
                               <div className="space-y-1 text-left flex-1">
-                                <span className="text-[8px] font-mono text-cyan-400 uppercase font-bold">CLIENT CASE STUDY</span>
-                                <h4 className="text-sm font-black text-white font-mono">{relatedCaseStudy.client}</h4>
-                                <p className="text-[11px] text-gray-400 font-sans font-light">Successfully integrated customized workflows and optimized search profiles.</p>
+                                <span className="text-[8px] font-mono text-[#f27447] uppercase font-bold">CLIENT CASE STUDY</span>
+                                <h4 className="text-sm font-black text-[#5c253d] font-mono">{relatedCaseStudy.client}</h4>
+                                <p className="text-[11px] text-[#5c253d]/70 font-sans font-light">Successfully integrated customized workflows and optimized search profiles.</p>
                               </div>
-                              <div className="text-center flex flex-col justify-center bg-cyan-950/20 px-4 py-3 rounded-lg border border-cyan-500/30">
-                                <span className="text-[8px] font-mono text-gray-400 uppercase leading-none block">OUTCOME LIFT</span>
-                                <span className="text-sm font-black font-mono text-cyan-400 mt-1 block whitespace-nowrap">{relatedCaseStudy.metrics}</span>
+                              <div className="text-center flex flex-col justify-center bg-[#dfd3eb]/30 px-4 py-3 rounded-lg border border-[#5c253d]/30">
+                                <span className="text-[8px] font-mono text-[#5c253d]/60 uppercase leading-none block font-bold">OUTCOME LIFT</span>
+                                <span className="text-sm font-black font-mono text-[#5c253d] mt-1 block whitespace-nowrap">{relatedCaseStudy.metrics}</span>
                               </div>
                             </div>
                             <div className="flex items-center space-x-3 pt-1">
-                              <span className="text-3xl font-black font-mono text-emerald-400">{roiDetails.multiplier}</span>
+                              <span className="text-3xl font-black font-mono text-[#f27447]">{roiDetails.multiplier}</span>
                               <div className="text-left">
-                                <span className="text-[9px] font-mono text-gray-400 uppercase block">Projected Benchmark</span>
-                                <span className="text-[10px] text-gray-500 font-sans">{roiDetails.description}</span>
+                                <span className="text-[9px] font-mono text-[#5c253d]/60 uppercase block font-bold">Projected Benchmark</span>
+                                <span className="text-[10px] text-[#5c253d]/70 font-sans">{roiDetails.description}</span>
                               </div>
                             </div>
                           </div>
@@ -2667,16 +2587,16 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                         {activeSequenceStep === 'book_call' && (
                           <div className="space-y-4 flex flex-col justify-between h-full">
                             <div className="flex justify-between items-center">
-                              <span className="text-[10px] font-mono text-gray-500 uppercase font-black">STEP 05 // ACTION COGNITION</span>
-                              <span className="text-[9px] font-mono text-cyan-400 font-bold">RESERVE TIME SLOT</span>
+                              <span className="text-[10px] font-mono text-[#5c253d]/70 uppercase font-black">STEP 05 // ACTION COGNITION</span>
+                              <span className="text-[9px] font-mono text-[#f27447] font-bold">RESERVE TIME SLOT</span>
                             </div>
                             <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pt-2">
-                              <p className="text-gray-300 text-xs sm:text-sm leading-relaxed max-w-md text-left font-sans font-light">
+                              <p className="text-[#5c253d]/80 text-xs sm:text-sm leading-relaxed max-w-md text-left font-sans font-light">
                                 Let&apos;s map these premium Shopify development, CRO modifications, and technical search funnels to your specific company domain. Reserve a free audit strategy slot.
                               </p>
                               <button 
                                 onClick={() => setIsContactModalOpen(true)}
-                                className="px-5 py-3.5 bg-gradient-to-r from-cyan-500 to-emerald-500 hover:from-cyan-400 hover:to-emerald-400 text-black font-bold font-mono text-[10px] uppercase tracking-widest rounded-xl transition-all cursor-pointer whitespace-nowrap shadow-[0_0_20px_rgba(34,211,238,0.2)]"
+                                className="px-5 py-3.5 bg-[#f27447] text-white hover:bg-[#d65f33] border-2 border-[#5c253d] shadow-[2px_2px_0px_#5c253d] font-bold font-mono text-[10px] uppercase tracking-widest rounded-xl transition-all cursor-pointer whitespace-nowrap"
                               >
                                 Book Strategy Session
                               </button>
@@ -2685,7 +2605,7 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                         )}
 
                         {/* Next Action Tooltip bar at bottom of card */}
-                        <div className="flex justify-between items-center mt-6 pt-4 border-t border-white/[0.02] text-[9px] font-mono text-gray-500">
+                        <div className="flex justify-between items-center mt-6 pt-4 border-t border-[#5c253d]/10 text-[9px] font-mono text-[#5c253d]/60">
                           <span>* CLICK CONVERSION SEQUENCE STAGES TO FLOW STATE</span>
                           <button
                             onClick={() => {
@@ -2694,7 +2614,7 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                               const nextIdx = (currentIdx + 1) % stepCycle.length;
                               setActiveSequenceStep(stepCycle[nextIdx] as any);
                             }}
-                            className="text-cyan-400 hover:text-cyan-300 transition-colors uppercase font-bold cursor-pointer"
+                            className="text-[#f27447] hover:text-[#d65f33] transition-colors uppercase font-bold cursor-pointer"
                           >
                             NEXT STATE &gt;&gt;
                           </button>
@@ -2709,25 +2629,23 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
           </div>
 
           {/* DYNAMIC ESTIMATOR SLIDER WIDGET */}
-          <div className="bg-[#060608] border border-gray-800/80 rounded-2xl p-6 sm:p-8 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-cyan-500/5 to-transparent rounded-full filter blur-xl pointer-events-none" />
-            
+          <div className="bg-white border-2 border-[#5c253d] shadow-[4px_4px_0px_#5c253d] rounded-2xl p-6 sm:p-8 relative overflow-hidden text-[#5c253d]">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
               
               <div className="lg:col-span-5 space-y-4">
-                <span className="px-2.5 py-1 bg-cyan-950/60 border border-cyan-800/40 rounded text-[10px] font-mono uppercase text-cyan-300">
+                <span className="px-2.5 py-1 bg-[#dfd3eb]/50 border border-[#5c253d]/20 rounded text-[10px] font-mono uppercase text-[#5c253d] font-black">
                   Interactive Planner
                 </span>
-                <h3 className="text-xl font-bold text-white uppercase tracking-tight">Growth Strategy Recommendation Engine</h3>
-                <p className="text-gray-400 text-xs font-sans leading-relaxed">
+                <h3 className="text-xl font-black text-[#5c253d] uppercase tracking-tight font-display">Growth Strategy Recommendation Engine</h3>
+                <p className="text-[#5c253d]/80 text-xs font-sans leading-relaxed">
                   Slide your projected monthly advertising or SEO investment plan (AED) to dynamically discover high-converting channels and forecasted strategic allocation.
                 </p>
 
                 {/* SLIDER CONTROLS */}
                 <div className="space-y-2 pt-2">
                   <div className="flex justify-between text-xs font-mono">
-                    <span className="text-gray-400">Projected Monthly Allocation:</span>
-                    <span className="text-cyan-400 font-bold">AED {estimateBudget.toLocaleString()} / mo</span>
+                    <span className="text-[#5c253d]/70 font-semibold">Projected Monthly Allocation:</span>
+                    <span className="text-[#f27447] font-bold">AED {estimateBudget.toLocaleString()} / mo</span>
                   </div>
                   <input 
                     type="range" 
@@ -2736,9 +2654,9 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                     step="500"
                     value={estimateBudget}
                     onChange={(e) => setEstimateBudget(parseInt(e.target.value))}
-                    className="w-full h-1.5 bg-gray-900 rounded-lg appearance-none cursor-pointer accent-cyan-500"
+                    className="w-full h-1.5 bg-[#dfd3eb] rounded-lg appearance-none cursor-pointer accent-[#f27447]"
                   />
-                  <div className="flex justify-between text-[10px] font-mono text-gray-500">
+                  <div className="flex justify-between text-[10px] font-mono text-[#5c253d]/50">
                     <span>AED 2K</span>
                     <span>AED 15K</span>
                     <span>AED 30K+</span>
@@ -2747,48 +2665,48 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
               </div>
 
               {/* RECOMMENDED OUTCOMES */}
-              <div className="lg:col-span-7 bg-[#000000] border border-gray-800/80 rounded-xl p-5 sm:p-6 space-y-4">
-                <div className="flex justify-between items-start border-b border-gray-800 pb-3">
+              <div className="lg:col-span-7 bg-[#f6f3f8] border-2 border-[#5c253d] rounded-xl p-5 sm:p-6 space-y-4">
+                <div className="flex justify-between items-start border-b border-[#5c253d]/15 pb-3">
                   <div>
-                    <span className="text-[10px] font-mono text-gray-500 uppercase">Recommended Strategy Grade</span>
-                    <h4 className="text-sm font-mono font-bold text-white uppercase mt-0.5">{recommendedStrategy.level}</h4>
+                    <span className="text-[10px] font-mono text-[#5c253d]/60 uppercase font-semibold">Recommended Strategy Grade</span>
+                    <h4 className="text-sm font-mono font-black text-[#5c253d] uppercase mt-0.5">{recommendedStrategy.level}</h4>
                   </div>
                   <div className="text-right">
-                    <span className="text-[10px] font-mono text-emerald-400 uppercase font-bold">Estimated ROAS Multiplier</span>
-                    <div className="text-sm font-mono font-black text-emerald-400">{recommendedStrategy.roasMultiplier}</div>
+                    <span className="text-[10px] font-mono text-[#f27447] uppercase font-bold">Estimated ROAS Multiplier</span>
+                    <div className="text-sm font-mono font-black text-[#f27447]">{recommendedStrategy.roasMultiplier}</div>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 py-2">
-                  <div className="bg-gray-900/40 p-2.5 rounded border border-gray-800/40 text-center">
-                    <span className="text-[10px] font-mono text-gray-500 block uppercase">Paid Traffic Focus</span>
-                    <span className="text-xs font-mono font-bold text-gray-200 block mt-1">{recommendedStrategy.split.ads}% Ads</span>
+                  <div className="bg-white p-2.5 rounded-xl border border-[#5c253d]/15 text-center">
+                    <span className="text-[10px] font-mono text-[#5c253d]/60 block uppercase font-semibold">Paid Traffic Focus</span>
+                    <span className="text-xs font-mono font-bold text-[#5c253d] block mt-1">{recommendedStrategy.split.ads}% Ads</span>
                   </div>
-                  <div className="bg-gray-900/40 p-2.5 rounded border border-gray-800/40 text-center">
-                    <span className="text-[10px] font-mono text-gray-500 block uppercase">Organic Authority</span>
-                    <span className="text-xs font-mono font-bold text-gray-200 block mt-1">{recommendedStrategy.split.seo}% SEO</span>
+                  <div className="bg-white p-2.5 rounded-xl border border-[#5c253d]/15 text-center">
+                    <span className="text-[10px] font-mono text-[#5c253d]/60 block uppercase font-semibold">Organic Authority</span>
+                    <span className="text-xs font-mono font-bold text-[#5c253d] block mt-1">{recommendedStrategy.split.seo}% SEO</span>
                   </div>
-                  <div className="bg-gray-900/40 p-2.5 rounded border border-gray-800/40 text-center">
-                    <span className="text-[10px] font-mono text-gray-500 block uppercase">Conversion Tuning</span>
-                    <span className="text-xs font-mono font-bold text-gray-200 block mt-1">{recommendedStrategy.split.cro}% CRO</span>
+                  <div className="bg-white p-2.5 rounded-xl border border-[#5c253d]/15 text-center">
+                    <span className="text-[10px] font-mono text-[#5c253d]/60 block uppercase font-semibold">Conversion Tuning</span>
+                    <span className="text-xs font-mono font-bold text-[#5c253d] block mt-1">{recommendedStrategy.split.cro}% CRO</span>
                   </div>
                 </div>
 
                 <div className="space-y-1.5">
-                  <span className="text-[10px] font-mono text-gray-500 uppercase block">Strategic Tasks & Channels Included:</span>
+                  <span className="text-[10px] font-mono text-[#5c253d]/60 uppercase block font-semibold">Strategic Tasks & Channels Included:</span>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                     {recommendedStrategy.channels.map((ch, idx) => (
-                      <div key={idx} className="flex items-center space-x-2 text-[10px] font-mono text-gray-300">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-cyan-400 flex-shrink-0" />
+                      <div key={idx} className="flex items-center space-x-2 text-[10px] font-mono text-[#5c253d]">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-[#f27447] flex-shrink-0" />
                         <span className="truncate">{ch}</span>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                <div className="border-t border-gray-800 pt-3 flex justify-between items-center text-[11px] font-mono">
-                  <span className="text-gray-400">Theme Optimization Level:</span>
-                  <span className="text-cyan-400">{recommendedStrategy.speedImprovement}</span>
+                <div className="border-t border-[#5c253d]/15 pt-3 flex justify-between items-center text-[11px] font-mono text-[#5c253d]">
+                  <span className="text-[#5c253d]/70">Theme Optimization Level:</span>
+                  <span className="text-[#f27447] font-bold">{recommendedStrategy.speedImprovement}</span>
                 </div>
 
               </div>
@@ -2800,129 +2718,47 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
         {/* OFFICIAL BRAND LOGO MATRIX */}
         <motion.section 
           id="brand-matrix" 
-          className="border-t border-gray-800/60 pt-16"
+          className="border-t border-[#5c253d]/15 pt-16 text-[#5c253d]"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={fadeInUpVariants}
         >
           <div className="text-center max-w-2xl mx-auto space-y-3 mb-10">
-            <div className="font-mono text-[11px] uppercase tracking-widest text-emerald-400">03 / TRUSTED BY LEADING FIRMS</div>
-            <h2 className="text-3xl font-black text-white uppercase tracking-tight">Our Journey of Innovation & Impact</h2>
-            <p className="text-gray-400 text-xs font-sans">
+            <div className="font-mono text-[11px] uppercase tracking-widest text-[#f27447] font-bold">03 / TRUSTED BY LEADING FIRMS</div>
+            <h2 className="text-3xl font-black text-[#5c253d] uppercase tracking-tight font-display">Our Journey of Innovation & Impact</h2>
+            <p className="text-[#5c253d]/80 text-xs font-sans">
               At Rizwan Saeed, innovation is at the core of everything we do. We build, manage and scale custom workflows for leading regional hospitality, commercial, and e-commerce labels.
             </p>
           </div>
 
           {/* Premium Glowing Card Logo Matrix */}
-          <div className="bg-[#060608]/90 backdrop-blur-md rounded-3xl border border-cyan-500/30 p-6 sm:p-10 shadow-xl shadow-cyan-500/5 relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-2 h-full bg-gradient-to-b from-cyan-500 to-emerald-500" />
+          <div className="bg-white rounded-3xl border-2 border-[#5c253d] p-6 sm:p-10 shadow-[4px_4px_0px_#5c253d] relative overflow-hidden text-[#5c253d]">
+            <div className="absolute top-0 left-0 w-2 h-full bg-gradient-to-b from-[#5c253d] to-[#f27447]" />
             
             <div id="dynamic-brand-matrix-grid" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 items-stretch text-center">
               
               {logoWall.filter((logo: any) => logo.visible).map((logo: any) => {
-                const getColorClasses = (col: string) => {
-                  switch (col?.toLowerCase()) {
-                    case 'amber':
-                      return {
-                        border: 'hover:border-amber-500/30 hover:bg-amber-950/10 hover:shadow-[0_0_30px_rgba(245,158,11,0.12)]',
-                        text: 'text-amber-400/80',
-                        badge: 'text-amber-400',
-                        logoBg: 'group-hover:border-amber-400/40 group-hover:shadow-[0_0_20px_rgba(245,158,11,0.25)]'
-                      };
-                    case 'cyan':
-                      return {
-                        border: 'hover:border-cyan-500/30 hover:bg-cyan-950/10 hover:shadow-[0_0_30px_rgba(6,182,212,0.12)]',
-                        text: 'text-cyan-400/80',
-                        badge: 'text-cyan-400',
-                        logoBg: 'group-hover:border-cyan-400/40 group-hover:shadow-[0_0_20px_rgba(6,182,212,0.25)]'
-                      };
-                    case 'emerald':
-                      return {
-                        border: 'hover:border-emerald-500/30 hover:bg-emerald-950/10 hover:shadow-[0_0_30px_rgba(16,185,129,0.12)]',
-                        text: 'text-emerald-400/80',
-                        badge: 'text-emerald-400',
-                        logoBg: 'group-hover:border-emerald-400/40 group-hover:shadow-[0_0_20px_rgba(16,185,129,0.25)]'
-                      };
-                    case 'sky':
-                      return {
-                        border: 'hover:border-sky-500/30 hover:bg-sky-950/10 hover:shadow-[0_0_30px_rgba(14,165,233,0.12)]',
-                        text: 'text-sky-400/80',
-                        badge: 'text-sky-400',
-                        logoBg: 'group-hover:border-sky-400/40 group-hover:shadow-[0_0_20px_rgba(14,165,233,0.25)]'
-                      };
-                    case 'yellow':
-                      return {
-                        border: 'hover:border-yellow-500/30 hover:bg-yellow-950/10 hover:shadow-[0_0_30px_rgba(234,179,8,0.12)]',
-                        text: 'text-yellow-400/80',
-                        badge: 'text-yellow-400',
-                        logoBg: 'group-hover:border-yellow-400/40 group-hover:shadow-[0_0_20px_rgba(234,179,8,0.25)]'
-                      };
-                    case 'rose':
-                      return {
-                        border: 'hover:border-rose-500/30 hover:bg-rose-950/10 hover:shadow-[0_0_30px_rgba(244,63,94,0.12)]',
-                        text: 'text-rose-400/80',
-                        badge: 'text-rose-400',
-                        logoBg: 'group-hover:border-rose-400/40 group-hover:shadow-[0_0_20px_rgba(244,63,94,0.25)]'
-                      };
-                    case 'indigo':
-                      return {
-                        border: 'hover:border-indigo-500/30 hover:bg-indigo-950/10 hover:shadow-[0_0_30px_rgba(99,102,241,0.12)]',
-                        text: 'text-indigo-400/80',
-                        badge: 'text-indigo-400',
-                        logoBg: 'group-hover:border-indigo-400/40 group-hover:shadow-[0_0_20px_rgba(99,102,241,0.25)]'
-                      };
-                    case 'blue':
-                      return {
-                        border: 'hover:border-blue-500/30 hover:bg-blue-950/10 hover:shadow-[0_0_30px_rgba(59,130,246,0.12)]',
-                        text: 'text-blue-400/80',
-                        badge: 'text-blue-400',
-                        logoBg: 'group-hover:border-blue-400/40 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.25)]'
-                      };
-                    default:
-                      return {
-                        border: 'hover:border-cyan-500/30 hover:bg-cyan-950/10 hover:shadow-[0_0_30px_rgba(6,182,212,0.12)]',
-                        text: 'text-cyan-400/80',
-                        badge: 'text-cyan-400',
-                        logoBg: 'group-hover:border-cyan-400/40 group-hover:shadow-[0_0_20px_rgba(6,182,212,0.25)]'
-                      };
-                  }
-                };
-
-                const colors = getColorClasses(logo.color);
                 return (
                   <a 
                     key={logo.id}
                     href={logo.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    onMouseMove={(e) => {
-                      const rect = e.currentTarget.getBoundingClientRect();
-                      const x = e.clientX - rect.left;
-                      const y = e.clientY - rect.top;
-                      e.currentTarget.style.setProperty("--x", `${x}px`);
-                      e.currentTarget.style.setProperty("--y", `${y}px`);
-                    }}
-                    className={cn(
-                      "flex flex-col justify-between p-5 rounded-2xl bg-[#090d14]/80 border border-gray-900 transition-all duration-300 group hover:-translate-y-1 relative overflow-hidden cursor-pointer before:absolute before:inset-0 before:bg-[radial-gradient(180px_circle_at_var(--x,0px)_var(--y,0px),rgba(6,182,212,0.08),transparent_80%)] before:opacity-0 hover:before:opacity-100 before:transition-opacity before:pointer-events-none",
-                      colors.border
-                    )}
+                    className="flex flex-col justify-between p-5 rounded-2xl bg-[#f6f3f8] border-2 border-[#5c253d]/25 transition-all duration-300 group hover:-translate-y-1 relative overflow-hidden cursor-pointer hover:bg-white hover:border-[#5c253d]"
                   >
-                    <div className="absolute top-4 right-4 text-gray-700 group-hover:text-cyan-400 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-1 -translate-y-1">
+                    <div className="absolute top-4 right-4 text-[#5c253d]/50 group-hover:text-[#f27447] opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-1 -translate-y-1">
                       <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
                       </svg>
                     </div>
                     <div className="space-y-4">
                       <div className="h-16 flex items-center justify-center">
-                        <div className={cn(
-                          "w-14 h-14 rounded-xl bg-[#0e1422] border border-gray-800/80 flex items-center justify-center p-2.5 transition-all duration-300",
-                          colors.logoBg
-                        )}>
+                        <div className="w-14 h-14 rounded-xl bg-white border border-[#5c253d]/15 flex items-center justify-center p-2.5 transition-all duration-300 group-hover:border-[#f27447]/40 group-hover:shadow-sm">
                           <LogoImage 
                             src={logo.img} 
                             alt={`${logo.label} Logo`}
-                            className="w-8 h-8 object-contain filter brightness-125 contrast-110 group-hover:scale-110 transition-transform duration-300"
+                            className="w-8 h-8 object-contain group-hover:scale-110 transition-transform duration-300"
                             fallbackDomain={(() => {
                               try {
                                 return new URL(logo.href).hostname;
@@ -2934,13 +2770,13 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                         </div>
                       </div>
                       <div className="space-y-1 text-center">
-                        <span className="font-sans font-black text-xs sm:text-sm tracking-wider text-white block uppercase truncate">{logo.label}</span>
-                        <span className={cn("text-[9px] font-mono uppercase tracking-widest block font-bold truncate", colors.text)}>{logo.subLabel}</span>
+                        <span className="font-sans font-black text-xs sm:text-sm tracking-wider text-[#5c253d] block uppercase truncate">{logo.label}</span>
+                        <span className="text-[9px] font-mono uppercase tracking-widest block font-bold truncate text-[#f27447]">{logo.subLabel}</span>
                       </div>
                     </div>
-                    <div className="border-t border-gray-900/80 pt-3 mt-4 space-y-1">
-                      <span className="text-[9px] font-mono text-gray-500 block uppercase truncate">{logo.desc}</span>
-                      <div className={cn("text-xs font-mono font-bold truncate", colors.badge)}>{logo.badge}</div>
+                    <div className="border-t border-[#5c253d]/10 pt-3 mt-4 space-y-1">
+                      <span className="text-[9px] font-mono text-[#5c253d]/60 block uppercase truncate">{logo.desc}</span>
+                      <div className="text-xs font-mono font-bold truncate text-[#5c253d]">{logo.badge}</div>
                     </div>
                   </a>
                 );
@@ -2971,7 +2807,7 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
         {/* PROFESSIONAL EXPERIENCE TIMELINE */}
         <motion.section 
           id="experience-timeline" 
-          className="border-t border-gray-800/60 pt-16"
+          className="border-t border-[#5c253d]/15 pt-16 text-[#5c253d]"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
@@ -2981,10 +2817,10 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
             
             <div className="lg:col-span-4">
               <div className="sticky top-28 space-y-3">
-                <div className="font-mono text-[11px] uppercase tracking-widest text-cyan-400">04 / HISTORY OF ROLES</div>
-                <h2 className="text-3xl font-black text-white uppercase tracking-tight">Professional Experience</h2>
-                <div className="h-1 w-20 bg-cyan-500 rounded" />
-                <p className="text-gray-400 text-xs font-sans pt-4 max-w-sm">
+                <div className="font-mono text-[11px] uppercase tracking-widest text-[#f27447] font-bold">04 / HISTORY OF ROLES</div>
+                <h2 className="text-3xl font-black text-[#5c253d] uppercase tracking-tight font-display">Professional Experience</h2>
+                <div className="h-1 w-20 bg-[#5c253d] rounded" />
+                <p className="text-[#5c253d]/70 text-xs font-sans pt-4 max-w-sm">
                   Over 5 years of active deployment spanning premium hospitality lead conversion and custom Shopify Liquid builds.
                 </p>
               </div>
@@ -2992,34 +2828,34 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
 
             <div className="lg:col-span-8 space-y-8 relative">
               {/* Vertical center track */}
-              <div className="absolute left-4 top-2 bottom-2 w-[1px] bg-gray-800" />
+              <div className="absolute left-4 top-2 bottom-2 w-[2px] bg-[#5c253d]/20" />
 
               {TIMELINE.map((time: any) => (
                 <div key={time.id} className="relative pl-10 group">
                   {/* Timeline dot */}
-                  <div className="absolute left-2.5 top-1.5 w-3 h-3 rounded-full bg-gray-950 border-2 border-gray-800 group-hover:border-cyan-500 group-hover:bg-cyan-500 transition-colors z-10" />
+                  <div className="absolute left-2.5 top-1.5 w-3.5 h-3.5 rounded-full bg-white border-2 border-[#5c253d] group-hover:border-[#f27447] group-hover:bg-[#f27447] transition-colors z-10" />
                   
-                  <div className="p-5 sm:p-6 bg-[#0b0f17] border border-gray-800/80 rounded-xl space-y-3 transition-all hover:border-gray-700/80">
+                  <div className="p-5 sm:p-6 bg-white border-2 border-[#5c253d] shadow-[4px_4px_0px_#5c253d] rounded-2xl space-y-3 transition-all hover:translate-x-1 hover:shadow-[6px_6px_0px_#5c253d]">
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
-                      <span className="font-mono text-xs font-black text-cyan-400">{time.period}</span>
-                      <span className="text-[10px] font-mono text-gray-500 uppercase flex items-center">
-                        <MapPin className="w-3 h-3 text-gray-600 mr-1" /> {time.location}
+                      <span className="font-mono text-xs font-black text-[#f27447]">{time.period}</span>
+                      <span className="text-[10px] font-mono text-[#5c253d]/60 uppercase flex items-center">
+                        <MapPin className="w-3 h-3 text-[#f27447] mr-1" /> {time.location}
                       </span>
                     </div>
 
                     <div>
-                      <h3 className="text-base font-bold text-white uppercase tracking-wide">{time.role}</h3>
-                      <span className="font-mono text-xs text-gray-400">@ <strong className="text-emerald-400">{time.company}</strong></span>
+                      <h3 className="text-base font-bold text-[#5c253d] uppercase tracking-wide">{time.role}</h3>
+                      <span className="font-mono text-xs text-[#5c253d]/70">@ <strong className="text-[#f27447] font-bold">{time.company}</strong></span>
                     </div>
 
-                    <p className="text-gray-400 text-xs font-sans leading-relaxed">{time.description}</p>
+                    <p className="text-[#5c253d]/80 text-xs font-sans leading-relaxed">{time.description}</p>
 
-                    <div className="space-y-1.5 border-t border-gray-900 pt-3">
-                      <span className="text-[10px] font-mono text-gray-500 uppercase block">Verified Deliverables:</span>
+                    <div className="space-y-1.5 border-t border-[#5c253d]/10 pt-3">
+                      <span className="text-[10px] font-mono text-[#5c253d]/60 uppercase block">Verified Deliverables:</span>
                       <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                         {time.achievements.map((ach: any, idx: number) => (
-                          <li key={idx} className="text-[10px] font-mono text-gray-300 flex items-start space-x-1.5">
-                            <span className="text-emerald-400 flex-shrink-0 mt-0.5">{"//"}</span>
+                          <li key={idx} className="text-[10px] font-mono text-[#5c253d]/80 flex items-start space-x-1.5">
+                            <span className="text-[#f27447] flex-shrink-0 mt-0.5">{"//"}</span>
                             <span className="leading-tight">{ach}</span>
                           </li>
                         ))}
@@ -3037,7 +2873,7 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
         {/* FILTERABLE CLIENT SHOWCASE & DETAIL POPUPS */}
         <motion.section 
           id="portfolio-grid" 
-          className="border-t border-gray-800/60 pt-16"
+          className="border-t border-[color-mix(in_srgb,var(--primary)_15%,transparent)] pt-16 text-[var(--primary)]"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
@@ -3045,9 +2881,9 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
         >
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
             <div className="space-y-3">
-              <div className="font-mono text-[11px] uppercase tracking-widest text-cyan-400">05 / PORTFOLIO DEMO</div>
-              <h2 className="text-3xl font-black text-white uppercase tracking-tight">Selected Case Studies</h2>
-              <p className="text-gray-400 text-xs font-sans">
+              <div className="font-mono text-[11px] uppercase tracking-widest text-[var(--secondary)] font-bold">05 / PORTFOLIO DEMO</div>
+              <h2 className="text-3xl font-black text-[var(--primary)] uppercase tracking-tight font-display">Selected Case Studies</h2>
+              <p className="text-[color-mix(in_srgb,var(--primary)_80%,transparent)] text-xs font-sans">
                 Search and explore real luxury, hospitality, and e-commerce domains optimized by Rizwan. Click cards for case study details.
               </p>
             </div>
@@ -3056,16 +2892,16 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full md:w-auto">
               {/* Fuzzy-search Input */}
               <div className="relative flex-grow">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[color-mix(in_srgb,var(--primary)_50%,transparent)]" />
                 <input 
                   type="text"
                   placeholder="Fuzzy-search domains..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full sm:w-64 bg-black border border-zinc-800 rounded px-3 py-2 pl-9 text-xs font-mono text-white focus:outline-none focus:border-cyan-500"
+                  className="w-full sm:w-64 bg-white border-2 border-[var(--primary)] text-[var(--primary)] focus:border-[var(--secondary)] placeholder-[color-mix(in_srgb,var(--primary)_40%,transparent)] rounded-xl px-3 py-2 pl-9 text-xs font-mono shadow-[2px_2px_0px_var(--primary)] focus:outline-none"
                 />
                 {searchQuery && (
-                  <button onClick={() => setSearchQuery('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white">
+                  <button onClick={() => setSearchQuery('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-[color-mix(in_srgb,var(--primary)_60%,transparent)] hover:text-[var(--primary)]">
                     <X className="w-3.5 h-3.5" />
                   </button>
                 )}
@@ -3073,11 +2909,11 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
 
               {/* Category Dropdown Toggle */}
               <div className="flex items-center space-x-2">
-                <span className="text-xs font-mono text-gray-500">Filter:</span>
+                <span className="text-xs font-mono text-[color-mix(in_srgb,var(--primary)_60%,transparent)]">Filter:</span>
                 <select
                   value={selectedCategory}
                   onChange={(e) => setSelectedCategory(e.target.value)}
-                  className="bg-black border border-zinc-800 rounded px-3 py-2 text-xs font-mono text-white focus:outline-none focus:border-cyan-500"
+                  className="bg-white border-2 border-[var(--primary)] text-[var(--primary)] rounded-xl px-3 py-2 text-xs font-mono focus:border-[var(--secondary)] shadow-[2px_2px_0px_var(--primary)] focus:outline-none cursor-pointer"
                 >
                   <option value="all">All Specialties</option>
                   <option value="carpet">Carpet & Furnishings</option>
@@ -3094,43 +2930,43 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
               {[1, 2, 3].map((idx) => (
                 <div 
                   key={`skeleton-${idx}`}
-                  className="bg-black border border-zinc-900 rounded-xl p-5 relative overflow-hidden flex flex-col justify-between h-full space-y-4"
+                  className="bg-white border-2 border-[var(--primary)] rounded-3xl p-5 relative overflow-hidden flex flex-col justify-between h-full space-y-4 shadow-[4px_4px_0px_var(--primary)]"
                 >
                   <div className="space-y-4 w-full">
                     {/* Browser Mockup Frame Skeleton */}
-                    <div className="relative w-full rounded-lg overflow-hidden border border-zinc-900 bg-[#0c0c0e] flex flex-col shrink-0">
+                    <div className="relative w-full rounded-lg overflow-hidden border border-[color-mix(in_srgb,var(--primary)_15%,transparent)] bg-[color-mix(in_srgb,var(--primary)_5%,transparent)] flex flex-col shrink-0">
                       {/* Browser Window Chrome/Header */}
-                      <div className="bg-zinc-950 border-b border-zinc-900/80 px-3 py-2 flex items-center justify-between shrink-0">
+                      <div className="bg-[color-mix(in_srgb,var(--primary)_5%,transparent)] border-b border-[color-mix(in_srgb,var(--primary)_10%,transparent)] px-3 py-2 flex items-center justify-between shrink-0">
                         <div className="flex gap-1 items-center">
-                          <span className="w-1.5 h-1.5 rounded-full bg-zinc-800" />
-                          <span className="w-1.5 h-1.5 rounded-full bg-zinc-800" />
-                          <span className="w-1.5 h-1.5 rounded-full bg-zinc-800" />
+                          <span className="w-1.5 h-1.5 rounded-full bg-[color-mix(in_srgb,var(--primary)_20%,transparent)]" />
+                          <span className="w-1.5 h-1.5 rounded-full bg-[color-mix(in_srgb,var(--primary)_20%,transparent)]" />
+                          <span className="w-1.5 h-1.5 rounded-full bg-[color-mix(in_srgb,var(--primary)_20%,transparent)]" />
                         </div>
-                        <div className="mx-2 flex-1 max-w-[120px] bg-zinc-900/60 border border-zinc-800/40 rounded h-3.5" />
+                        <div className="mx-2 flex-1 max-w-[120px] bg-[color-mix(in_srgb,var(--primary)_10%,transparent)] rounded h-3.5" />
                         <div className="w-3" />
                       </div>
 
                       {/* Live Screenshot Shimmer cover */}
-                      <div className="relative w-full h-40 bg-zinc-950/80 flex items-center justify-center overflow-hidden">
-                        <div className="absolute inset-0 bg-gradient-to-r from-zinc-950 via-zinc-900/40 to-zinc-950 animate-pulse" />
-                        <Globe className="w-4 h-4 text-zinc-850/60 animate-bounce" />
+                      <div className="relative w-full h-40 bg-white flex items-center justify-center overflow-hidden">
+                        <div className="absolute inset-0 bg-gradient-to-r from-white via-[color-mix(in_srgb,var(--primary)_5%,transparent)] to-white animate-pulse" />
+                        <Globe className="w-4 h-4 text-[color-mix(in_srgb,var(--primary)_20%,transparent)] animate-bounce" />
                       </div>
                     </div>
 
                     {/* Title & Subtitle skeleton lines */}
                     <div className="space-y-2 pt-1">
-                      <div className="h-5 w-2/3 bg-zinc-900 rounded animate-pulse" />
-                      <div className="h-3 w-1/3 bg-zinc-900/60 rounded animate-pulse" />
+                      <div className="h-5 w-2/3 bg-[color-mix(in_srgb,var(--primary)_10%,transparent)] rounded animate-pulse" />
+                      <div className="h-3 w-1/3 bg-[color-mix(in_srgb,var(--primary)_5%,transparent)] rounded animate-pulse" />
                     </div>
 
                     {/* Split Metrics Columns Skeletons */}
                     <div className="grid grid-cols-2 gap-4 py-3 border-t border-b border-zinc-900/80">
                       <div className="space-y-2">
-                        <div className="h-6 w-1/2 bg-cyan-950/20 rounded animate-pulse" />
+                        <div className="h-6 w-1/2 bg-[color-mix(in_srgb,var(--primary)_20%,transparent)] rounded animate-pulse" />
                         <div className="h-2.5 w-1/3 bg-zinc-900/50 rounded animate-pulse" />
                       </div>
                       <div className="space-y-2">
-                        <div className="h-6 w-1/2 bg-emerald-950/20 rounded animate-pulse" />
+                        <div className="h-6 w-1/2 bg-[color-mix(in_srgb,var(--secondary)_20%,transparent)] rounded animate-pulse" />
                         <div className="h-2.5 w-1/3 bg-zinc-900/50 rounded animate-pulse" />
                       </div>
                     </div>
@@ -3139,7 +2975,7 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                   {/* Dual Action Card Footer Skeletons */}
                   <div className="mt-5 pt-3 border-t border-zinc-900/80 flex items-center gap-2">
                     <div className="flex-1 bg-zinc-950/80 border border-zinc-900 h-9 rounded animate-pulse" />
-                    <div className="w-24 bg-cyan-950/10 border border-cyan-950/35 h-9 rounded animate-pulse" />
+                    <div className="w-24 bg-[color-mix(in_srgb,var(--primary)_10%,transparent)] border border-[color-mix(in_srgb,var(--primary)_35%,transparent)] h-9 rounded animate-pulse" />
                   </div>
                 </div>
               ))}
@@ -3167,9 +3003,9 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
               >
                 {filteredClients.slice(0, 3).map((client: any) => {
                   // Determine badge style
-                  let badgeBg = "bg-[#06b6d4] text-black";
+                  let badgeBg = "bg-[var(--primary)] text-zinc-950 font-bold border border-[var(--primary)]/20";
                   if (client.badge === "Performance Boost") {
-                    badgeBg = "bg-[#10b981] text-black";
+                    badgeBg = "bg-[var(--secondary)] text-zinc-950 font-bold border border-[var(--secondary)]/20";
                   } else if (client.badge === "CRO & Organic") {
                     badgeBg = "bg-amber-400 text-black";
                   } else if (client.badge) {
@@ -3188,8 +3024,7 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                         }
                       }}
                       whileHover={{ 
-                        y: -10,
-                        scale: 1.018,
+                        y: -8,
                         transition: { duration: 0.3, ease: [0.16, 1, 0.3, 1] }
                       }}
                       onMouseMove={(e) => {
@@ -3208,32 +3043,34 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                         }
                       }}
                       className={cn(
-                        "bg-[#0a0a0d] border border-zinc-800/80 rounded-xl p-5 cursor-pointer relative group flex flex-col justify-between overflow-hidden before:absolute before:inset-0 before:bg-[radial-gradient(240px_circle_at_var(--x,0px)_var(--y,0px),rgba(6,182,212,0.15),transparent_85%)] before:opacity-0 hover:before:opacity-100 before:transition-opacity before:pointer-events-none shadow-xl shadow-black/80",
-                        client.highlight 
-                          ? "hover:border-cyan-500/40 hover:shadow-[0_0_30px_rgba(6,182,212,0.2)]" 
-                          : "hover:border-zinc-700 hover:shadow-2xl hover:shadow-cyan-500/5"
+                        "bg-white border-2 border-[var(--primary)] rounded-3xl p-5 cursor-pointer relative group flex flex-col justify-between overflow-hidden shadow-[4px_4px_0px_var(--primary)] hover:shadow-[6px_6px_0px_var(--primary)] transition-all",
+                        client.highlight && "ring-2 ring-[var(--secondary)] ring-offset-2 ring-offset-white"
                       )}
                     >
-                      {/* Subtle glow for VIP highlight cards */}
+                      {/* Highlight subtle corner ribbon if VIP */}
                       {client.highlight && (
-                        <div className="absolute -inset-px bg-gradient-to-r from-cyan-500/10 to-emerald-500/10 rounded-xl opacity-60 group-hover:opacity-100 transition-opacity pointer-events-none" />
+                        <div className="absolute top-0 right-0 w-24 h-24 overflow-hidden pointer-events-none z-20">
+                          <div className="absolute transform rotate-45 bg-[var(--secondary)] text-white font-mono text-[7px] font-bold py-1 px-5 right-[-24px] top-[14px] text-center w-[100px] shadow-sm uppercase tracking-widest">
+                            VIP
+                          </div>
+                        </div>
                       )}
 
                       <div className="space-y-4 relative z-10 w-full">
                         {/* Browser Mockup Frame with Live Website Screenshot */}
-                        <div className="relative w-full rounded-lg overflow-hidden border border-zinc-900 bg-[#0c0c0e] shadow-inner flex flex-col group/browser">
+                        <div className="relative w-full rounded-xl overflow-hidden border-2 border-[var(--primary)] bg-[color-mix(in_srgb,var(--primary)_3%,transparent)] flex flex-col group/browser">
                           {/* Browser Window Chrome/Header */}
-                          <div className="bg-zinc-950 border-b border-zinc-900/80 px-3 py-2 flex items-center justify-between shrink-0 select-none">
+                          <div className="bg-[color-mix(in_srgb,var(--primary)_5%,transparent)] border-b-2 border-[var(--primary)] px-3 py-2 flex items-center justify-between shrink-0 select-none">
                             {/* Left Dot Controls */}
                             <div className="flex gap-1 items-center shrink-0">
-                              <span className="w-1.5 h-1.5 rounded-full bg-red-500/60" />
-                              <span className="w-1.5 h-1.5 rounded-full bg-amber-500/60" />
-                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500/60" />
+                              <span className="w-1.5 h-1.5 rounded-full bg-red-400" />
+                              <span className="w-1.5 h-1.5 rounded-full bg-yellow-400" />
+                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
                             </div>
                             {/* Center URL pill */}
-                            <div className="mx-2 flex-1 max-w-[140px] sm:max-w-[180px] bg-zinc-900/80 border border-zinc-800/60 rounded px-1.5 py-0.5 flex items-center gap-1 justify-center">
-                              <Lock className="w-2 h-2 text-emerald-400 shrink-0" />
-                              <span className="text-[8.5px] font-mono text-zinc-400 truncate tracking-wide">
+                            <div className="mx-2 flex-1 max-w-[140px] sm:max-w-[180px] bg-white border border-[var(--primary)]/30 rounded-lg px-1.5 py-0.5 flex items-center gap-1 justify-center">
+                              <Lock className="w-2 h-2 text-[var(--secondary)] shrink-0" />
+                              <span className="text-[8.5px] font-mono text-[var(--primary)]/80 truncate tracking-wide">
                                 {getClientDomain(client.name)}
                               </span>
                             </div>
@@ -3242,25 +3079,25 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                           </div>
 
                           {/* Live Screenshot Wrapper */}
-                          <div className="relative w-full h-40 overflow-hidden bg-zinc-950">
+                          <div className="relative w-full h-40 overflow-hidden bg-white">
                             <ClientScreenshot 
                               key={client.id || client.name}
                               client={client} 
                               className="w-full h-full object-cover object-top group-hover:scale-[1.04] transition-transform duration-500" 
                             />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-50 pointer-events-none" />
+                            <div className="absolute inset-0 bg-gradient-to-t from-white/10 via-transparent to-transparent opacity-50 pointer-events-none" />
                             
                             {/* Top Left Badge overlay */}
                             {client.badge && (
                               <div className="absolute top-2.5 left-2.5 z-10">
-                                <span className={cn("text-[8px] font-mono font-black tracking-wider uppercase px-2 py-0.5 rounded shadow-md", badgeBg)}>
+                                <span className={cn("text-[8px] font-mono font-black tracking-wider uppercase px-2 py-0.5 rounded shadow-sm border border-[var(--primary)]/20", badgeBg)}>
                                   {client.badge}
                                 </span>
                               </div>
                             )}
 
                             {/* Top Right Logo icon overlay */}
-                            <div className="absolute top-2.5 right-2.5 z-10 bg-black/80 border border-zinc-800 p-0.5 rounded backdrop-blur-xs flex items-center justify-center">
+                            <div className="absolute top-2.5 right-2.5 z-10 bg-white border border-[var(--primary)] p-0.5 rounded backdrop-blur-xs flex items-center justify-center shadow-sm">
                               <ClientLogoImage 
                                 key={client.id}
                                 domain={getClientDomain(client.name)}
@@ -3272,39 +3109,39 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                         </div>
 
                         <div className="space-y-1">
-                          <h3 className="font-sans font-black text-white tracking-tight group-hover:text-cyan-400 transition-colors text-base sm:text-lg flex items-center gap-1.5">
+                          <h3 className="font-sans font-black text-[var(--primary)] tracking-tight group-hover:text-[var(--secondary)] transition-colors text-base sm:text-lg flex items-center gap-1.5">
                             <span>{client.name}</span>
                             <a 
                               href={client.websiteUrl || `https://${getClientDomain(client.name)}`}
                               target="_blank"
                               rel="noopener noreferrer"
                               onClick={(e) => e.stopPropagation()}
-                              className="text-zinc-500 hover:text-cyan-400 transition-colors cursor-pointer inline-flex items-center"
+                              className="text-[var(--primary)]/40 hover:text-[var(--secondary)] transition-colors cursor-pointer inline-flex items-center"
                               title={`Visit ${client.name} live`}
                             >
                               <ExternalLink className="w-3.5 h-3.5" />
                             </a>
                           </h3>
-                          <p className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest font-bold">
+                          <p className="text-[10px] font-mono text-[var(--primary)]/60 uppercase tracking-widest font-bold">
                             {client.tag}
                           </p>
                         </div>
 
                         {/* Split Metrics Columns */}
-                        <div className="grid grid-cols-2 gap-4 py-3 border-t border-b border-zinc-900/80">
+                        <div className="grid grid-cols-2 gap-4 py-3 border-t-2 border-b-2 border-[var(--primary)]/10">
                           <div>
-                            <div className="text-base sm:text-lg font-black font-mono text-cyan-400">
+                            <div className="text-base sm:text-lg font-black font-mono text-[var(--primary)]">
                               {client.metric1?.val || client.metrics?.split(' / ')[0] || '98%'}
                             </div>
-                            <div className="text-[9px] font-mono uppercase text-zinc-500 tracking-wider">
+                            <div className="text-[9px] font-mono uppercase text-[var(--primary)]/60 tracking-wider font-bold">
                               {client.metric1?.label || 'Score'}
                             </div>
                           </div>
                           <div>
-                            <div className="text-base sm:text-lg font-black font-mono text-emerald-400">
+                            <div className="text-base sm:text-lg font-black font-mono text-[var(--secondary)]">
                               {client.metric2?.val || client.metrics?.split(' / ')[1] || 'Completed'}
                             </div>
-                            <div className="text-[9px] font-mono uppercase text-zinc-500 tracking-wider">
+                            <div className="text-[9px] font-mono uppercase text-[var(--primary)]/60 tracking-wider font-bold">
                               {client.metric2?.label || 'Outcome'}
                             </div>
                           </div>
@@ -3312,7 +3149,7 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                       </div>
 
                       {/* Dual Action Card Footer */}
-                      <div className="mt-5 pt-3 border-t border-zinc-900/80 flex items-center gap-2 relative z-10">
+                      <div className="mt-5 pt-3 border-t-2 border-[var(--primary)]/10 flex items-center gap-2 relative z-10">
                         <button 
                           onClick={(e) => {
                             e.stopPropagation();
@@ -3323,7 +3160,7 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                               window.history.pushState({}, '', url.toString());
                             }
                           }}
-                          className="flex-1 bg-zinc-950/80 hover:bg-zinc-900 border border-zinc-900 hover:border-cyan-500/20 text-zinc-400 hover:text-cyan-400 text-[10px] font-mono font-bold uppercase tracking-widest py-2.5 rounded transition-all text-center"
+                          className="flex-1 bg-white hover:bg-[color-mix(in_srgb,var(--primary)_5%,transparent)] border-2 border-[var(--primary)] text-[var(--primary)] text-[10px] font-mono font-bold uppercase tracking-widest py-2 rounded-xl shadow-[2px_2px_0px_var(--primary)] transition-all text-center active:translate-x-[1px] active:translate-y-[1px] active:shadow-[1px_1px_0px_var(--primary)]"
                         >
                           {client.buttonText || 'Case Study'}
                         </button>
@@ -3333,10 +3170,10 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                           target="_blank"
                           rel="noopener noreferrer"
                           onClick={(e) => e.stopPropagation()}
-                          className="px-3.5 py-2.5 bg-cyan-950/20 hover:bg-cyan-950/80 border border-cyan-950/50 hover:border-cyan-500/40 text-cyan-400 text-[10px] font-mono font-bold uppercase tracking-widest rounded transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                          className="px-3.5 py-2.5 bg-[var(--secondary)] hover:opacity-95 border-2 border-[var(--primary)] text-white text-[10px] font-mono font-bold uppercase tracking-widest rounded-xl shadow-[2px_2px_0px_var(--primary)] transition-all flex items-center justify-center gap-1.5 cursor-pointer active:translate-x-[1px] active:translate-y-[1px] active:shadow-[1px_1px_0px_var(--primary)]"
                           title={`Visit ${client.name} live`}
                         >
-                          <ExternalLink className="w-3.5 h-3.5" />
+                          <ExternalLink className="w-3.5 h-3.5 text-white" />
                           <span>Live Site</span>
                         </a>
                       </div>
@@ -3349,9 +3186,9 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
 
           {/* CLIENT DETAIL MODAL POPUP */}
           {selectedClientModal && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in">
               <div 
-                className="bg-[#060608] border border-cyan-500/40 rounded-2xl max-w-lg w-full p-6 sm:p-8 space-y-6 relative shadow-2xl shadow-cyan-500/10 animate-scale-in"
+                className="bg-white border-2 border-[var(--primary)] rounded-3xl max-w-lg w-full p-6 sm:p-8 space-y-6 relative shadow-[8px_8px_0px_var(--primary)] animate-scale-in text-[var(--primary)]"
                 onClick={(e) => e.stopPropagation()}
               >
                 {/* Close Button */}
@@ -3364,21 +3201,21 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                       window.history.pushState({}, '', url.toString());
                     }
                   }}
-                  className="absolute top-4 right-4 z-20 p-1 rounded bg-gray-900 border border-gray-800 text-gray-400 hover:text-white hover:border-gray-700 transition-all"
+                  className="absolute top-4 right-4 z-20 p-1.5 rounded-xl bg-white border-2 border-[var(--primary)] text-[var(--primary)] shadow-[2px_2px_0px_var(--primary)] hover:bg-[color-mix(in_srgb,var(--primary)_5%,transparent)] active:translate-x-[1px] active:translate-y-[1px] active:shadow-[1px_1px_0px_var(--primary)] transition-all cursor-pointer"
                 >
                   <X className="w-4 h-4" />
                 </button>
 
                 {/* Cover Image banner */}
-                <div className="relative w-full h-44 sm:h-52 rounded-xl overflow-hidden border border-gray-800/80 bg-black shadow-inner">
+                <div className="relative w-full h-44 sm:h-52 rounded-2xl overflow-hidden border-2 border-[var(--primary)] bg-white shadow-inner">
                   <ClientScreenshot 
                     key={selectedClientModal.id || selectedClientModal.name}
                     client={selectedClientModal} 
                     className="w-full h-full object-cover" 
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0b101c] via-[#0b101c]/40 to-transparent pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-white/10 via-transparent to-transparent pointer-events-none" />
                   {selectedClientModal.highlight && (
-                    <span className="absolute top-3 left-3 px-2 py-0.5 rounded bg-gradient-to-r from-cyan-400 to-blue-500 text-black text-[8px] font-bold tracking-widest uppercase font-mono shadow-md">
+                    <span className="absolute top-3 left-3 px-2 py-0.5 rounded border-2 border-[var(--primary)] bg-[var(--secondary)] text-white text-[8px] font-bold tracking-widest uppercase font-mono shadow-[2px_2px_0px_var(--primary)]">
                       ⭐ VIP CASE STUDY
                     </span>
                   )}
@@ -3386,13 +3223,13 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
 
                 {/* Modal Title */}
                 <div className="space-y-3">
-                  <div className="inline-flex items-center space-x-1.5 px-2 py-0.5 rounded bg-cyan-950/60 border border-cyan-800/40 text-[10px] font-mono uppercase text-cyan-300">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-cyan-400" />
+                  <div className="inline-flex items-center space-x-1.5 px-2 py-0.5 rounded border-2 border-[var(--primary)] bg-[color-mix(in_srgb,var(--primary)_5%,transparent)] text-[var(--primary)] text-[10px] font-mono font-bold uppercase shadow-[2px_2px_0px_var(--primary)]">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-[var(--primary)]" />
                     <span>Rizwan&apos;s Verified Case Study</span>
                   </div>
                   
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-gray-950 border border-gray-800 flex items-center justify-center p-1.5 shadow-inner">
+                    <div className="w-10 h-10 rounded-xl bg-white border-2 border-[var(--primary)] flex items-center justify-center p-1.5 shadow-sm">
                       <LargeClientLogoImage 
                         key={selectedClientModal.id}
                         domain={getClientDomain(selectedClientModal.name)}
@@ -3400,51 +3237,51 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                         className="w-full h-full rounded-lg object-contain"
                       />
                     </div>
-                    <h3 className="text-xl sm:text-2xl font-mono font-black text-white uppercase tracking-tight">
+                    <h3 className="text-xl sm:text-2xl font-sans font-black text-[var(--primary)] uppercase tracking-tight">
                       {selectedClientModal.name}
                     </h3>
                   </div>
 
-                  <div className="flex flex-col sm:flex-row sm:justify-between text-xs font-mono text-emerald-400 gap-1 sm:gap-0">
+                  <div className="flex flex-col sm:flex-row sm:justify-between text-xs font-mono text-[var(--secondary)] gap-1 sm:gap-0 font-bold">
                     <span>Outcome Metric: {selectedClientModal.metrics}</span>
-                    <span className="text-gray-500">Tag: {selectedClientModal.tag}</span>
+                    <span className="text-[var(--primary)]/60 font-bold">Tag: {selectedClientModal.tag}</span>
                   </div>
                 </div>
 
                 {/* Content body */}
-                <div className="space-y-4 border-t border-gray-900 pt-4">
+                <div className="space-y-4 border-t-2 border-[var(--primary)]/10 pt-4">
                   <div className="space-y-1">
-                    <span className="text-[10px] font-mono text-red-400/80 uppercase font-bold tracking-wider">{"// The Challenge"}</span>
-                    <p className="text-gray-300 text-xs sm:text-sm leading-relaxed font-sans bg-gray-950/40 p-3 rounded border border-gray-900">
+                    <span className="text-[10px] font-mono text-red-500 uppercase font-black tracking-wider">{"// The Challenge"}</span>
+                    <p className="text-[var(--primary)] text-xs sm:text-sm leading-relaxed font-sans bg-[color-mix(in_srgb,var(--primary)_3%,transparent)] p-3 rounded-xl border-2 border-[var(--primary)] font-medium">
                       {selectedClientModal.challenge}
                     </p>
                   </div>
 
                   <div className="space-y-1">
-                    <span className="text-[10px] font-mono text-cyan-400 uppercase font-bold tracking-wider">{"// Rizwan's Strategy"}</span>
-                    <p className="text-gray-300 text-xs sm:text-sm leading-relaxed font-sans bg-gray-950/40 p-3 rounded border border-gray-900">
+                    <span className="text-[10px] font-mono text-[var(--primary)] uppercase font-black tracking-wider">{"// Rizwan's Strategy"}</span>
+                    <p className="text-[var(--primary)] text-xs sm:text-sm leading-relaxed font-sans bg-[color-mix(in_srgb,var(--primary)_3%,transparent)] p-3 rounded-xl border-2 border-[var(--primary)] font-medium">
                       {selectedClientModal.strategy}
                     </p>
                   </div>
 
                   <div className="space-y-1">
-                    <span className="text-[10px] font-mono text-emerald-400 uppercase font-bold tracking-wider">{"// Verified Outcomes"}</span>
-                    <p className="text-gray-300 text-xs sm:text-sm leading-relaxed font-sans bg-emerald-950/5 p-3 rounded border border-emerald-950/30">
+                    <span className="text-[10px] font-mono text-[var(--secondary)] uppercase font-black tracking-wider">{"// Verified Outcomes"}</span>
+                    <p className="text-[var(--primary)] text-xs sm:text-sm leading-relaxed font-sans bg-[color-mix(in_srgb,var(--secondary)_5%,transparent)] p-3 rounded-xl border-2 border-[var(--primary)] font-medium">
                       {selectedClientModal.outcomes}
                     </p>
                   </div>
                 </div>
 
-                <div className="border-t border-gray-900 pt-4 flex flex-col sm:flex-row justify-between items-center gap-3">
-                  <span className="text-[10px] font-mono text-gray-500">Rizwan Saeed • Shopify Developer</span>
+                <div className="border-t-2 border-[var(--primary)]/10 pt-4 flex flex-col sm:flex-row justify-between items-center gap-3">
+                  <span className="text-[10px] font-mono text-[var(--primary)]/60 font-bold">Rizwan Saeed • Shopify Developer</span>
                   <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
                     <a 
                       href={selectedClientModal.websiteUrl || `https://${getClientDomain(selectedClientModal.name)}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="px-4 py-2 bg-gradient-to-r from-cyan-500 to-emerald-500 hover:from-cyan-400 hover:to-emerald-400 text-black font-semibold font-mono text-[10px] uppercase tracking-wider rounded transition-all flex items-center gap-1.5 cursor-pointer shadow-md shadow-cyan-500/10"
+                      className="px-4 py-2 bg-[var(--secondary)] hover:opacity-95 border-2 border-[var(--primary)] text-white font-bold font-mono text-[10px] uppercase tracking-wider rounded-xl transition-all flex items-center gap-1.5 cursor-pointer shadow-[2px_2px_0px_var(--primary)] active:translate-x-[1px] active:translate-y-[1px] active:shadow-[1px_1px_0px_var(--primary)]"
                     >
-                      <Globe className="w-3.5 h-3.5 text-black" />
+                      <Globe className="w-3.5 h-3.5 text-white" />
                       <span>Visit Live Website</span>
                     </a>
                     <button 
@@ -3456,7 +3293,7 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                           window.history.pushState({}, '', url.toString());
                         }
                       }}
-                      className="px-4 py-2 bg-gray-900 hover:bg-gray-800 text-white border border-gray-800 rounded font-mono text-[10px] uppercase tracking-wider transition-all cursor-pointer"
+                      className="px-4 py-2 bg-white hover:bg-[color-mix(in_srgb,var(--primary)_5%,transparent)] text-[var(--primary)] border-2 border-[var(--primary)] rounded-xl font-mono text-[10px] uppercase font-bold tracking-wider shadow-[2px_2px_0px_var(--primary)] transition-all active:translate-x-[1px] active:translate-y-[1px] active:shadow-[1px_1px_0px_var(--primary)] cursor-pointer"
                     >
                       Close Study
                     </button>
@@ -3470,43 +3307,43 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
         {/* INDUSTRIES WE COVER SECTION */}
         <motion.section 
           id="industries-coverage" 
-          className="border-t border-gray-800/60 pt-24 pb-16 space-y-12"
+          className="border-t border-[#5c253d]/15 pt-24 pb-16 space-y-12 text-[#5c253d]"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={fadeInUpVariants}
         >
           <div className="text-center space-y-4 max-w-3xl mx-auto">
-            <span className="text-[11px] font-mono font-bold text-cyan-400 uppercase tracking-widest bg-cyan-950/40 border border-cyan-800/40 px-3 py-1 rounded-full">
+            <span className="text-[11px] font-mono font-bold text-[#f27447] uppercase tracking-widest bg-[#f27447]/5 border border-[#f27447]/20 px-3 py-1 rounded-full">
               ✦ Targeted Market Sectors
             </span>
-            <h2 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tight leading-none">
+            <h2 className="text-4xl md:text-5xl font-black text-[#5c253d] uppercase tracking-tight leading-none font-display">
               Industries We Cover
             </h2>
-            <p className="text-gray-400 text-sm font-sans leading-relaxed max-w-2xl mx-auto">
+            <p className="text-[#5c253d]/80 text-sm font-sans leading-relaxed max-w-2xl mx-auto">
               Deploying tailormade acquisition funnels, technical search frameworks, and premium conversion engineering across high-value commercial domains.
             </p>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6 max-w-7xl mx-auto px-4">
             {[
-              { name: "Events Digital Marketing", desc: "Ticket sales & venue promotion", icon: Calendar, color: "text-cyan-400", bg: "hover:border-cyan-500/30 hover:shadow-cyan-950/20" },
-              { name: "Hotel Digital Marketing", desc: "Direct bookings & hospitality CRO", icon: Hotel, color: "text-sky-400", bg: "hover:border-sky-500/30 hover:shadow-sky-950/20" },
-              { name: "Health Digital Marketing", desc: "Patient acquisition & clinics SEO", icon: HeartPulse, color: "text-emerald-400", bg: "hover:border-emerald-500/30 hover:shadow-emerald-950/20" },
-              { name: "Sports Digital Marketing", desc: "Athletic brands & fitness channels", icon: Activity, color: "text-amber-400", bg: "hover:border-amber-500/30 hover:shadow-amber-950/20" },
-              { name: "Educational Marketing", desc: "Student enrollment & courses scaling", icon: GraduationCap, color: "text-indigo-400", bg: "hover:border-indigo-500/30 hover:shadow-indigo-950/20" },
+              { name: "Events Digital Marketing", desc: "Ticket sales & venue promotion", icon: Calendar },
+              { name: "Hotel Digital Marketing", desc: "Direct bookings & hospitality CRO", icon: Hotel },
+              { name: "Health Digital Marketing", desc: "Patient acquisition & clinics SEO", icon: HeartPulse },
+              { name: "Sports Digital Marketing", desc: "Athletic brands & fitness channels", icon: Activity },
+              { name: "Educational Marketing", desc: "Student enrollment & courses scaling", icon: GraduationCap },
               
-              { name: "HVAC Digital Marketing", desc: "Local dispatch & service contracts", icon: Wind, color: "text-teal-400", bg: "hover:border-teal-500/30 hover:shadow-teal-950/20" },
-              { name: "Small Business Marketing", desc: "Hyperlocal visibility & store traffic", icon: Store, color: "text-orange-400", bg: "hover:border-orange-500/30 hover:shadow-orange-950/20" },
-              { name: "Fashion Marketing", desc: "D2C retail scaling & lookbooks CRO", icon: Sparkles, color: "text-pink-400", bg: "hover:border-pink-500/30 hover:shadow-pink-950/20" },
-              { name: "Entertainment & Arts", desc: "Creative campaigns & media exposure", icon: Theater, color: "text-violet-400", bg: "hover:border-violet-500/30 hover:shadow-violet-950/20" },
-              { name: "E-Commerce Marketing", desc: "Shopify scale & cart optimizations", icon: ShoppingBag, color: "text-lime-400", bg: "hover:border-lime-500/30 hover:shadow-lime-950/20" },
+              { name: "HVAC Digital Marketing", desc: "Local dispatch & service contracts", icon: Wind },
+              { name: "Small Business Marketing", desc: "Hyperlocal visibility & store traffic", icon: Store },
+              { name: "Fashion Marketing", desc: "D2C retail scaling & lookbooks CRO", icon: Sparkles },
+              { name: "Entertainment & Arts", desc: "Creative campaigns & media exposure", icon: Theater },
+              { name: "E-Commerce Marketing", desc: "Shopify scale & cart optimizations", icon: ShoppingBag },
               
-              { name: "Food Digital Marketing", desc: "Restaurant chains & delivery funnels", icon: Utensils, color: "text-red-400", bg: "hover:border-red-500/30 hover:shadow-red-950/20" },
-              { name: "Electrician Digital Marketing", desc: "Emergency service leads & commercial", icon: Zap, color: "text-yellow-400", bg: "hover:border-yellow-500/30 hover:shadow-yellow-950/20" },
-              { name: "B2B Marketing", desc: "Lead generation & enterprise outreach", icon: Network, color: "text-blue-400", bg: "hover:border-blue-500/30 hover:shadow-blue-950/20" },
-              { name: "Cleaning Marketing", desc: "Residential & commercial contracts", icon: Brush, color: "text-emerald-300", bg: "hover:border-emerald-300/30 hover:shadow-emerald-950/20" },
-              { name: "Photography Marketing", desc: "Studio bookings & portfolio prestige", icon: Camera, color: "text-rose-400", bg: "hover:border-rose-500/30 hover:shadow-rose-950/20" },
+              { name: "Food Digital Marketing", desc: "Restaurant chains & delivery funnels", icon: Utensils },
+              { name: "Electrician Digital Marketing", desc: "Emergency service leads & commercial", icon: Zap },
+              { name: "B2B Marketing", desc: "Lead generation & enterprise outreach", icon: Network },
+              { name: "Cleaning Marketing", desc: "Residential & commercial contracts", icon: Brush },
+              { name: "Photography Marketing", desc: "Studio bookings & portfolio prestige", icon: Camera },
             ].map((industry, index) => {
               const IconComponent = industry.icon;
               return (
@@ -3514,17 +3351,14 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                   key={index}
                   whileHover={{ scale: 1.02, y: -4 }}
                   transition={{ duration: 0.2 }}
-                  className={cn(
-                    "bg-[#0d1527]/30 border border-white/[0.04] rounded-2xl p-6 flex flex-col items-center text-center space-y-4 backdrop-blur-sm transition-all duration-300",
-                    industry.bg
-                  )}
+                  className="bg-white border-2 border-[#5c253d] shadow-[4px_4px_0px_#5c253d] rounded-2xl p-6 flex flex-col items-center text-center space-y-4 transition-all duration-300 hover:shadow-[6px_6px_0px_#5c253d] hover:bg-[#f6f3f8]"
                 >
-                  <div className={cn("p-3 rounded-xl bg-white/[0.02] border border-white/[0.04]", industry.color)}>
+                  <div className="p-3 rounded-xl bg-[#f6f3f8] border border-[#5c253d]/15 text-[#f27447]">
                     <IconComponent className="w-6 h-6 stroke-[1.5]" />
                   </div>
                   <div className="space-y-1">
-                    <h3 className="text-sm font-bold text-white tracking-tight">{industry.name}</h3>
-                    <p className="text-[10px] font-mono text-zinc-500">{industry.desc}</p>
+                    <h3 className="text-sm font-bold text-[#5c253d] tracking-tight font-sans uppercase">{industry.name}</h3>
+                    <p className="text-[10px] font-mono text-[#5c253d]/70">{industry.desc}</p>
                   </div>
                 </motion.div>
               );
@@ -3535,32 +3369,32 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
         {/* DUAL-MODE ROI GROWTH CALCULATOR */}
         <motion.section 
           id="roi-calculator" 
-          className="border-t border-gray-800/60 pt-16"
+          className="border-t border-[#5c253d]/15 pt-16 text-[#5c253d]"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={fadeInUpVariants}
         >
           <div className="space-y-4 mb-10">
-            <div className="font-mono text-[11px] uppercase tracking-widest text-emerald-400">07 / PROJECT FINANCIAL RETURNS</div>
-            <h2 className="text-3xl font-black text-white uppercase tracking-tight">Growth & ROI Estimator</h2>
-            <p className="text-gray-400 text-sm max-w-2xl font-sans">
+            <div className="font-mono text-[11px] uppercase tracking-widest text-[#f27447] font-bold">07 / PROJECT FINANCIAL RETURNS</div>
+            <h2 className="text-3xl font-black text-[#5c253d] uppercase tracking-tight font-display">Growth & ROI Estimator</h2>
+            <p className="text-[#5c253d]/80 text-sm max-w-2xl font-sans">
               Enter details below to compare e-commerce (B2C) sales or custom B2B lead targets, simulating your ROI based on Rizwan&apos;s historical optimization multipliers.
             </p>
           </div>
 
-          <div className="bg-[#0b0f17] border border-gray-800/80 rounded-2xl p-6 sm:p-8 relative overflow-hidden">
+          <div className="bg-white border-2 border-[#5c253d] shadow-[4px_4px_0px_#5c253d] rounded-2xl p-6 sm:p-8 relative overflow-hidden text-[#5c253d]">
             
             {/* Mode Selector Toggle */}
-            <div className="flex items-center space-x-2 border-b border-gray-900 pb-5 mb-6">
-              <span className="text-xs font-mono text-gray-500 mr-2">Target Funnel Type:</span>
+            <div className="flex flex-wrap items-center gap-2 border-b border-[#5c253d]/10 pb-5 mb-6">
+              <span className="text-xs font-mono text-[#5c253d]/60 mr-2">Target Funnel Type:</span>
               <button 
                 onClick={() => setCalculatorMode('b2c')}
                 className={cn(
-                  "px-4 py-2 rounded text-xs font-mono transition-all",
+                  "px-4 py-2 rounded-xl text-xs font-mono transition-all cursor-pointer border-2",
                   calculatorMode === 'b2c' 
-                    ? "bg-cyan-500 text-black font-bold" 
-                    : "bg-gray-950 border border-gray-800 text-gray-400 hover:text-white"
+                    ? "bg-[#5c253d] border-[#5c253d] text-white font-bold" 
+                    : "bg-transparent border-[#5c253d]/20 text-[#5c253d] hover:bg-[#5c253d]/5"
                 )}
               >
                 E-commerce (B2C) Funnel
@@ -3568,10 +3402,10 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
               <button 
                 onClick={() => setCalculatorMode('b2b')}
                 className={cn(
-                  "px-4 py-2 rounded text-xs font-mono transition-all",
+                  "px-4 py-2 rounded-xl text-xs font-mono transition-all cursor-pointer border-2",
                   calculatorMode === 'b2b' 
-                    ? "bg-emerald-500 text-black font-bold" 
-                    : "bg-gray-950 border border-gray-800 text-gray-400 hover:text-white"
+                    ? "bg-[#5c253d] border-[#5c253d] text-white font-bold" 
+                    : "bg-transparent border-[#5c253d]/20 text-[#5c253d] hover:bg-[#5c253d]/5"
                 )}
               >
                 Lead Generation (B2B)
@@ -3586,8 +3420,8 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                 {/* 1. Spend Slider */}
                 <div className="space-y-2">
                   <div className="flex justify-between text-xs font-mono">
-                    <span className="text-gray-400">Projected Ad Spend Plan:</span>
-                    <span className="text-white font-bold">AED {adSpend.toLocaleString()}</span>
+                    <span className="text-[#5c253d]/70">Projected Ad Spend Plan:</span>
+                    <span className="text-[#5c253d] font-bold">AED {adSpend.toLocaleString()}</span>
                   </div>
                   <input 
                     type="range" 
@@ -3596,9 +3430,9 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                     step="500"
                     value={adSpend}
                     onChange={(e) => setAdSpend(parseInt(e.target.value))}
-                    className="w-full h-1.5 bg-gray-900 rounded accent-cyan-500"
+                    className="w-full h-2 bg-[#f6f3f8] border border-[#5c253d]/20 rounded-lg accent-[#f27447] cursor-pointer"
                   />
-                  <div className="flex justify-between text-[9px] font-mono text-gray-500">
+                  <div className="flex justify-between text-[9px] font-mono text-[#5c253d]/50">
                     <span>AED 1K</span>
                     <span>AED 25K</span>
                     <span>AED 50K</span>
@@ -3608,8 +3442,8 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                 {/* 2. Conversion Rate Slider */}
                 <div className="space-y-2">
                   <div className="flex justify-between text-xs font-mono">
-                    <span className="text-gray-400">Target Conversion Rate:</span>
-                    <span className="text-cyan-400 font-bold">{conversionRate.toFixed(1)}%</span>
+                    <span className="text-[#5c253d]/70">Target Conversion Rate:</span>
+                    <span className="text-[#f27447] font-bold">{conversionRate.toFixed(1)}%</span>
                   </div>
                   <input 
                     type="range" 
@@ -3618,9 +3452,9 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                     step="0.1"
                     value={conversionRate}
                     onChange={(e) => setConversionRate(parseFloat(e.target.value))}
-                    className="w-full h-1.5 bg-gray-900 rounded accent-cyan-500"
+                    className="w-full h-2 bg-[#f6f3f8] border border-[#5c253d]/20 rounded-lg accent-[#f27447] cursor-pointer"
                   />
-                  <div className="flex justify-between text-[9px] font-mono text-gray-500">
+                  <div className="flex justify-between text-[9px] font-mono text-[#5c253d]/50">
                     <span>0.5% (Weak)</span>
                     <span>5.0% (Average)</span>
                     <span>10.0% (Elite Shopify)</span>
@@ -3632,8 +3466,8 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                   /* B2C Average Order Value Slider */
                   <div className="space-y-2">
                     <div className="flex justify-between text-xs font-mono">
-                      <span className="text-gray-400">Average Order Value (AOV):</span>
-                      <span className="text-emerald-400 font-bold">AED {avgOrderValue}</span>
+                      <span className="text-[#5c253d]/70">Average Order Value (AOV):</span>
+                      <span className="text-[#f27447] font-bold">AED {avgOrderValue}</span>
                     </div>
                     <input 
                       type="range" 
@@ -3642,9 +3476,9 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                       step="25"
                       value={avgOrderValue}
                       onChange={(e) => setAvgOrderValue(parseInt(e.target.value))}
-                      className="w-full h-1.5 bg-gray-900 rounded accent-emerald-500"
+                      className="w-full h-2 bg-[#f6f3f8] border border-[#5c253d]/20 rounded-lg accent-[#f27447] cursor-pointer"
                     />
-                    <div className="flex justify-between text-[9px] font-mono text-gray-500">
+                    <div className="flex justify-between text-[9px] font-mono text-[#5c253d]/50">
                       <span>AED 50</span>
                       <span>AED 750</span>
                       <span>AED 1,500</span>
@@ -3655,8 +3489,8 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                   <div className="space-y-5">
                     <div className="space-y-2">
                       <div className="flex justify-between text-xs font-mono">
-                        <span className="text-gray-400">Lead Close Rate:</span>
-                        <span className="text-cyan-400 font-bold">{leadCloseRate}%</span>
+                        <span className="text-[#5c253d]/70">Lead Close Rate:</span>
+                        <span className="text-[#f27447] font-bold">{leadCloseRate}%</span>
                       </div>
                       <input 
                         type="range" 
@@ -3665,9 +3499,9 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                         step="1"
                         value={leadCloseRate}
                         onChange={(e) => setLeadCloseRate(parseInt(e.target.value))}
-                        className="w-full h-1.5 bg-gray-900 rounded accent-cyan-500"
+                        className="w-full h-2 bg-[#f6f3f8] border border-[#5c253d]/20 rounded-lg accent-[#f27447] cursor-pointer"
                       />
-                      <div className="flex justify-between text-[9px] font-mono text-gray-500">
+                      <div className="flex justify-between text-[9px] font-mono text-[#5c253d]/50">
                         <span>5% Close</span>
                         <span>25% Close</span>
                         <span>50% Close</span>
@@ -3676,8 +3510,8 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
 
                     <div className="space-y-2">
                       <div className="flex justify-between text-xs font-mono">
-                        <span className="text-gray-400">Average Sales Deal Value:</span>
-                        <span className="text-emerald-400 font-bold">AED {leadValue.toLocaleString()}</span>
+                        <span className="text-[#5c253d]/70">Average Sales Deal Value:</span>
+                        <span className="text-[#f27447] font-bold">AED {leadValue.toLocaleString()}</span>
                       </div>
                       <input 
                         type="range" 
@@ -3686,9 +3520,9 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                         step="100"
                         value={leadValue}
                         onChange={(e) => setLeadValue(parseInt(e.target.value))}
-                        className="w-full h-1.5 bg-gray-900 rounded accent-emerald-500"
+                        className="w-full h-2 bg-[#f6f3f8] border border-[#5c253d]/20 rounded-lg accent-[#f27447] cursor-pointer"
                       />
-                      <div className="flex justify-between text-[9px] font-mono text-gray-500">
+                      <div className="flex justify-between text-[9px] font-mono text-[#5c253d]/50">
                         <span>AED 200</span>
                         <span>AED 5,000</span>
                         <span>AED 10,000</span>
@@ -3700,56 +3534,56 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
               </div>
 
               {/* Calculator Output Display Box */}
-              <div className="lg:col-span-7 bg-[#000000] border border-gray-800 rounded-xl p-6 space-y-6">
+              <div className="lg:col-span-7 bg-[#f6f3f8] border-2 border-[#5c253d] rounded-2xl p-6 space-y-6">
                 
-                <div className="flex justify-between items-center border-b border-gray-900 pb-4">
-                  <span className="text-xs font-mono text-gray-500 uppercase">Estimated Return Simulation</span>
-                  <span className="text-[10px] font-mono text-cyan-400 uppercase tracking-widest font-bold">Computed Benchmarks</span>
+                <div className="flex justify-between items-center border-b border-[#5c253d]/10 pb-4">
+                  <span className="text-xs font-mono text-[#5c253d]/60 uppercase">Estimated Return Simulation</span>
+                  <span className="text-[10px] font-mono text-[#f27447] uppercase tracking-widest font-bold">Computed Benchmarks</span>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   
                   {/* Revenue output */}
                   <div className="space-y-1">
-                    <span className="text-[10px] font-mono text-gray-500 uppercase block">Projected Sales Revenue</span>
-                    <div className="text-2xl sm:text-3xl font-mono font-black text-white">{calculatedROI.secondaryMetric}</div>
-                    <span className="text-[9px] font-mono text-gray-400 block">Gross return footprint</span>
+                    <span className="text-[10px] font-mono text-[#5c253d]/60 uppercase block">Projected Sales Revenue</span>
+                    <div className="text-2xl sm:text-3xl font-mono font-black text-[#5c253d]">{calculatedROI.secondaryMetric}</div>
+                    <span className="text-[9px] font-mono text-[#5c253d]/50 block">Gross return footprint</span>
                   </div>
 
                   {/* Net ROI output */}
                   <div className="space-y-1">
-                    <span className="text-[10px] font-mono text-gray-500 uppercase block">Net Gains (Minus Spend)</span>
+                    <span className="text-[10px] font-mono text-[#5c253d]/60 uppercase block">Net Gains (Minus Spend)</span>
                     <div className={cn(
                       "text-2xl sm:text-3xl font-mono font-black",
-                      calculatedROI.netGain >= 0 ? "text-emerald-400" : "text-red-400"
+                      calculatedROI.netGain >= 0 ? "text-[#f27447]" : "text-red-500"
                     )}>
                       AED {calculatedROI.netGain.toLocaleString()}
                     </div>
-                    <span className="text-[9px] font-mono text-gray-400 block">Total advertising net margin</span>
+                    <span className="text-[9px] font-mono text-[#5c253d]/50 block">Total advertising net margin</span>
                   </div>
 
                   {/* Volume output */}
                   <div className="space-y-1">
-                    <span className="text-[10px] font-mono text-gray-500 uppercase block">{calculatedROI.metricLabel}</span>
-                    <div className="text-xl font-mono font-black text-gray-200">{calculatedROI.primaryMetric}</div>
-                    <span className="text-[9px] font-mono text-gray-400 block">From estimated traffic segment</span>
+                    <span className="text-[10px] font-mono text-[#5c253d]/60 uppercase block">{calculatedROI.metricLabel}</span>
+                    <div className="text-xl font-mono font-black text-[#5c253d]">{calculatedROI.primaryMetric}</div>
+                    <span className="text-[9px] font-mono text-[#5c253d]/50 block">From estimated traffic segment</span>
                   </div>
 
                   {/* ROI / ROAS multiplier output */}
                   <div className="space-y-1">
-                    <span className="text-[10px] font-mono text-gray-500 uppercase block">{calculatedROI.efficiencyLabel}</span>
-                    <div className="text-xl font-mono font-black text-cyan-400">{calculatedROI.efficiencyValue}</div>
-                    <span className="text-[9px] font-mono text-gray-400 block">Cost tracking safety factor</span>
+                    <span className="text-[10px] font-mono text-[#5c253d]/60 uppercase block">{calculatedROI.efficiencyLabel}</span>
+                    <div className="text-xl font-mono font-black text-[#f27447]">{calculatedROI.efficiencyValue}</div>
+                    <span className="text-[9px] font-mono text-[#5c253d]/50 block">Cost tracking safety factor</span>
                   </div>
 
                 </div>
 
-                <div className="border-t border-gray-900 pt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                  <p className="text-[10px] font-mono text-gray-500 max-w-sm">
+                <div className="border-t border-[#5c253d]/10 pt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                  <p className="text-[10px] font-mono text-[#5c253d]/70 max-w-sm">
                     {calculatedROI.speedBoostDesc}
                   </p>
-                  <span className="text-[10px] font-mono px-2 py-0.5 bg-emerald-950/20 border border-emerald-900/30 text-emerald-400 rounded flex items-center space-x-1.5 self-start">
-                    <Sparkles className="w-3 h-3 text-emerald-400" />
+                  <span className="text-[10px] font-mono px-2.5 py-1 bg-[#f27447]/10 border border-[#f27447]/30 text-[#f27447] rounded-xl flex items-center space-x-1.5 self-start font-bold">
+                    <Sparkles className="w-3 h-3 text-[#f27447]" />
                     <span>Speed Boost Multiplier Active</span>
                   </span>
                 </div>
@@ -3763,16 +3597,16 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
         {/* CLIENT TESTIMONIALS HUB */}
         <motion.section 
           id="testimonials-hub" 
-          className="border-t border-gray-800/60 pt-16"
+          className="border-t border-[#5c253d]/15 pt-16 text-[#5c253d]"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={fadeInUpVariants}
         >
           <div className="text-center max-w-2xl mx-auto space-y-3 mb-12">
-            <div className="font-mono text-[11px] uppercase tracking-widest text-emerald-400">08 / VERIFIED ENDORSEMENTS</div>
-            <h2 className="text-3xl font-black text-white uppercase tracking-tight">Client Testimonials</h2>
-            <p className="text-gray-400 text-xs font-sans">
+            <div className="font-mono text-[11px] uppercase tracking-widest text-[#f27447] font-bold">08 / VERIFIED ENDORSEMENTS</div>
+            <h2 className="text-3xl font-black text-[#5c253d] uppercase tracking-tight font-display">Client Testimonials</h2>
+            <p className="text-[#5c253d]/80 text-xs font-sans">
               Real testimonials from founders and directors scaled by Rizwan Saeed.
             </p>
           </div>
@@ -3785,7 +3619,7 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
         {/* FAQS */}
         <motion.section 
           id="faqs" 
-          className="border-t border-gray-800/60 pt-16"
+          className="border-t border-[#5c253d]/15 pt-16 text-[#5c253d]"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
@@ -3795,10 +3629,10 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
             
             <div className="lg:col-span-4">
               <div className="sticky top-28 space-y-3">
-                <div className="font-mono text-[11px] uppercase tracking-widest text-cyan-400">09 / CORE FAQ</div>
-                <h2 className="text-3xl font-black text-white uppercase tracking-tight">Technical FAQs</h2>
-                <div className="h-1 w-20 bg-cyan-500 rounded" />
-                <p className="text-gray-400 text-xs font-sans pt-4">
+                <div className="font-mono text-[11px] uppercase tracking-widest text-[#f27447] font-bold">09 / CORE FAQ</div>
+                <h2 className="text-3xl font-black text-[#5c253d] uppercase tracking-tight font-display">Technical FAQs</h2>
+                <div className="h-1 w-20 bg-[#5c253d] rounded" />
+                <p className="text-[#5c253d]/80 text-xs font-sans pt-4">
                   Common queries covering Liquid, technical crawl maps, and pixel attributions for Middle East campaigns.
                 </p>
               </div>
@@ -3810,18 +3644,18 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                 return (
                   <div 
                     key={idx}
-                    className="bg-[#0b0f17] border border-gray-800/80 rounded-xl overflow-hidden transition-all"
+                    className="bg-white border-2 border-[#5c253d] shadow-[2px_2px_0px_#5c253d] rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-[4px_4px_0px_#5c253d]"
                   >
                     <button
                       onClick={() => setExpandedFaq(isExpanded ? null : idx)}
-                      className="w-full text-left p-5 flex justify-between items-center text-xs sm:text-sm font-mono text-white font-bold hover:text-cyan-300 transition-colors"
+                      className="w-full text-left p-5 flex justify-between items-center text-xs sm:text-sm font-mono text-[#5c253d] font-bold hover:text-[#f27447] transition-colors cursor-pointer"
                     >
                       <span>{faq.question}</span>
-                      <ChevronDown className={cn("w-4 h-4 text-gray-500 transition-transform", isExpanded ? "rotate-180 text-cyan-400" : "")} />
+                      <ChevronDown className={cn("w-4 h-4 text-[#5c253d]/50 transition-transform", isExpanded ? "rotate-180 text-[#f27447]" : "")} />
                     </button>
 
                     {isExpanded && (
-                      <div className="p-5 border-t border-gray-900 bg-gray-950/20 text-xs sm:text-sm text-gray-400 font-sans leading-relaxed">
+                      <div className="p-5 border-t border-[#5c253d]/10 bg-[#f6f3f8]/50 text-xs sm:text-sm text-[#5c253d]/80 font-sans leading-relaxed">
                         {faq.answer}
                       </div>
                     )}
@@ -3836,7 +3670,7 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
         {/* SECURE PROJECT ACQUISITION & CONTACT INTAKE */}
         <motion.section 
           id="contact-form" 
-          className="border-t border-gray-800/60 pt-16 scroll-mt-24"
+          className="border-t border-[#5c253d]/15 pt-16 scroll-mt-24 text-[#5c253d]"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
@@ -3847,51 +3681,51 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
             {/* Left Column: Context, Location and Telemetry Stats */}
             <div className="lg:col-span-4 space-y-6">
               <div className="sticky top-28 space-y-4">
-                <div className="font-mono text-[11px] uppercase tracking-widest text-cyan-400">08 / SECURE GET IN TOUCH</div>
-                <h2 className="text-3xl font-black text-white uppercase tracking-tight">Initiate Project</h2>
-                <div className="h-1 w-20 bg-cyan-500 rounded" />
-                <p className="text-gray-400 text-xs sm:text-sm font-sans leading-relaxed pt-2">
+                <div className="font-mono text-[11px] uppercase tracking-widest text-[#f27447] font-bold">08 / SECURE GET IN TOUCH</div>
+                <h2 className="text-3xl font-black text-[#5c253d] uppercase tracking-tight font-display">Initiate Project</h2>
+                <div className="h-1 w-20 bg-[#5c253d] rounded" />
+                <p className="text-[#5c253d]/80 text-xs sm:text-sm font-sans leading-relaxed pt-2">
                   Ready to deploy high-converting Shopify designs or optimize your paid advertising budget? Complete the intake secure protocol. Rizwan generally responds within 2 hours.
                 </p>
 
                 {/* Direct details bento cards */}
                 <div className="space-y-3 pt-4">
-                  <div className="flex items-start space-x-3 bg-gray-950/40 p-3.5 rounded-xl border border-gray-900">
-                    <MapPin className="w-4 h-4 text-cyan-400 mt-0.5 flex-shrink-0" />
+                  <div className="flex items-start space-x-3 bg-white p-3.5 rounded-xl border-2 border-[#5c253d] shadow-[2px_2px_0px_#5c253d]">
+                    <MapPin className="w-4 h-4 text-[#f27447] mt-0.5 flex-shrink-0" />
                     <div className="text-left">
-                      <span className="text-[10px] font-mono uppercase text-gray-500 block">HQ Operations</span>
-                      <span className="text-xs font-mono text-white">{liveMapConfig?.address || 'Dubai Marina, Dubai, United Arab Emirates'}</span>
+                      <span className="text-[10px] font-mono uppercase text-[#5c253d]/50 block font-bold">HQ Operations</span>
+                      <span className="text-xs font-mono text-[#5c253d] font-semibold">{liveMapConfig?.address || 'Dubai Marina, Dubai, United Arab Emirates'}</span>
                     </div>
                   </div>
 
-                  <div className="flex items-start space-x-3 bg-gray-950/40 p-3.5 rounded-xl border border-gray-900">
-                    <Mail className="w-4 h-4 text-cyan-400 mt-0.5 flex-shrink-0" />
+                  <div className="flex items-start space-x-3 bg-white p-3.5 rounded-xl border-2 border-[#5c253d] shadow-[2px_2px_0px_#5c253d]">
+                    <Mail className="w-4 h-4 text-[#f27447] mt-0.5 flex-shrink-0" />
                     <div className="text-left">
-                      <span className="text-[10px] font-mono uppercase text-gray-500 block">Direct Channel</span>
-                      <a href={`mailto:${brandInfo.contactEmail || 'RIZWANSAEED610@gmail.com'}`} className="text-xs font-mono text-cyan-300 hover:underline">
+                      <span className="text-[10px] font-mono uppercase text-[#5c253d]/50 block font-bold">Direct Channel</span>
+                      <a href={`mailto:${brandInfo.contactEmail || 'RIZWANSAEED610@gmail.com'}`} className="text-xs font-mono text-[#f27447] hover:underline font-semibold">
                         {brandInfo.contactEmail || 'RIZWANSAEED610@gmail.com'}
                       </a>
                     </div>
                   </div>
 
-                  <div className="flex items-start space-x-3 bg-gray-950/40 p-3.5 rounded-xl border border-gray-900">
-                    <Phone className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                  <div className="flex items-start space-x-3 bg-white p-3.5 rounded-xl border-2 border-[#5c253d] shadow-[2px_2px_0px_#5c253d]">
+                    <Phone className="w-4 h-4 text-[#f27447] mt-0.5 flex-shrink-0" />
                     <div className="text-left">
-                      <span className="text-[10px] font-mono uppercase text-gray-500 block">Direct Voice Line</span>
-                      <a href={`tel:${brandInfo.contactPhone || '+971500000000'}`} className="text-xs font-mono text-emerald-400 hover:underline">
+                      <span className="text-[10px] font-mono uppercase text-[#5c253d]/50 block font-bold">Direct Voice Line</span>
+                      <a href={`tel:${brandInfo.contactPhone || '+971500000000'}`} className="text-xs font-mono text-[#f27447] hover:underline font-semibold">
                         {brandInfo.contactPhone || '+971 50 000 0000'}
                       </a>
                     </div>
                   </div>
 
                   {brandInfo.whatsappNumber && (
-                    <div className="flex items-start space-x-3 bg-gray-950/40 p-3.5 rounded-xl border border-gray-900">
-                      <svg className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                    <div className="flex items-start space-x-3 bg-white p-3.5 rounded-xl border-2 border-[#5c253d] shadow-[2px_2px_0px_#5c253d]">
+                      <svg className="w-4 h-4 text-[#f27447] mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.262 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.965C16.592 1.978 14.12 1.01 11.625 1.01c-5.442 0-9.866 4.372-9.87 9.802 0 1.714.47 3.387 1.357 4.847l-.994 3.63 3.771-.978zm11.531-7.141c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.672-1.62-.922-2.206-.24-.584-.487-.51-.67-.51-.172-.008-.371-.008-.57-.008-.198 0-.523.074-.797.371-.272.296-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
                       </svg>
                       <div className="text-left">
-                        <span className="text-[10px] font-mono uppercase text-gray-500 block">Direct WhatsApp</span>
-                        <a href={`https://wa.me/${brandInfo.whatsappNumber.replace(/[^0-9]/g, '')}`} target="_blank" rel="noopener noreferrer" className="text-xs font-mono text-green-400 hover:underline">
+                        <span className="text-[10px] font-mono uppercase text-[#5c253d]/50 block font-bold">Direct WhatsApp</span>
+                        <a href={`https://wa.me/${brandInfo.whatsappNumber.replace(/[^0-9]/g, '')}`} target="_blank" rel="noopener noreferrer" className="text-xs font-mono text-[#f27447] hover:underline font-semibold">
                           WhatsApp Chat
                         </a>
                       </div>
@@ -3900,51 +3734,51 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                 </div>
 
                 {/* DYNAMIC GOOGLE MAPS COMPONENT */}
-                <div className="bg-gray-950/40 p-4 rounded-xl border border-gray-900 space-y-3 relative overflow-hidden group hover:border-cyan-500/30 transition-all duration-300">
-                  <div className="flex justify-between items-center border-b border-gray-900/60 pb-2">
+                <div className="bg-white p-4 rounded-xl border-2 border-[#5c253d] shadow-[2px_2px_0px_#5c253d] space-y-3 relative overflow-hidden group transition-all duration-300">
+                  <div className="flex justify-between items-center border-b border-[#5c253d]/10 pb-2">
                     <div className="flex items-center gap-2">
-                      <MapPin className="w-3.5 h-3.5 text-cyan-400" />
-                      <span className="text-[10px] font-mono uppercase text-cyan-400 font-bold">Dynamic Office Location</span>
+                      <MapPin className="w-3.5 h-3.5 text-[#f27447]" />
+                      <span className="text-[10px] font-mono uppercase text-[#f27447] font-bold">Dynamic Office Location</span>
                     </div>
-                    <span className="text-[8px] font-mono text-gray-500 uppercase">Live Operations Map</span>
+                    <span className="text-[8px] font-mono text-[#5c253d]/50 uppercase font-semibold">Live Operations Map</span>
                   </div>
                   
-                  <div className="w-full h-44 rounded-lg overflow-hidden border border-gray-800/80 relative bg-black">
+                  <div className="w-full h-44 rounded-lg overflow-hidden border border-[#5c253d]/15 relative bg-neutral-100">
                     {liveMapConfig?.mapEmbedUrl ? (
                       <iframe
                         src={liveMapConfig.mapEmbedUrl}
                         width="100%"
                         height="100%"
-                        className="absolute inset-0 border-0 filter grayscale invert contrast-115 brightness-90 opacity-80 hover:opacity-100 transition-opacity duration-300"
+                        className="absolute inset-0 border-0 filter grayscale contrast-115 brightness-95 opacity-90 hover:opacity-100 transition-opacity duration-300"
                         allowFullScreen={false}
                         loading="lazy"
                         referrerPolicy="no-referrer"
                       />
                     ) : (
-                      <div className="absolute inset-0 flex items-center justify-center text-[10px] font-mono text-gray-600 p-4 text-center">
+                      <div className="absolute inset-0 flex items-center justify-center text-[10px] font-mono text-[#5c253d]/50 p-4 text-center">
                         Active operations coordinates not available.
                       </div>
                     )}
                   </div>
                   
-                  <div className="text-[10px] font-mono text-gray-400 bg-black/30 p-2.5 rounded-lg border border-gray-900/60 leading-normal text-left">
-                    <span className="text-gray-500 uppercase block mb-0.5 text-[8px] font-bold">HQ Office Address:</span>
-                    <span className="text-white font-semibold">{liveMapConfig?.address || 'Dubai Marina, Dubai, United Arab Emirates'}</span>
+                  <div className="text-[10px] font-mono text-[#5c253d]/80 bg-[#f6f3f8] p-2.5 rounded-lg border border-[#5c253d]/10 leading-normal text-left">
+                    <span className="text-[#5c253d]/50 uppercase block mb-0.5 text-[8px] font-bold">HQ Office Address:</span>
+                    <span className="text-[#5c253d] font-semibold">{liveMapConfig?.address || 'Dubai Marina, Dubai, United Arab Emirates'}</span>
                   </div>
                 </div>
 
                 {/* Telemetry live status indicators */}
-                <div className="p-4 bg-[#0a1120]/40 border border-cyan-500/20 rounded-xl space-y-2.5">
+                <div className="p-4 bg-[#f6f3f8] border-2 border-[#5c253d] rounded-xl space-y-2.5 shadow-[2px_2px_0px_#5c253d]">
                   <div className="flex justify-between items-center text-[10px] font-mono">
-                    <span className="text-gray-400 uppercase">SYSTEM RESPONSE TIME</span>
-                    <span className="text-emerald-400 font-bold">&lt; 120 MIN</span>
+                    <span className="text-[#5c253d]/60 font-bold uppercase">SYSTEM RESPONSE TIME</span>
+                    <span className="text-[#f27447] font-bold">&lt; 120 MIN</span>
                   </div>
                   <div className="flex justify-between items-center text-[10px] font-mono">
-                    <span className="text-gray-400 uppercase">AVAILABILITY WINDOW</span>
-                    <span className="text-cyan-400 font-bold">2 OPEN SLOTS</span>
+                    <span className="text-[#5c253d]/60 font-bold uppercase">AVAILABILITY WINDOW</span>
+                    <span className="text-[#f27447] font-bold">2 OPEN SLOTS</span>
                   </div>
-                  <div className="w-full bg-gray-950 rounded-full h-1.5 overflow-hidden">
-                    <div className="bg-gradient-to-r from-cyan-500 to-emerald-500 h-1.5 rounded-full" style={{ width: '80%' }}></div>
+                  <div className="w-full bg-neutral-200 rounded-full h-1.5 overflow-hidden">
+                    <div className="bg-[#f27447] h-1.5 rounded-full" style={{ width: '80%' }}></div>
                   </div>
                 </div>
               </div>
@@ -3952,12 +3786,12 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
 
             {/* Right Column: Contact intake form with advanced UI validation & cyber accents */}
             <div className="lg:col-span-8">
-              <div className="bg-[#0b0f17] border border-gray-800/80 rounded-2xl p-6 sm:p-8 relative overflow-hidden shadow-2xl">
-                {/* Ambient glow decorative background elements */}
-                <div className="absolute -top-40 -right-40 w-80 h-80 bg-cyan-500/5 rounded-full blur-3xl pointer-events-none" />
-                <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
+              <div className="bg-white border-2 border-[#5c253d] shadow-[4px_4px_0px_#5c253d] hover:shadow-[6px_6px_0px_#5c253d] transition-all duration-300 rounded-2xl p-6 sm:p-8 relative overflow-hidden">
+                {/* Ambient decorative soft glow elements */}
+                <div className="absolute -top-40 -right-40 w-80 h-80 bg-[#f27447]/5 rounded-full blur-3xl pointer-events-none" />
+                <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-[#5c253d]/5 rounded-full blur-3xl pointer-events-none" />
 
-                <div className="flex items-center space-x-2 text-cyan-400 font-mono text-[10px] uppercase tracking-wider font-bold mb-4 border-b border-gray-900 pb-3">
+                <div className="flex items-center space-x-2 text-[#f27447] font-mono text-[10px] uppercase tracking-wider font-bold mb-4 border-b border-[#5c253d]/10 pb-3">
                   <Sparkles className="w-3.5 h-3.5" />
                   <span>TRANSMISSION PROTOCOL: INQUIRY_INTAKE</span>
                 </div>
@@ -3966,8 +3800,8 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     {/* Name */}
                     <div className="space-y-1.5">
-                      <label className="text-[10px] font-mono text-gray-400 uppercase tracking-wider block">
-                        Your Name <span className="text-red-400">*</span>
+                      <label className="text-[10px] font-mono text-[#5c253d]/80 uppercase tracking-wider block font-bold">
+                        Your Name <span className="text-red-500">*</span>
                       </label>
                       <input
                         type="text"
@@ -3980,14 +3814,14 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                           }
                         }}
                         className={cn(
-                          "w-full px-4 py-2.5 bg-black/50 border text-white font-sans text-sm rounded-xl transition-all outline-none focus:ring-1",
+                          "w-full px-4 py-2.5 bg-[#f6f3f8]/50 border-2 text-[#5c253d] font-sans text-sm rounded-xl transition-all outline-none focus:bg-white placeholder:text-[#5c253d]/45",
                           contactErrors.name 
-                            ? "border-red-500/50 focus:border-red-500 focus:ring-red-500/20" 
-                            : "border-gray-800 focus:border-cyan-500/50 focus:ring-cyan-500/20"
+                            ? "border-red-500 focus:border-red-600 focus:ring-1 focus:ring-red-500/20" 
+                            : "border-[#5c253d]/20 focus:border-[#5c253d] focus:ring-1 focus:ring-[#5c253d]/15"
                         )}
                       />
                       {contactErrors.name && (
-                        <p className="text-[10px] font-mono text-red-400 flex items-center space-x-1 mt-1">
+                        <p className="text-[10px] font-mono text-red-500 flex items-center space-x-1 mt-1">
                           <AlertCircle className="w-3 h-3 flex-shrink-0" />
                           <span>{contactErrors.name}</span>
                         </p>
@@ -3996,7 +3830,7 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
 
                     {/* Email */}
                     <div className="space-y-1.5">
-                      <label className="text-[10px] font-mono text-gray-400 uppercase tracking-wider block">
+                      <label className="text-[10px] font-mono text-[#5c253d]/80 uppercase tracking-wider block font-bold">
                         Email Address <span className="text-red-400">*</span>
                       </label>
                       <input
@@ -4010,14 +3844,14 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                           }
                         }}
                         className={cn(
-                          "w-full px-4 py-2.5 bg-black/50 border text-white font-sans text-sm rounded-xl transition-all outline-none focus:ring-1",
+                          "w-full px-4 py-2.5 bg-[#f6f3f8]/50 border-2 text-[#5c253d] font-sans text-sm rounded-xl transition-all outline-none focus:bg-white placeholder:text-[#5c253d]/45",
                           contactErrors.email 
-                            ? "border-red-500/50 focus:border-red-500 focus:ring-red-500/20" 
-                            : "border-gray-800 focus:border-cyan-500/50 focus:ring-cyan-500/20"
+                            ? "border-red-500 focus:border-red-600 focus:ring-1 focus:ring-red-500/20" 
+                            : "border-[#5c253d]/20 focus:border-[#5c253d] focus:ring-1 focus:ring-[#5c253d]/15"
                         )}
                       />
                       {contactErrors.email && (
-                        <p className="text-[10px] font-mono text-red-400 flex items-center space-x-1 mt-1">
+                        <p className="text-[10px] font-mono text-red-500 flex items-center space-x-1 mt-1">
                           <AlertCircle className="w-3 h-3 flex-shrink-0" />
                           <span>{contactErrors.email}</span>
                         </p>
@@ -4028,30 +3862,30 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     {/* Company / Website URL */}
                     <div className="space-y-1.5">
-                      <label className="text-[10px] font-mono text-gray-400 uppercase tracking-wider block">
-                        Company or Current Website URL <span className="text-gray-600 font-normal">(Optional)</span>
+                      <label className="text-[10px] font-mono text-[#5c253d]/80 uppercase tracking-wider block font-bold">
+                        Company or Current Website URL <span className="text-[#5c253d]/50 font-normal">(Optional)</span>
                       </label>
                       <div className="relative">
-                        <Building2 className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+                        <Building2 className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#5c253d]/40" />
                         <input
                           type="text"
                           placeholder="e.g. mycompany.com"
                           value={contactCompany}
                           onChange={(e) => setContactCompany(e.target.value)}
-                          className="w-full pl-10 pr-4 py-2.5 bg-black/50 border border-gray-800 focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/20 text-white font-sans text-sm rounded-xl transition-all outline-none"
+                          className="w-full pl-10 pr-4 py-2.5 bg-[#f6f3f8]/50 border-2 border-[#5c253d]/20 focus:border-[#5c253d] focus:bg-white focus:ring-1 focus:ring-[#5c253d]/15 text-[#5c253d] font-sans text-sm rounded-xl transition-all outline-none placeholder:text-[#5c253d]/45"
                         />
                       </div>
                     </div>
 
                     {/* Estimated Budget */}
                     <div className="space-y-1.5">
-                      <label className="text-[10px] font-mono text-gray-400 uppercase tracking-wider block">
+                      <label className="text-[10px] font-mono text-[#5c253d]/80 uppercase tracking-wider block font-bold">
                         Target Monthly Budget
                       </label>
                       <select
                         value={contactBudget}
                         onChange={(e) => setContactBudget(e.target.value)}
-                        className="w-full px-4 py-2.5 bg-black/50 border border-gray-800 focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/20 text-white font-mono text-xs rounded-xl transition-all outline-none"
+                        className="w-full px-4 py-2.5 bg-[#f6f3f8]/50 border-2 border-[#5c253d]/20 focus:border-[#5c253d] focus:bg-white focus:ring-1 focus:ring-[#5c253d]/15 text-[#5c253d] font-mono text-xs rounded-xl transition-all outline-none"
                       >
                         <option value="under-5k">Under AED 5,000 / month</option>
                         <option value="5k-15k">AED 5,000 - 15,000 / month</option>
@@ -4063,15 +3897,15 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
 
                   {/* Project Focus Chips */}
                   <div className="space-y-2">
-                    <label className="text-[10px] font-mono text-gray-400 uppercase tracking-wider block">
+                    <label className="text-[10px] font-mono text-[#5c253d]/80 uppercase tracking-wider block font-bold">
                       Core Project Focus / Alignment
                     </label>
                     <div className="flex flex-wrap gap-2.5">
                       {[
-                        { id: 'shopify-development', label: 'Shopify Custom Liquid Dev', color: 'border-cyan-500/30 text-cyan-300' },
-                        { id: 'ads-management', label: 'Google & Meta Ads Strategy', color: 'border-emerald-500/30 text-emerald-300' },
-                        { id: 'seo-audit', label: 'Technical SEO Crawl Mapping', color: 'border-purple-500/30 text-purple-300' },
-                        { id: 'all-inclusive', label: 'All-Inclusive Scale Package', color: 'border-amber-500/30 text-amber-300' },
+                        { id: 'shopify-development', label: 'Shopify Custom Liquid Dev' },
+                        { id: 'ads-management', label: 'Google & Meta Ads Strategy' },
+                        { id: 'seo-audit', label: 'Technical SEO Crawl Mapping' },
+                        { id: 'all-inclusive', label: 'All-Inclusive Scale Package' },
                       ].map((chip) => {
                         const isSelected = contactProjectType === chip.id;
                         return (
@@ -4080,10 +3914,10 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                             type="button"
                             onClick={() => setContactProjectType(chip.id)}
                             className={cn(
-                              "px-3 py-2 rounded-xl text-xs font-mono border transition-all cursor-pointer",
+                              "px-3 py-2 rounded-xl text-xs font-mono border-2 transition-all cursor-pointer",
                               isSelected 
-                                ? "bg-cyan-950/80 border-cyan-400 text-white shadow-md shadow-cyan-500/10"
-                                : "bg-black/40 border-gray-900 text-gray-400 hover:border-gray-800 hover:text-gray-300"
+                                ? "bg-[#f27447]/15 border-[#f27447] text-[#f27447] font-bold shadow-[2px_2px_0px_#f27447]"
+                                : "bg-white border-[#5c253d]/20 text-[#5c253d]/70 hover:border-[#5c253d] hover:text-[#5c253d]"
                             )}
                           >
                             {chip.label}
@@ -4095,7 +3929,7 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
 
                   {/* Project Requirements text area */}
                   <div className="space-y-1.5">
-                    <label className="text-[10px] font-mono text-gray-400 uppercase tracking-wider block">
+                    <label className="text-[10px] font-mono text-[#5c253d]/80 uppercase tracking-wider block font-bold">
                       Project Requirements & Goals <span className="text-red-400">*</span>
                     </label>
                     <textarea
@@ -4109,22 +3943,22 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                         }
                       }}
                       className={cn(
-                        "w-full px-4 py-2.5 bg-black/50 border text-white font-sans text-sm rounded-xl transition-all outline-none resize-none focus:ring-1",
+                        "w-full px-4 py-2.5 bg-[#f6f3f8]/50 border-2 text-[#5c253d] font-sans text-sm rounded-xl transition-all outline-none resize-none focus:bg-white placeholder:text-[#5c253d]/45",
                         contactErrors.requirements 
-                          ? "border-red-500/50 focus:border-red-500 focus:ring-red-500/20" 
-                          : "border-gray-800 focus:border-cyan-500/50 focus:ring-cyan-500/20"
+                          ? "border-red-500 focus:border-red-600 focus:ring-1 focus:ring-red-500/20" 
+                          : "border-[#5c253d]/20 focus:border-[#5c253d] focus:ring-1 focus:ring-[#5c253d]/15"
                       )}
                     />
-                    <div className="flex justify-between items-center text-[10px] font-mono text-gray-500">
+                    <div className="flex justify-between items-center text-[10px] font-mono text-[#5c253d]/50 font-semibold">
                       <span>Provide as much detail as possible. Minimum 15 chars.</span>
                       <span className={cn(
-                        contactRequirements.trim().length >= 15 ? "text-emerald-500" : "text-gray-500"
+                        contactRequirements.trim().length >= 15 ? "text-emerald-600 font-bold" : "text-[#5c253d]/50"
                       )}>
                         {contactRequirements.trim().length} chars
                       </span>
                     </div>
                     {contactErrors.requirements && (
-                      <p className="text-[10px] font-mono text-red-400 flex items-center space-x-1 mt-1">
+                      <p className="text-[10px] font-mono text-red-500 flex items-center space-x-1 mt-1">
                         <AlertCircle className="w-3 h-3 flex-shrink-0" />
                         <span>{contactErrors.requirements}</span>
                       </p>
@@ -4132,9 +3966,9 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                   </div>
 
                   {/* Form Submission Actions */}
-                  <div className="pt-3 border-t border-gray-900 flex flex-col sm:flex-row items-center justify-between gap-4">
-                    <div className="flex items-center space-x-2 text-[10px] font-mono text-gray-500">
-                      <CheckCircle className="w-4 h-4 text-emerald-500" />
+                  <div className="pt-3 border-t border-[#5c253d]/10 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div className="flex items-center space-x-2 text-[10px] font-mono text-[#5c253d]/60 font-semibold">
+                      <CheckCircle className="w-4 h-4 text-emerald-600" />
                       <span>Encrypted SSL Socket Connection Active</span>
                     </div>
 
@@ -4142,18 +3976,18 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                       type="submit"
                       disabled={isContactSubmitting}
                       className={cn(
-                        "w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-cyan-500 to-emerald-500 hover:from-cyan-400 hover:to-emerald-400 text-black font-semibold font-mono text-xs uppercase tracking-widest rounded-xl transition-all flex items-center justify-center space-x-2 shadow-lg shadow-cyan-500/10 cursor-pointer",
+                        "w-full sm:w-auto px-6 py-3 bg-[#f27447] hover:bg-[#f27447]/90 text-white font-semibold font-mono text-xs uppercase tracking-widest rounded-xl transition-all flex items-center justify-center space-x-2 border-2 border-[#5c253d] shadow-[3px_3px_0px_#5c253d] hover:shadow-[5px_5px_0px_#5c253d] active:scale-[0.98] cursor-pointer",
                         isContactSubmitting ? "opacity-75 cursor-not-allowed" : ""
                       )}
                     >
                       {isContactSubmitting ? (
                         <>
-                          <Loader2 className="w-4 h-4 animate-spin text-black" />
+                          <Loader2 className="w-4 h-4 animate-spin text-white" />
                           <span>SECURE TRANSMITTING...</span>
                         </>
                       ) : (
                         <>
-                          <Send className="w-4 h-4 text-black" />
+                          <Send className="w-4 h-4 text-white" />
                           <span>TRANSMIT PROJECT PROTOCOL</span>
                         </>
                       )}
@@ -4171,18 +4005,16 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
       </main>
 
       {/* FOOTER SECTION */}
-      <footer id="main-footer" className="bg-[#000000] border-t border-white/[0.04] pt-16 pb-12 mt-24 relative overflow-hidden">
-        {/* Futuristic top gradient line with subtle glow */}
-        <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-cyan-500/20 to-transparent" />
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-[2px] bg-gradient-to-r from-transparent via-cyan-400/40 to-transparent blur-sm" />
+      <footer id="main-footer" className="bg-[#f6f3f8] border-t-2 border-[#5c253d] pt-16 pb-12 mt-24 relative overflow-hidden text-[#5c253d]">
+        <div className="absolute top-0 left-0 right-0 h-[2px] bg-[#5c253d]" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-white/[0.04] text-left">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-[#5c253d]/15 text-left">
             
             {/* COLUMN 1: BRAND IDENTITY */}
             <div className="space-y-4">
               <div className="flex items-center space-x-3">
-                <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-cyan-500/20 to-emerald-500/20 border border-cyan-500/30 flex items-center justify-center font-mono font-black text-xs text-cyan-300 shadow-[0_0_15px_rgba(6,182,212,0.15)] overflow-hidden">
+                <div className="w-9 h-9 rounded-xl bg-white border-2 border-[#5c253d] flex items-center justify-center font-mono font-black text-xs text-[#5c253d] shadow-[2px_2px_0px_#5c253d] overflow-hidden">
                   {brandInfo.logoImageUrl ? (
                     <img 
                       src={brandInfo.logoImageUrl} 
@@ -4195,27 +4027,27 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                   )}
                 </div>
                 <div>
-                  <span className="font-mono text-xs tracking-widest text-white uppercase font-black block">{brandInfo.logoText || 'Rizwan Saeed'}</span>
-                  <span className="text-[9px] font-mono text-cyan-400/80 uppercase tracking-tight">{brandInfo.logoTagline || 'GROWTH LEAD & SHOPIFY ENGINEER'}</span>
+                  <span className="font-mono text-xs tracking-widest text-[#5c253d] uppercase font-black block">{brandInfo.logoText || 'Rizwan Saeed'}</span>
+                  <span className="text-[9px] font-mono text-[#f27447] uppercase tracking-tight font-bold">{brandInfo.logoTagline || 'GROWTH LEAD & SHOPIFY ENGINEER'}</span>
                 </div>
               </div>
-              <p className="text-xs text-gray-400 font-sans leading-relaxed max-w-xs">
+              <p className="text-xs text-[#5c253d]/80 font-sans leading-relaxed max-w-xs">
                 {brandInfo.footerDesc || 'High-performance Shopify Liquid theme development & digital marketing strategies designed for high-scale hospitality and retail brands.'}
               </p>
               
               {/* Live Location / Pulse indicator */}
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/40 border border-white/[0.04] text-[10px] font-mono text-gray-400">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border-2 border-[#5c253d] text-[10px] font-mono text-[#5c253d] shadow-[1px_1px_0px_#5c253d]">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                 <span>{brandInfo.footerLocation || 'DUBAI, UAE (GST)'}</span>
-                <span className="text-gray-600">|</span>
-                <span className="text-emerald-400/90 font-bold uppercase tracking-wide">ACTIVE</span>
+                <span className="text-gray-300">|</span>
+                <span className="text-emerald-600 font-bold uppercase tracking-wide">ACTIVE</span>
               </div>
             </div>
 
             {/* COLUMN 2: QUICK NAVIGATION */}
             <div className="space-y-4">
-              <span className="text-[10px] uppercase text-gray-500 tracking-wider font-mono font-bold block">SITEMAP</span>
-              <ul className="space-y-2 text-xs font-mono text-gray-400">
+              <span className="text-[10px] uppercase text-[#5c253d]/60 tracking-wider font-mono font-bold block">SITEMAP</span>
+              <ul className="space-y-2 text-xs font-mono text-[#5c253d]/80">
                 {[
                   { label: "Home Base", href: "#hero-section" },
                   { label: "Client Portfolio", href: "#portfolio-grid" },
@@ -4225,8 +4057,8 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                   { label: "Contact Terminal", href: "#contact-form" }
                 ].map((link, idx) => (
                   <li key={idx}>
-                    <a href={link.href} className="hover:text-cyan-400 transition-colors flex items-center space-x-1.5">
-                      <span className="text-cyan-500/50">→</span>
+                    <a href={link.href} className="hover:text-[#f27447] transition-colors flex items-center space-x-1.5">
+                      <span className="text-[#f27447]">→</span>
                       <span>{link.label}</span>
                     </a>
                   </li>
@@ -4236,54 +4068,54 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
 
             {/* COLUMN 3: DIRECT CHANNELS & BACK-TO-TOP */}
             <div className="space-y-4">
-              <span className="text-[10px] uppercase text-gray-500 tracking-wider font-mono font-bold block">DIRECT CHANNELS</span>
+              <span className="text-[10px] uppercase text-[#5c253d]/60 tracking-wider font-mono font-bold block">DIRECT CHANNELS</span>
               <div className="space-y-3 font-mono text-xs">
                 <a 
                   href={`mailto:${brandInfo.contactEmail || 'RIZWANSAEED610@gmail.com'}`} 
-                  className="group flex items-start gap-2.5 text-gray-400 hover:text-cyan-400 transition-all" 
+                  className="group flex items-start gap-2.5 text-[#5c253d] hover:text-[#f27447] transition-all" 
                   id="footer-contact-email"
                 >
-                  <div className="p-1.5 rounded-lg bg-gray-950/80 border border-white/[0.04] group-hover:border-cyan-500/30 group-hover:bg-cyan-950/20 transition-all">
-                    <Mail className="w-3.5 h-3.5 text-cyan-400" />
+                  <div className="p-1.5 rounded-lg bg-white border-2 border-[#5c253d] shadow-[1px_1px_0px_#5c253d] group-hover:bg-[#f6f3f8] transition-all">
+                    <Mail className="w-3.5 h-3.5 text-[#f27447]" />
                   </div>
                   <div>
-                    <span className="text-[9px] text-gray-500 block uppercase font-bold tracking-tight">Write Message</span>
-                    <span className="text-white/90 group-hover:text-cyan-400 transition-colors">{brandInfo.contactEmail || 'RIZWANSAEED610@gmail.com'}</span>
+                    <span className="text-[9px] text-[#5c253d]/50 block uppercase font-bold tracking-tight">Write Message</span>
+                    <span className="text-[#5c253d] group-hover:text-[#f27447] transition-colors font-semibold">{brandInfo.contactEmail || 'RIZWANSAEED610@gmail.com'}</span>
                   </div>
                 </a>
                 
                 <a 
                   href={`tel:${brandInfo.contactPhone || '+971500000000'}`} 
-                  className="group flex items-start gap-2.5 text-gray-400 hover:text-emerald-400 transition-all" 
+                  className="group flex items-start gap-2.5 text-[#5c253d] hover:text-[#f27447] transition-all" 
                   id="footer-contact-phone"
                 >
-                  <div className="p-1.5 rounded-lg bg-gray-950/80 border border-white/[0.04] group-hover:border-emerald-500/30 group-hover:bg-emerald-950/20 transition-all">
-                    <Phone className="w-3.5 h-3.5 text-emerald-400" />
+                  <div className="p-1.5 rounded-lg bg-white border-2 border-[#5c253d] shadow-[1px_1px_0px_#5c253d] group-hover:bg-[#f6f3f8] transition-all">
+                    <Phone className="w-3.5 h-3.5 text-[#f27447]" />
                   </div>
                   <div>
-                    <span className="text-[9px] text-gray-500 block uppercase font-bold tracking-tight">Direct Call Line</span>
-                    <span className="text-white/90 group-hover:text-emerald-400 transition-colors">{brandInfo.contactPhone || '+971 50 000 0000'}</span>
+                    <span className="text-[9px] text-[#5c253d]/50 block uppercase font-bold tracking-tight">Direct Call Line</span>
+                    <span className="text-[#5c253d] group-hover:text-[#f27447] transition-colors font-semibold">{brandInfo.contactPhone || '+971 50 000 0000'}</span>
                   </div>
                 </a>
 
                 {/* Return To Top Button */}
                 <button 
                   onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-                  className="w-full flex items-center justify-between p-2.5 mt-2 rounded-xl border border-gray-800 bg-[#060608]/50 hover:bg-[#0b0f19] hover:border-cyan-500/30 group transition-all duration-300 cursor-pointer text-left font-mono text-[10px]"
+                  className="w-full flex items-center justify-between p-2.5 mt-2 rounded-xl border-2 border-[#5c253d] bg-white hover:bg-[#f6f3f8] text-[#5c253d] shadow-[2px_2px_0px_#5c253d] hover:shadow-[3px_3px_0px_#5c253d] transition-all duration-300 cursor-pointer text-left font-mono text-[10px]"
                 >
-                  <span className="text-gray-400 group-hover:text-white transition-colors uppercase font-bold flex items-center gap-1.5">
-                    <ChevronUp className="w-3.5 h-3.5 text-cyan-400 animate-bounce" />
+                  <span className="text-[#5c253d]/80 group-hover:text-[#5c253d] transition-colors uppercase font-bold flex items-center gap-1.5">
+                    <ChevronUp className="w-3.5 h-3.5 text-[#f27447]" />
                     Back To Top
                   </span>
-                  <span className="text-gray-600 group-hover:text-cyan-400 transition-colors">▲</span>
+                  <span className="text-[#5c253d]/60 group-hover:text-[#f27447] transition-colors">▲</span>
                 </button>
               </div>
             </div>
 
             {/* COLUMN 4: NEWSLETTER & CONTROL */}
             <div className="space-y-4">
-              <span className="text-[10px] uppercase text-gray-500 tracking-wider font-mono font-bold block">SCALE INTELLIGENCE</span>
-              <p className="text-xs text-gray-400 font-sans leading-relaxed">
+              <span className="text-[10px] uppercase text-[#5c253d]/60 tracking-wider font-mono font-bold block">SCALE INTELLIGENCE</span>
+              <p className="text-xs text-[#5c253d]/80 font-sans leading-relaxed">
                 Join for 2026 Shopify scaling playbooks, conversion metrics, and technical SEO frameworks.
               </p>
               
@@ -4306,16 +4138,16 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                     placeholder="Enter your work email"
                     value={newsletterEmail}
                     onChange={(e) => setNewsletterEmail(e.target.value)}
-                    className="w-full bg-[#050507] border border-gray-850 rounded-xl px-3 py-2.5 text-xs font-mono text-white focus:outline-none focus:border-cyan-500/80 pr-10"
+                    className="w-full bg-white border-2 border-[#5c253d]/30 focus:border-[#5c253d] rounded-xl px-3 py-2.5 text-xs font-mono text-[#5c253d] focus:outline-none pr-10"
                   />
                   <button 
                     type="submit"
-                    className="absolute right-1.5 top-1.5 p-1 bg-cyan-500 hover:bg-cyan-400 text-black rounded-lg transition-all cursor-pointer"
+                    className="absolute right-1.5 top-1.5 p-1 bg-[#f27447] hover:bg-[#f27447]/90 text-white border border-[#5c253d]/10 rounded-lg transition-all cursor-pointer"
                   >
                     <Send className="w-3.5 h-3.5" />
                   </button>
                 </div>
-                <span className="text-[9px] font-mono text-gray-500 block leading-tight">
+                <span className="text-[9px] font-mono text-[#5c253d]/60 block leading-tight">
                   🔒 Zero spam. We send technical value only.
                 </span>
               </form>
@@ -4330,27 +4162,27 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                       setShowPasskeyModal(true);
                     }
                   }}
-                  className="w-full flex items-center justify-between p-2.5 rounded-xl border border-white/[0.04] bg-black/30 hover:bg-[#0b0f19] hover:border-cyan-500/30 group transition-all duration-300 cursor-pointer"
+                  className="w-full flex items-center justify-between p-2.5 rounded-xl border-2 border-[#5c253d] bg-white hover:bg-[#f6f3f8] text-[#5c253d] shadow-[2px_2px_0px_#5c253d] hover:shadow-[3px_3px_0px_#5c253d] group transition-all duration-300 cursor-pointer"
                   title="Access Secure Administrative Control Panel"
                 >
                   <div className="flex items-center space-x-2">
-                    <Lock className="w-3.5 h-3.5 text-cyan-400" />
-                    <span className="text-[10px] font-mono text-gray-400 group-hover:text-white uppercase font-bold">Admin Portal</span>
+                    <Lock className="w-3.5 h-3.5 text-[#f27447]" />
+                    <span className="text-[10px] font-mono text-[#5c253d]/80 group-hover:text-[#5c253d] uppercase font-bold">Admin Portal</span>
                   </div>
-                  <span className="text-xs text-gray-600 group-hover:text-cyan-400 transition-colors">▶</span>
+                  <span className="text-xs text-[#5c253d]/60 group-hover:text-[#f27447] transition-colors">▶</span>
                 </button>
               </div>
 
               {/* Social Icons */}
               <div className="space-y-1.5">
-                <span className="text-[9px] font-mono text-gray-500 uppercase block tracking-wider">Social Connect Nodes</span>
+                <span className="text-[9px] font-mono text-[#5c253d]/50 uppercase block tracking-wider font-semibold">Social Connect Nodes</span>
                 <div className="flex items-center gap-2">
                   {brandInfo.linkedinUrl && (
                     <a 
                       href={brandInfo.linkedinUrl} 
                       target="_blank" 
                       rel="noopener noreferrer" 
-                      className="flex items-center justify-center w-8 h-8 rounded-lg border border-white/[0.04] bg-black/40 text-gray-400 hover:text-cyan-400 hover:border-cyan-500/30 hover:bg-cyan-950/10 transition-all cursor-pointer"
+                      className="flex items-center justify-center w-8 h-8 rounded-lg border-2 border-[#5c253d] bg-white text-[#5c253d] hover:text-[#f27447] hover:shadow-[1px_1px_0px_#5c253d] transition-all cursor-pointer"
                       title="LinkedIn Secure Connection"
                       id="footer-social-linkedin"
                     >
@@ -4362,7 +4194,7 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                       href={brandInfo.twitterUrl} 
                       target="_blank" 
                       rel="noopener noreferrer" 
-                      className="flex items-center justify-center w-8 h-8 rounded-lg border border-white/[0.04] bg-black/40 text-gray-400 hover:text-cyan-400 hover:border-cyan-500/30 hover:bg-cyan-950/10 transition-all cursor-pointer"
+                      className="flex items-center justify-center w-8 h-8 rounded-lg border-2 border-[#5c253d] bg-white text-[#5c253d] hover:text-[#f27447] hover:shadow-[1px_1px_0px_#5c253d] transition-all cursor-pointer"
                       title="Twitter Channel"
                       id="footer-social-twitter"
                     >
@@ -4374,7 +4206,7 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                       href={brandInfo.facebookUrl} 
                       target="_blank" 
                       rel="noopener noreferrer" 
-                      className="flex items-center justify-center w-8 h-8 rounded-lg border border-white/[0.04] bg-black/40 text-gray-400 hover:text-cyan-400 hover:border-cyan-500/30 hover:bg-cyan-950/10 transition-all cursor-pointer"
+                      className="flex items-center justify-center w-8 h-8 rounded-lg border-2 border-[#5c253d] bg-white text-[#5c253d] hover:text-[#f27447] hover:shadow-[1px_1px_0px_#5c253d] transition-all cursor-pointer"
                       title="Facebook Profile"
                       id="footer-social-facebook"
                     >
@@ -4386,7 +4218,7 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                       href={brandInfo.instagramUrl} 
                       target="_blank" 
                       rel="noopener noreferrer" 
-                      className="flex items-center justify-center w-8 h-8 rounded-lg border border-white/[0.04] bg-black/40 text-gray-400 hover:text-cyan-400 hover:border-cyan-500/30 hover:bg-cyan-950/10 transition-all cursor-pointer"
+                      className="flex items-center justify-center w-8 h-8 rounded-lg border-2 border-[#5c253d] bg-white text-[#5c253d] hover:text-[#f27447] hover:shadow-[1px_1px_0px_#5c253d] transition-all cursor-pointer"
                       title="Instagram Profile"
                       id="footer-social-instagram"
                     >
@@ -4398,7 +4230,7 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                       href={brandInfo.githubUrl} 
                       target="_blank" 
                       rel="noopener noreferrer" 
-                      className="flex items-center justify-center w-8 h-8 rounded-lg border border-white/[0.04] bg-black/40 text-gray-400 hover:text-cyan-400 hover:border-cyan-500/30 hover:bg-cyan-950/10 transition-all cursor-pointer"
+                      className="flex items-center justify-center w-8 h-8 rounded-lg border-2 border-[#5c253d] bg-white text-[#5c253d] hover:text-[#f27447] hover:shadow-[1px_1px_0px_#5c253d] transition-all cursor-pointer"
                       title="GitHub Repository"
                       id="footer-social-github"
                     >
@@ -4410,7 +4242,7 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                       href={`https://wa.me/${brandInfo.whatsappNumber.replace(/[^0-9]/g, '')}`} 
                       target="_blank" 
                       rel="noopener noreferrer" 
-                      className="flex items-center justify-center w-8 h-8 rounded-lg border border-white/[0.04] bg-black/40 text-emerald-400 hover:text-emerald-300 hover:border-emerald-500/30 hover:bg-emerald-950/10 transition-all cursor-pointer"
+                      className="flex items-center justify-center w-8 h-8 rounded-lg border-2 border-[#5c253d] bg-white text-[#5c253d] hover:text-[#f27447] hover:shadow-[1px_1px_0px_#5c253d] transition-all cursor-pointer"
                       title="WhatsApp Channel"
                       id="footer-social-whatsapp"
                     >
@@ -4426,41 +4258,27 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
           </div>
 
           {/* BOTTOM COPYRIGHT ROW */}
-          <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-8 text-[10px] font-mono text-gray-500">
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-8 text-[10px] font-mono text-[#5c253d]/60 font-semibold">
             <div className="flex items-center gap-2">
               <span>© 2026 Rizwan Saeed. All Rights Reserved.</span>
-              <span className="text-gray-700">|</span>
-              <span className="text-[9px] uppercase tracking-wider text-emerald-500/80 font-bold flex items-center gap-1">
-                <span className="w-1 h-1 rounded-full bg-emerald-500 inline-block" /> Cryptographically Validated
+              <span className="text-[#5c253d]/30">|</span>
+              <span className="text-[9px] uppercase tracking-wider text-[#f27447] font-bold flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#f27447] inline-block animate-pulse" /> Cryptographically Validated
               </span>
             </div>
             
             <div className="flex flex-wrap justify-center items-center gap-4">
-              <span className="hover:text-cyan-400 transition-colors">Next.js 15 App Router</span>
-              <span className="text-gray-800">•</span>
-              <span className="hover:text-cyan-400 transition-colors">Tailwind CSS v4 Engine</span>
-              <span className="text-gray-800">•</span>
-              <span className="hover:text-cyan-400 transition-colors">Secure Attribution</span>
+              <span className="hover:text-[#f27447] transition-colors">Next.js 15 App Router</span>
+              <span className="text-[#5c253d]/30">•</span>
+              <span className="hover:text-[#f27447] transition-colors">Tailwind CSS v4 Engine</span>
+              <span className="text-[#5c253d]/30">•</span>
+              <span className="hover:text-[#f27447] transition-colors">Secure Attribution</span>
             </div>
           </div>
         </div>
       </footer>
 
-      {/* FLOATING REAL-TIME ACTIVITY TICKER */}
-      <div className="fixed bottom-4 left-4 z-40 max-w-xs sm:max-w-sm w-full bg-black/90 border border-cyan-500/40 rounded-xl p-3.5 shadow-2xl backdrop-blur-md pointer-events-auto">
-        <div className="flex items-center space-x-3">
-          <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse flex-shrink-0" />
-          <div className="flex-grow overflow-hidden">
-            <span className="text-[8px] font-mono text-gray-500 uppercase block tracking-wider">Live System Stream Indicator</span>
-            <div className={cn(
-              "text-[10px] font-mono text-cyan-300 font-bold tracking-tight transition-all duration-300 truncate",
-              tickerAnimate ? "opacity-100 translate-y-0" : "opacity-0 translate-y-1"
-            )}>
-              {SIMULATED_TICKER_EVENTS[currentTickerIdx]}
-            </div>
-          </div>
-        </div>
-      </div>
+
 
       {/* FLOATING WHATSAPP WIDGET INTEGRATION */}
       {liveWhatsappConfig?.enabled && (
@@ -5409,7 +5227,7 @@ interface TestimonialCarouselProps {
 function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0); // -1 for left, 1 for right
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
   const { showToast } = useAdmin();
 
   const items = testimonials && testimonials.length > 0 ? testimonials : [];
@@ -5496,19 +5314,19 @@ function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) {
   };
 
   return (
-    <div className="relative max-w-5xl mx-auto px-1 sm:px-4">
+    <div className="relative max-w-5xl mx-auto px-1 sm:px-4 text-[#5c253d]">
       {/* Testimonial Active Display Panel */}
       <div 
-        className="relative bg-[#070b13]/80 border border-gray-800/85 rounded-3xl overflow-hidden p-6 sm:p-10 md:p-12 shadow-[0_20px_50px_rgba(0,0,0,0.6)] hover:border-emerald-500/30 transition-all duration-500 group"
+        className="relative bg-white border-2 border-[#5c253d] shadow-[4px_4px_0px_#5c253d] rounded-3xl overflow-hidden p-6 sm:p-10 md:p-12 transition-all duration-500 group hover:shadow-[6px_6px_0px_#5c253d]"
         onMouseEnter={() => setIsPlaying(false)}
         onMouseLeave={() => setIsPlaying(true)}
       >
-        {/* Background glow effects */}
-        <div className="absolute top-0 right-0 w-80 h-80 bg-cyan-500/5 rounded-full blur-[100px] pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-80 h-80 bg-emerald-500/5 rounded-full blur-[100px] pointer-events-none" />
+        {/* Background decorative soft glow elements */}
+        <div className="absolute top-0 right-0 w-80 h-80 bg-[#f27447]/5 rounded-full blur-[100px] pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#5c253d]/5 rounded-full blur-[100px] pointer-events-none" />
 
         {/* Large Decorative Quote Icon */}
-        <div className="absolute top-6 left-6 text-emerald-500/10 group-hover:text-emerald-500/15 transition-colors duration-300 pointer-events-none">
+        <div className="absolute top-6 left-6 text-[#f27447]/10 group-hover:text-[#f27447]/15 transition-colors duration-300 pointer-events-none">
           <Quote className="w-16 h-16 transform -scale-x-100" />
         </div>
 
@@ -5526,38 +5344,38 @@ function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) {
             >
               {/* Left Column: Quote & Stars (md:col-span-7) */}
               <div className="md:col-span-7 space-y-6 text-left">
-                <div className="flex items-center space-x-1.5 bg-[#0e1726]/40 border border-white/[0.04] px-3 py-1 rounded-full w-fit">
+                <div className="flex items-center space-x-1.5 bg-[#f6f3f8] border border-[#5c253d]/15 px-3 py-1 rounded-full w-fit">
                   {[...Array(active.rating || 5)].map((_, i) => (
-                    <span key={i} className="text-amber-400 text-sm drop-shadow-[0_0_8px_rgba(251,191,36,0.3)] animate-pulse" style={{ animationDelay: `${i * 150}ms` }}>★</span>
+                    <span key={i} className="text-amber-500 text-sm drop-shadow-[0_0_8px_rgba(251,191,36,0.3)] animate-pulse" style={{ animationDelay: `${i * 150}ms` }}>★</span>
                   ))}
-                  <span className="text-[10px] font-mono text-gray-500 ml-1.5 uppercase tracking-wider font-bold">5.0 Star Rating</span>
+                  <span className="text-[10px] font-mono text-[#5c253d]/60 ml-1.5 uppercase tracking-wider font-bold">5.0 Star Rating</span>
                 </div>
 
-                <blockquote className="text-white text-base sm:text-lg md:text-xl font-sans font-medium italic leading-relaxed text-gray-200">
+                <blockquote className="text-[#5c253d] text-base sm:text-lg md:text-xl font-sans font-medium italic leading-relaxed">
                   &quot;{active.content}&quot;
                 </blockquote>
 
                 <div className="flex flex-wrap gap-2 pt-2">
-                  <span className="text-[10px] font-mono px-2.5 py-1 bg-[#10192a] border border-gray-800 text-emerald-400 rounded-full uppercase font-bold tracking-wider">
+                  <span className="text-[10px] font-mono px-2.5 py-1 bg-[#f27447]/10 border border-[#f27447]/30 text-[#f27447] rounded-full uppercase font-bold tracking-wider">
                     {active.tag}
                   </span>
-                  <span className="text-[10px] font-mono px-2.5 py-1 bg-cyan-950/25 border border-cyan-500/20 text-cyan-400 rounded-full uppercase font-bold tracking-wider">
+                  <span className="text-[10px] font-mono px-2.5 py-1 bg-[#5c253d]/10 border border-[#5c253d]/30 text-[#5c253d] rounded-full uppercase font-bold tracking-wider">
                     Verified Endorsement
                   </span>
                 </div>
               </div>
 
               {/* Right Column: Profile & Success Highlight Stats Card (md:col-span-5) */}
-              <div className="md:col-span-5 flex flex-col items-center md:items-start bg-[#0b101b] border border-gray-800/80 p-6 rounded-2xl relative shadow-2xl w-full">
+              <div className="md:col-span-5 flex flex-col items-center md:items-start bg-[#f6f3f8] border-2 border-[#5c253d] p-6 rounded-2xl relative shadow-[2px_2px_0px_#5c253d] w-full text-[#5c253d]">
                 {/* Micro Tag */}
-                <div className="absolute top-4 right-4 text-[9px] font-mono bg-cyan-950/50 border border-cyan-500/30 text-cyan-400 px-2 py-0.5 rounded uppercase font-black tracking-widest">
+                <div className="absolute top-4 right-4 text-[9px] font-mono bg-[#f27447]/10 border border-[#f27447]/30 text-[#f27447] px-2 py-0.5 rounded uppercase font-black tracking-widest">
                   Active Partner
                 </div>
 
                 {/* Avatar and Name */}
                 <div className="flex items-center gap-4 text-left w-full">
                   {active.imageUrl ? (
-                    <div className="relative w-14 h-14 rounded-full overflow-hidden border-2 border-emerald-500/30 shrink-0 bg-black shadow-[0_0_15px_rgba(16,185,129,0.15)]">
+                    <div className="relative w-14 h-14 rounded-full overflow-hidden border-2 border-[#5c253d]/30 shrink-0 bg-white">
                       <Image 
                         src={active.imageUrl} 
                         alt={active.name || "Client"} 
@@ -5569,29 +5387,26 @@ function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) {
                       />
                     </div>
                   ) : (
-                    <div className="w-14 h-14 rounded-full bg-gradient-to-br from-emerald-500/15 to-cyan-500/15 border-2 border-emerald-500/20 flex items-center justify-center font-mono font-black text-lg text-emerald-400 shrink-0 shadow-[0_0_15px_rgba(16,185,129,0.1)]">
+                    <div className="w-14 h-14 rounded-full bg-[#f27447]/10 border-2 border-[#f27447]/20 flex items-center justify-center font-mono font-black text-lg text-[#f27447] shrink-0">
                       {active.name ? active.name.split(' ').map((n: string) => n[0]).join('').slice(0, 2) : 'C'}
                     </div>
                   )}
                   <div className="min-w-0 flex-1">
-                    <h3 className="text-base font-black text-white font-mono uppercase tracking-tight leading-tight truncate">{active.name}</h3>
-                    <span className="text-xs text-gray-400 font-mono block mt-0.5 truncate">
-                      {active.role} @ <strong className="text-cyan-400 font-black tracking-tight">{active.company}</strong>
+                    <h3 className="text-base font-black text-[#5c253d] font-mono uppercase tracking-tight leading-tight truncate">{active.name}</h3>
+                    <span className="text-xs text-[#5c253d]/70 font-mono block mt-0.5 truncate">
+                      {active.role} @ <strong className="text-[#f27447] font-black tracking-tight">{active.company}</strong>
                     </span>
                   </div>
                 </div>
 
                 {/* Pulsing Highlight Metric Box */}
-                <div className="mt-5 w-full bg-gradient-to-r from-emerald-950/20 to-cyan-950/20 border border-emerald-500/25 p-4 rounded-xl flex items-center gap-4 relative overflow-hidden group/metric shadow-inner">
-                  {/* Decorative neon streak */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-emerald-500/10 to-transparent translate-x-[-100%] group-hover/metric:translate-x-[100%] transition-transform duration-1000 ease-out pointer-events-none" />
-                  
-                  <div className="text-2xl sm:text-3xl font-black text-emerald-400 font-mono tracking-tighter shrink-0 drop-shadow-[0_0_10px_rgba(52,211,153,0.3)] select-none">
+                <div className="mt-5 w-full bg-white border-2 border-[#5c253d] p-4 rounded-xl flex items-center gap-4 relative overflow-hidden group/metric shadow-[2px_2px_0px_#5c253d]">
+                  <div className="text-2xl sm:text-3xl font-black text-[#f27447] font-mono tracking-tighter shrink-0 select-none">
                     {metric.value}
                   </div>
                   <div className="text-left min-w-0 flex-1">
-                    <span className="text-[10px] font-mono text-gray-500 uppercase block font-black tracking-widest leading-none">KEY ACHIEVEMENT</span>
-                    <span className="text-xs font-bold text-white uppercase font-mono block mt-1 tracking-tight leading-none text-gray-200 truncate">
+                    <span className="text-[10px] font-mono text-[#5c253d]/50 uppercase block font-black tracking-widest leading-none">KEY ACHIEVEMENT</span>
+                    <span className="text-xs font-bold text-[#5c253d] uppercase font-mono block mt-1 tracking-tight leading-none truncate">
                       {metric.label}
                     </span>
                   </div>
@@ -5613,10 +5428,10 @@ function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) {
               showToast(isPlaying ? "Autoplay paused." : "Autoplay activated.", "info");
             }}
             className={cn(
-              "p-2 rounded-xl border font-mono text-[10px] flex items-center gap-1.5 transition-all cursor-pointer",
+              "p-2 rounded-xl border-2 font-mono text-[10px] flex items-center gap-1.5 transition-all cursor-pointer",
               isPlaying 
-                ? "bg-emerald-950/15 border-emerald-500/20 text-emerald-400 hover:bg-emerald-950/25" 
-                : "bg-gray-900 border-gray-800 text-gray-400 hover:text-white"
+                ? "bg-[#f27447]/10 border-[#f27447] text-[#f27447] hover:bg-[#f27447]/20" 
+                : "bg-transparent border-[#5c253d]/30 text-[#5c253d] hover:bg-[#5c253d]/5"
             )}
             title={isPlaying ? "Pause autoplay" : "Start autoplay"}
           >
@@ -5646,8 +5461,8 @@ function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) {
               <div className={cn(
                 "h-2 rounded-full transition-all duration-300",
                 idx === currentIndex 
-                  ? "w-6 bg-gradient-to-r from-emerald-400 to-cyan-400 shadow-[0_0_8px_rgba(52,211,153,0.4)]" 
-                  : "w-2 bg-gray-700 group-hover:bg-gray-500"
+                  ? "w-6 bg-[#f27447] shadow-[0_0_8px_rgba(242,116,71,0.4)]" 
+                  : "w-2 bg-[#5c253d]/30 group-hover:bg-[#5c253d]/50"
               )} />
             </button>
           ))}
@@ -5657,14 +5472,14 @@ function TestimonialCarousel({ testimonials }: TestimonialCarouselProps) {
         <div className="flex items-center gap-2.5 order-2 sm:order-3">
           <button
             onClick={handlePrev}
-            className="p-2.5 bg-[#0b0f17] hover:bg-[#101726] border border-gray-800 hover:border-cyan-500/30 text-gray-400 hover:text-white rounded-xl transition-all cursor-pointer active:scale-95 shadow-md flex items-center justify-center group"
+            className="p-2.5 bg-white hover:bg-[#f6f3f8] border-2 border-[#5c253d] text-[#5c253d] shadow-[2px_2px_0px_#5c253d] hover:shadow-[3px_3px_0px_#5c253d] rounded-xl transition-all cursor-pointer active:scale-95 flex items-center justify-center group"
             title="Previous testimonial"
           >
             <ChevronLeft className="w-4 h-4 transform group-hover:-translate-x-0.5 transition-transform" />
           </button>
           <button
             onClick={handleNext}
-            className="p-2.5 bg-[#0b0f17] hover:bg-[#101726] border border-gray-800 hover:border-emerald-500/30 text-gray-400 hover:text-white rounded-xl transition-all cursor-pointer active:scale-95 shadow-md flex items-center justify-center group"
+            className="p-2.5 bg-white hover:bg-[#f6f3f8] border-2 border-[#5c253d] text-[#5c253d] shadow-[2px_2px_0px_#5c253d] hover:shadow-[3px_3px_0px_#5c253d] rounded-xl transition-all cursor-pointer active:scale-95 flex items-center justify-center group"
             title="Next testimonial"
           >
             <ChevronRight className="w-4 h-4 transform group-hover:translate-x-0.5 transition-transform" />

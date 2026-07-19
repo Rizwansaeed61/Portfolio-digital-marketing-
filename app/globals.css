@@ -85,3 +85,15 @@ h1, h2, h3, .font-display {
   font-family: var(--font-display);
   letter-spacing: -0.02em;
 }
+
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 20s linear infinite;
+}
+
