@@ -579,27 +579,27 @@ function ThemeStyleInjector() {
 
   const styles = `
     :root {
-      --primary: ${cfg.customPrimary || '#0f172a'};
-      --secondary: ${cfg.customSecondary || '#0284c7'};
-      --accent: ${cfg.accentColor || '#3b82f6'};
-      --background: ${cfg.backgroundColor || '#f8fafc'};
+      --primary: ${cfg.customPrimary || '#5c253d'};
+      --secondary: ${cfg.customSecondary || '#f27447'};
+      --accent: ${cfg.accentColor || '#f27447'};
+      --background: ${cfg.backgroundColor || '#f6f3f8'};
       --surface: ${cfg.surfaceColor || '#ffffff'};
       --card: ${cfg.cardColor || '#ffffff'};
-      --sidebar: ${cfg.sidebarColor || '#f1f5f9'};
+      --sidebar: ${cfg.sidebarColor || '#f6f3f8'};
       --navbar: ${cfg.navbarColor || '#ffffff'};
       --header: ${cfg.headerColor || '#ffffff'};
-      --footer: ${cfg.footerColor || '#e2e8f0'};
-      --border: ${cfg.borderColor || 'rgba(15, 23, 42, 0.08)'};
-      --text: ${cfg.textColor || '#0f172a'};
-      --text-muted: ${cfg.textMutedColor || '#475569'};
-      --icon: ${cfg.iconColor || '#0f172a'};
-      --link: ${cfg.linkColor || '#0284c7'};
-      --success: ${cfg.successColor || '#10b981'};
+      --footer: ${cfg.footerColor || '#dfd3eb'};
+      --border: ${cfg.borderColor || 'rgba(92, 37, 61, 0.08)'};
+      --text: ${cfg.textColor || '#5c253d'};
+      --text-muted: ${cfg.textMutedColor || '#5c253d/80'};
+      --icon: ${cfg.iconColor || '#5c253d'};
+      --link: ${cfg.linkColor || '#f27447'};
+      --success: ${cfg.successColor || '#f27447'};
       --warning: ${cfg.warningColor || '#f59e0b'};
       --error: ${cfg.errorColor || '#ef4444'};
       --info: ${cfg.infoColor || '#3b82f6'};
-      --chart-1: ${cfg.chartColor1 || '#0f172a'};
-      --chart-2: ${cfg.chartColor2 || '#0284c7'};
+      --chart-1: ${cfg.chartColor1 || '#5c253d'};
+      --chart-2: ${cfg.chartColor2 || '#f27447'};
       
       --font-sans: '${cfg.fontFamily || 'Inter'}', sans-serif;
       --font-display: '${cfg.fontFamily || 'Inter'}', sans-serif;
@@ -616,27 +616,27 @@ function ThemeStyleInjector() {
     }
 
     .dark, html.dark {
-      --primary: ${cfg.customPrimary || '#06b6d4'};
-      --secondary: ${cfg.customSecondary || '#10b981'};
-      --accent: ${cfg.accentColor || '#3b82f6'};
-      --background: ${cfg.backgroundColor || '#000000'};
-      --surface: ${cfg.surfaceColor || '#0a0f1d'};
-      --card: ${cfg.cardColor || '#0c1222'};
-      --sidebar: ${cfg.sidebarColor || '#090d16'};
-      --navbar: ${cfg.navbarColor || '#0c1222'};
-      --header: ${cfg.headerColor || '#0c1222'};
-      --footer: ${cfg.footerColor || '#05080f'};
-      --border: ${cfg.borderColor || 'rgba(255, 255, 255, 0.08)'};
-      --text: ${cfg.textColor || '#f8fafc'};
-      --text-muted: ${cfg.textMutedColor || '#94a3b8'};
-      --icon: ${cfg.iconColor || '#06b6d4'};
-      --link: ${cfg.linkColor || '#06b6d4'};
-      --success: ${cfg.successColor || '#10b981'};
+      --primary: ${cfg.customPrimary || '#5c253d'};
+      --secondary: ${cfg.customSecondary || '#f27447'};
+      --accent: ${cfg.accentColor || '#f27447'};
+      --background: ${cfg.backgroundColor || '#f6f3f8'};
+      --surface: ${cfg.surfaceColor || '#ffffff'};
+      --card: ${cfg.cardColor || '#ffffff'};
+      --sidebar: ${cfg.sidebarColor || '#f6f3f8'};
+      --navbar: ${cfg.navbarColor || '#ffffff'};
+      --header: ${cfg.headerColor || '#ffffff'};
+      --footer: ${cfg.footerColor || '#dfd3eb'};
+      --border: ${cfg.borderColor || 'rgba(92, 37, 61, 0.08)'};
+      --text: ${cfg.textColor || '#5c253d'};
+      --text-muted: ${cfg.textMutedColor || '#5c253d/80'};
+      --icon: ${cfg.iconColor || '#5c253d'};
+      --link: ${cfg.linkColor || '#f27447'};
+      --success: ${cfg.successColor || '#f27447'};
       --warning: ${cfg.warningColor || '#f59e0b'};
       --error: ${cfg.errorColor || '#ef4444'};
       --info: ${cfg.infoColor || '#3b82f6'};
-      --chart-1: ${cfg.chartColor1 || '#06b6d4'};
-      --chart-2: ${cfg.chartColor2 || '#10b981'};
+      --chart-1: ${cfg.chartColor1 || '#5c253d'};
+      --chart-2: ${cfg.chartColor2 || '#f27447'};
       
       --font-sans: '${cfg.fontFamily || 'Inter'}', sans-serif;
       --font-display: '${cfg.fontFamily || 'Inter'}', sans-serif;
@@ -4859,18 +4859,18 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
               <div 
                 className="absolute top-0 inset-x-0 h-[3.5px]" 
                 style={{
-                  backgroundImage: `linear-gradient(to right, ${liveThemeConfig?.customPrimary || '#06b6d4'}, ${liveThemeConfig?.customSecondary || '#10b981'})`
+                  backgroundImage: `linear-gradient(to right, ${liveThemeConfig?.customPrimary || '#5c253d'}, ${liveThemeConfig?.customSecondary || '#f27447'})`
                 }}
               />
 
               {/* Glowing decorative background ambient spots */}
               <div 
                 className="absolute -top-24 -right-24 w-48 h-48 rounded-full blur-3xl pointer-events-none opacity-30"
-                style={{ backgroundColor: liveThemeConfig?.customPrimary || '#06b6d4' }}
+                style={{ backgroundColor: liveThemeConfig?.customPrimary || '#5c253d' }}
               />
               <div 
                 className="absolute -bottom-24 -left-24 w-48 h-48 rounded-full blur-3xl pointer-events-none opacity-20"
-                style={{ backgroundColor: liveThemeConfig?.customSecondary || '#10b981' }}
+                style={{ backgroundColor: liveThemeConfig?.customSecondary || '#f27447' }}
               />
 
               {/* Header */}
@@ -4885,7 +4885,7 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                   >
                     <Mail 
                       className="w-5 h-5 animate-pulse" 
-                      style={{ color: liveThemeConfig?.customPrimary || '#06b6d4' }}
+                      style={{ color: liveThemeConfig?.customPrimary || '#5c253d' }}
                     />
                   </div>
                   <div>
@@ -5064,7 +5064,7 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                     disabled={isModalSubmitting}
                     className="w-full py-3 bg-gradient-to-r from-cyan-500 to-emerald-500 hover:from-cyan-400 hover:to-emerald-400 text-black font-bold font-sans text-xs uppercase tracking-wider rounded-xl transition-all shadow-lg hover:brightness-110 flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50"
                     style={{
-                      backgroundImage: `linear-gradient(to right, ${liveThemeConfig?.customPrimary || '#06b6d4'}, ${liveThemeConfig?.customSecondary || '#10b981'})`
+                      backgroundImage: `linear-gradient(to right, ${liveThemeConfig?.customPrimary || '#5c253d'}, ${liveThemeConfig?.customSecondary || '#f27447'})`
                     }}
                   >
                     {isModalSubmitting ? (
@@ -5115,7 +5115,7 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                       className="w-1/2 py-2.5 bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 hover:bg-cyan-500 hover:text-black font-bold font-sans text-xs uppercase tracking-wider rounded-xl transition-all text-center flex items-center justify-center gap-1 hover:brightness-110"
                       style={{
                         borderColor: liveThemeConfig?.customPrimary ? `color-mix(in srgb, ${liveThemeConfig.customPrimary} 40%, transparent)` : undefined,
-                        color: liveThemeConfig?.customPrimary || '#06b6d4'
+                        color: liveThemeConfig?.customPrimary || '#5c253d'
                       }}
                     >
                       Instant WhatsApp <ArrowUpRight className="w-3.5 h-3.5" />
@@ -5132,7 +5132,7 @@ function PublicPortfolio({ initialCaseStudyId }: { initialCaseStudyId?: string |
                       }}
                       className="w-1/2 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-black font-bold font-sans text-xs uppercase tracking-wider rounded-xl transition-all"
                       style={{
-                        backgroundColor: liveThemeConfig?.customSecondary || '#10b981'
+                        backgroundColor: liveThemeConfig?.customSecondary || '#f27447'
                       }}
                     >
                       Dismiss Gateway
